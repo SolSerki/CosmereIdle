@@ -74,6 +74,10 @@ Packages/packages-lock.json linguist-generated
 *.cubemap               lfs
 *.unitypackage          lfs
 
+# Pixel art (Aseprite) - binarios, van por LFS
+*.aseprite              lfs
+*.ase                   lfs
+
 # 3D models
 *.3dm                   lfs
 *.3ds                   lfs
