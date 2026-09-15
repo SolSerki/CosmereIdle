@@ -1,0 +1,949 @@
+fileFormatVersion: 2
+guid: 46a9a4df784f6d94c882457072fc0d3f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1007322628693673298
+    second: Joch_Spritesheet_0
+  - first:
+      213: 6060175716736776573
+    second: Joch_Spritesheet_1
+  - first:
+      213: -7461515801630965076
+    second: Joch_Spritesheet_2
+  - first:
+      213: 1210144202800727037
+    second: Joch_Spritesheet_3
+  - first:
+      213: 6392108382671950766
+    second: Joch_Spritesheet_4
+  - first:
+      213: 5135932931684978102
+    second: Joch_Spritesheet_5
+  - first:
+      213: 1518402776038097389
+    second: Joch_Spritesheet_6
+  - first:
+      213: 3826099196830431629
+    second: Joch_Spritesheet_7
+  - first:
+      213: 416333609531938809
+    second: Joch_Spritesheet_8
+  - first:
+      213: 5105311892902123289
+    second: Joch_Spritesheet_9
+  - first:
+      213: -2264648305390605559
+    second: Joch_Spritesheet_10
+  - first:
+      213: 4950312361813507779
+    second: Joch_Spritesheet_11
+  - first:
+      213: 4762575386665593347
+    second: Joch_Spritesheet_12
+  - first:
+      213: 1802758185015082339
+    second: Joch_Spritesheet_13
+  - first:
+      213: -5646749797975558788
+    second: Joch_Spritesheet_14
+  - first:
+      213: 4956362004096478870
+    second: Joch_Spritesheet_15
+  - first:
+      213: -4717360334121126437
+    second: Joch_Spritesheet_16
+  - first:
+      213: 6092384862365904975
+    second: Joch_Spritesheet_17
+  - first:
+      213: -7095742666759410718
+    second: Joch_Spritesheet_18
+  - first:
+      213: -6315993898153707772
+    second: Joch_Spritesheet_19
+  - first:
+      213: 2930519286800182107
+    second: Joch_Spritesheet_20
+  - first:
+      213: -5956889914281755716
+    second: Joch_Spritesheet_21
+  - first:
+      213: 2599553926728821001
+    second: Joch_Spritesheet_22
+  - first:
+      213: -1986953105535145874
+    second: Joch_Spritesheet_23
+  - first:
+      213: 5223366189039628575
+    second: Joch_Spritesheet_24
+  - first:
+      213: -5574604706124637568
+    second: Joch_Spritesheet_25
+  - first:
+      213: 6824036246711766615
+    second: Joch_Spritesheet_26
+  - first:
+      213: -2887825436870561857
+    second: Joch_Spritesheet_27
+  - first:
+      213: -3686343741905998045
+    second: Joch_Spritesheet_28
+  - first:
+      213: 5359979054959936728
+    second: Joch_Spritesheet_29
+  - first:
+      213: 4793156442960329259
+    second: Joch_Spritesheet_30
+  - first:
+      213: 3122775859823870883
+    second: Joch_Spritesheet_31
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Joch_Spritesheet_0
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 7
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eaa308ef7654502f0800000000000000
+      internalID: -1007322628693673298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 7
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d793b88c4b11a1450800000000000000
+      internalID: 6060175716736776573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 7
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca282d549ee537890800000000000000
+      internalID: -7461515801630965076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 7
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df38fe6adbb4bc010800000000000000
+      internalID: 1210144202800727037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 7
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea355fa05b455b850800000000000000
+      internalID: 6392108382671950766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_5
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 7
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bd405f3acf764740800000000000000
+      internalID: 5135932931684978102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_6
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 7
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de1c7bba743721510800000000000000
+      internalID: 1518402776038097389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_7
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 7
+        width: 12
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d893c7ea2f8091530800000000000000
+      internalID: 3826099196830431629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_8
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 7
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f71538463d17c500800000000000000
+      internalID: 416333609531938809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_9
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 7
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91712041e16b9d640800000000000000
+      internalID: 5105311892902123289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_10
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 7
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90ba0086d5a5290e0800000000000000
+      internalID: -2264648305390605559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_11
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 7
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ce7e1d7dda03b440800000000000000
+      internalID: 4950312361813507779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_12
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 7
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30aa83ab411181240800000000000000
+      internalID: 4762575386665593347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_13
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 7
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36d70c1940fa40910800000000000000
+      internalID: 1802758185015082339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_14
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 7
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c75782cf9f6b2a1b0800000000000000
+      internalID: -5646749797975558788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_15
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 7
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69ee9689bf888c440800000000000000
+      internalID: 4956362004096478870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_16
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 7
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd5313f05c1988eb0800000000000000
+      internalID: -4717360334121126437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_17
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 7
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f407944e0cf7c8450800000000000000
+      internalID: 6092384862365904975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_18
+      rect:
+        serializedVersion: 2
+        x: 437
+        y: 7
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ebe832b3abd68d90800000000000000
+      internalID: -7095742666759410718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_19
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 7
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 407730163051958a0800000000000000
+      internalID: -6315993898153707772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_20
+      rect:
+        serializedVersion: 2
+        x: 485
+        y: 7
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5be729c3cb4ba820800000000000000
+      internalID: 2930519286800182107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_21
+      rect:
+        serializedVersion: 2
+        x: 509
+        y: 7
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbbf0251f20e45da0800000000000000
+      internalID: -5956889914281755716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_22
+      rect:
+        serializedVersion: 2
+        x: 533
+        y: 7
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 909a429f588731420800000000000000
+      internalID: 2599553926728821001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_23
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 7
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e68e7378dacec64e0800000000000000
+      internalID: -1986953105535145874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_24
+      rect:
+        serializedVersion: 2
+        x: 581
+        y: 7
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f113e75dfdf1d7840800000000000000
+      internalID: 5223366189039628575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_25
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 7
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08a58382e8603a2b0800000000000000
+      internalID: -5574604706124637568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_26
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 7
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75e05a3afc8d3be50800000000000000
+      internalID: 6824036246711766615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_27
+      rect:
+        serializedVersion: 2
+        x: 653
+        y: 7
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbf2ef5c0126ce7d0800000000000000
+      internalID: -2887825436870561857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_28
+      rect:
+        serializedVersion: 2
+        x: 677
+        y: 7
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32f65b7d5e977dcc0800000000000000
+      internalID: -3686343741905998045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_29
+      rect:
+        serializedVersion: 2
+        x: 701
+        y: 7
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d4cb665d88726a40800000000000000
+      internalID: 5359979054959936728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_30
+      rect:
+        serializedVersion: 2
+        x: 725
+        y: 7
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2a768fb366b48240800000000000000
+      internalID: 4793156442960329259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Joch_Spritesheet_31
+      rect:
+        serializedVersion: 2
+        x: 749
+        y: 7
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a387fd6914565b20800000000000000
+      internalID: 3122775859823870883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Joch_Spritesheet_0: -1007322628693673298
+      Joch_Spritesheet_1: 6060175716736776573
+      Joch_Spritesheet_10: -2264648305390605559
+      Joch_Spritesheet_11: 4950312361813507779
+      Joch_Spritesheet_12: 4762575386665593347
+      Joch_Spritesheet_13: 1802758185015082339
+      Joch_Spritesheet_14: -5646749797975558788
+      Joch_Spritesheet_15: 4956362004096478870
+      Joch_Spritesheet_16: -4717360334121126437
+      Joch_Spritesheet_17: 6092384862365904975
+      Joch_Spritesheet_18: -7095742666759410718
+      Joch_Spritesheet_19: -6315993898153707772
+      Joch_Spritesheet_2: -7461515801630965076
+      Joch_Spritesheet_20: 2930519286800182107
+      Joch_Spritesheet_21: -5956889914281755716
+      Joch_Spritesheet_22: 2599553926728821001
+      Joch_Spritesheet_23: -1986953105535145874
+      Joch_Spritesheet_24: 5223366189039628575
+      Joch_Spritesheet_25: -5574604706124637568
+      Joch_Spritesheet_26: 6824036246711766615
+      Joch_Spritesheet_27: -2887825436870561857
+      Joch_Spritesheet_28: -3686343741905998045
+      Joch_Spritesheet_29: 5359979054959936728
+      Joch_Spritesheet_3: 1210144202800727037
+      Joch_Spritesheet_30: 4793156442960329259
+      Joch_Spritesheet_31: 3122775859823870883
+      Joch_Spritesheet_4: 6392108382671950766
+      Joch_Spritesheet_5: 5135932931684978102
+      Joch_Spritesheet_6: 1518402776038097389
+      Joch_Spritesheet_7: 3826099196830431629
+      Joch_Spritesheet_8: 416333609531938809
+      Joch_Spritesheet_9: 5105311892902123289
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
