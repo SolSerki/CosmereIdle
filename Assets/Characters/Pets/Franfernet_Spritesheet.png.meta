@@ -1,0 +1,949 @@
+fileFormatVersion: 2
+guid: ec2b5ed204de49943b09bf9edf41c30f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -38979932431365749
+    second: Franfernet_Spritesheet_0
+  - first:
+      213: 7006507688746101068
+    second: Franfernet_Spritesheet_1
+  - first:
+      213: -8890127536608250246
+    second: Franfernet_Spritesheet_2
+  - first:
+      213: -810613614563820807
+    second: Franfernet_Spritesheet_3
+  - first:
+      213: -2149201818922205858
+    second: Franfernet_Spritesheet_4
+  - first:
+      213: 2190294823804465754
+    second: Franfernet_Spritesheet_5
+  - first:
+      213: 8084653290713209756
+    second: Franfernet_Spritesheet_6
+  - first:
+      213: 8532414712519469272
+    second: Franfernet_Spritesheet_7
+  - first:
+      213: -5517534929538173996
+    second: Franfernet_Spritesheet_8
+  - first:
+      213: -6707359154400930617
+    second: Franfernet_Spritesheet_9
+  - first:
+      213: 5263341176121729087
+    second: Franfernet_Spritesheet_10
+  - first:
+      213: -3864226343492804446
+    second: Franfernet_Spritesheet_11
+  - first:
+      213: 1027922526244265866
+    second: Franfernet_Spritesheet_12
+  - first:
+      213: 6051233474484897288
+    second: Franfernet_Spritesheet_13
+  - first:
+      213: -6642227262974647284
+    second: Franfernet_Spritesheet_14
+  - first:
+      213: 7553600720878517725
+    second: Franfernet_Spritesheet_15
+  - first:
+      213: -3077640375554506295
+    second: Franfernet_Spritesheet_16
+  - first:
+      213: -1163843822592715383
+    second: Franfernet_Spritesheet_17
+  - first:
+      213: 2890010204461975233
+    second: Franfernet_Spritesheet_18
+  - first:
+      213: 3411504865230401809
+    second: Franfernet_Spritesheet_19
+  - first:
+      213: -3798574686289206609
+    second: Franfernet_Spritesheet_20
+  - first:
+      213: 6697496351498463035
+    second: Franfernet_Spritesheet_21
+  - first:
+      213: -5732894583182197674
+    second: Franfernet_Spritesheet_22
+  - first:
+      213: 6540408321825244895
+    second: Franfernet_Spritesheet_23
+  - first:
+      213: -4649961419720043116
+    second: Franfernet_Spritesheet_24
+  - first:
+      213: -1584230697338038316
+    second: Franfernet_Spritesheet_25
+  - first:
+      213: 53625378004324301
+    second: Franfernet_Spritesheet_26
+  - first:
+      213: 1374699376630358225
+    second: Franfernet_Spritesheet_27
+  - first:
+      213: 924698733617503167
+    second: Franfernet_Spritesheet_28
+  - first:
+      213: -9121153948503208754
+    second: Franfernet_Spritesheet_29
+  - first:
+      213: 8715033540210242613
+    second: Franfernet_Spritesheet_30
+  - first:
+      213: -3710585689280471980
+    second: Franfernet_Spritesheet_31
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 0
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b894f0e35f3857ff0800000000000000
+      internalID: -38979932431365749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 0
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4921cfee9d1c3160800000000000000
+      internalID: 7006507688746101068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 0
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a76fb8c7b1cef9480800000000000000
+      internalID: -8890127536608250246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 0
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9faf3dd563f10c4f0800000000000000
+      internalID: -810613614563820807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 0
+        width: 13
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5db48825508c22e0800000000000000
+      internalID: -2149201818922205858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_5
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 0
+        width: 15
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a52fd3e998d756e10800000000000000
+      internalID: 2190294823804465754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_6
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 0
+        width: 13
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9b57256555723070800000000000000
+      internalID: 8084653290713209756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_7
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 0
+        width: 13
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d82a0079f9396670800000000000000
+      internalID: 8532414712519469272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_8
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 0
+        width: 13
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d33119f637cd63b0800000000000000
+      internalID: -5517534929538173996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_9
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 0
+        width: 13
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c4d7fcd26caae2a0800000000000000
+      internalID: -6707359154400930617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_10
+      rect:
+        serializedVersion: 2
+        x: 245
+        y: 0
+        width: 13
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f302c6ec9e42b0940800000000000000
+      internalID: 5263341176121729087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_11
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 0
+        width: 13
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a0a7683d928f5ac0800000000000000
+      internalID: -3864226343492804446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_12
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 0
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8f5969671ae34e00800000000000000
+      internalID: 1027922526244265866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_13
+      rect:
+        serializedVersion: 2
+        x: 316
+        y: 0
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80600a3c8cc4af350800000000000000
+      internalID: 6051233474484897288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_14
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c042bf01f7112d3a0800000000000000
+      internalID: -6642227262974647284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_15
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddd391fb5d7c3d860800000000000000
+      internalID: 7553600720878517725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_16
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c18cac62660a45d0800000000000000
+      internalID: -3077640375554506295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_17
+      rect:
+        serializedVersion: 2
+        x: 412
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 985145ca53239dfe0800000000000000
+      internalID: -1163843822592715383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_18
+      rect:
+        serializedVersion: 2
+        x: 436
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c6c53218f06b1820800000000000000
+      internalID: 2890010204461975233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_19
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11133999999185f20800000000000000
+      internalID: 3411504865230401809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_20
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa2e0f2d270c84bc0800000000000000
+      internalID: -3798574686289206609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_21
+      rect:
+        serializedVersion: 2
+        x: 508
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b376a83627942fc50800000000000000
+      internalID: 6697496351498463035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_22
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65cf9a230caa070b0800000000000000
+      internalID: -5732894583182197674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_23
+      rect:
+        serializedVersion: 2
+        x: 556
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd6076457b234ca50800000000000000
+      internalID: 6540408321825244895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_24
+      rect:
+        serializedVersion: 2
+        x: 580
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 495d05ea9b4087fb0800000000000000
+      internalID: -4649961419720043116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_25
+      rect:
+        serializedVersion: 2
+        x: 604
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d795ea039ea30ae0800000000000000
+      internalID: -1584230697338038316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_26
+      rect:
+        serializedVersion: 2
+        x: 628
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcfc4e64ff38eb000800000000000000
+      internalID: 53625378004324301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_27
+      rect:
+        serializedVersion: 2
+        x: 652
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d0e001bcc9e31310800000000000000
+      internalID: 1374699376630358225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_28
+      rect:
+        serializedVersion: 2
+        x: 676
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbb5685599035dc00800000000000000
+      internalID: 924698733617503167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_29
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecc80dd4fc62b6180800000000000000
+      internalID: -9121153948503208754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_30
+      rect:
+        serializedVersion: 2
+        x: 724
+        y: 0
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 534b8d1a4d402f870800000000000000
+      internalID: 8715033540210242613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Franfernet_Spritesheet_31
+      rect:
+        serializedVersion: 2
+        x: 748
+        y: 0
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45c1ac1a9f9518cc0800000000000000
+      internalID: -3710585689280471980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Franfernet_Spritesheet_0: -38979932431365749
+      Franfernet_Spritesheet_1: 7006507688746101068
+      Franfernet_Spritesheet_10: 5263341176121729087
+      Franfernet_Spritesheet_11: -3864226343492804446
+      Franfernet_Spritesheet_12: 1027922526244265866
+      Franfernet_Spritesheet_13: 6051233474484897288
+      Franfernet_Spritesheet_14: -6642227262974647284
+      Franfernet_Spritesheet_15: 7553600720878517725
+      Franfernet_Spritesheet_16: -3077640375554506295
+      Franfernet_Spritesheet_17: -1163843822592715383
+      Franfernet_Spritesheet_18: 2890010204461975233
+      Franfernet_Spritesheet_19: 3411504865230401809
+      Franfernet_Spritesheet_2: -8890127536608250246
+      Franfernet_Spritesheet_20: -3798574686289206609
+      Franfernet_Spritesheet_21: 6697496351498463035
+      Franfernet_Spritesheet_22: -5732894583182197674
+      Franfernet_Spritesheet_23: 6540408321825244895
+      Franfernet_Spritesheet_24: -4649961419720043116
+      Franfernet_Spritesheet_25: -1584230697338038316
+      Franfernet_Spritesheet_26: 53625378004324301
+      Franfernet_Spritesheet_27: 1374699376630358225
+      Franfernet_Spritesheet_28: 924698733617503167
+      Franfernet_Spritesheet_29: -9121153948503208754
+      Franfernet_Spritesheet_3: -810613614563820807
+      Franfernet_Spritesheet_30: 8715033540210242613
+      Franfernet_Spritesheet_31: -3710585689280471980
+      Franfernet_Spritesheet_4: -2149201818922205858
+      Franfernet_Spritesheet_5: 2190294823804465754
+      Franfernet_Spritesheet_6: 8084653290713209756
+      Franfernet_Spritesheet_7: 8532414712519469272
+      Franfernet_Spritesheet_8: -5517534929538173996
+      Franfernet_Spritesheet_9: -6707359154400930617
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,949 @@
+fileFormatVersion: 2
+guid: 1e70f0f6c6474724e876f8f4bf6e2a79
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 109327706072039215
+    second: MDQ_Spritesheet_0
+  - first:
+      213: -6669261400670837829
+    second: MDQ_Spritesheet_1
+  - first:
+      213: 289259733032055581
+    second: MDQ_Spritesheet_2
+  - first:
+      213: -5625379926164812046
+    second: MDQ_Spritesheet_3
+  - first:
+      213: -6670615137583411179
+    second: MDQ_Spritesheet_4
+  - first:
+      213: -8404921979872218633
+    second: MDQ_Spritesheet_5
+  - first:
+      213: -2606633628477933360
+    second: MDQ_Spritesheet_6
+  - first:
+      213: -8312092400488861423
+    second: MDQ_Spritesheet_7
+  - first:
+      213: -3138260324113595600
+    second: MDQ_Spritesheet_8
+  - first:
+      213: 562576372572647180
+    second: MDQ_Spritesheet_9
+  - first:
+      213: 7334298658490304807
+    second: MDQ_Spritesheet_10
+  - first:
+      213: -5642882506564465841
+    second: MDQ_Spritesheet_11
+  - first:
+      213: -5398825930454155276
+    second: MDQ_Spritesheet_12
+  - first:
+      213: -3581262156376399924
+    second: MDQ_Spritesheet_13
+  - first:
+      213: -2522755607152074977
+    second: MDQ_Spritesheet_14
+  - first:
+      213: 1097000612714685915
+    second: MDQ_Spritesheet_15
+  - first:
+      213: -6911792616354609640
+    second: MDQ_Spritesheet_16
+  - first:
+      213: 4040083427815296249
+    second: MDQ_Spritesheet_17
+  - first:
+      213: 12625341941354109
+    second: MDQ_Spritesheet_18
+  - first:
+      213: 6963682702679611172
+    second: MDQ_Spritesheet_19
+  - first:
+      213: -8674270710205463540
+    second: MDQ_Spritesheet_20
+  - first:
+      213: 3441758226563590480
+    second: MDQ_Spritesheet_21
+  - first:
+      213: -4422602798826596658
+    second: MDQ_Spritesheet_22
+  - first:
+      213: 2616382129924389734
+    second: MDQ_Spritesheet_23
+  - first:
+      213: 8455530016592158268
+    second: MDQ_Spritesheet_24
+  - first:
+      213: 3472877068323563488
+    second: MDQ_Spritesheet_25
+  - first:
+      213: 3290302515231738197
+    second: MDQ_Spritesheet_26
+  - first:
+      213: 3116850933446169681
+    second: MDQ_Spritesheet_27
+  - first:
+      213: -6671583291402651797
+    second: MDQ_Spritesheet_28
+  - first:
+      213: 3089472320298197987
+    second: MDQ_Spritesheet_29
+  - first:
+      213: 6400220804012715911
+    second: MDQ_Spritesheet_30
+  - first:
+      213: 1713589172069655265
+    second: MDQ_Spritesheet_31
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_0
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 0
+        width: 14
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2f388c28f8648100800000000000000
+      internalID: 109327706072039215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 0
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb36ac267160273a0800000000000000
+      internalID: -6669261400670837829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 0
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d133333d138a30400800000000000000
+      internalID: 289259733032055581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 0
+        width: 14
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fe455ef2c2aee1b0800000000000000
+      internalID: -5625379926164812046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 0
+        width: 12
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5105ff2ffd63d63a0800000000000000
+      internalID: -6670615137583411179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_5
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 0
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f1f7d09df7bb5b80800000000000000
+      internalID: -8404921979872218633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_6
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 0
+        width: 12
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d83cf2868063dbd0800000000000000
+      internalID: -2606633628477933360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_7
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 0
+        width: 12
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11133a8400485ac80800000000000000
+      internalID: -8312092400488861423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_8
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 0
+        width: 12
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 033c188ccd8a274d0800000000000000
+      internalID: -3138260324113595600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_9
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 0
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0f683eea3caec700800000000000000
+      internalID: 562576372572647180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_10
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 0
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72940f765c9a8c560800000000000000
+      internalID: 7334298658490304807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_11
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 0
+        width: 12
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4b85fee14470b1b0800000000000000
+      internalID: -5642882506564465841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_12
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 0
+        width: 14
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ffbc13ab648315b0800000000000000
+      internalID: -5398825930454155276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_13
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 0
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ccf92a90b0dcc4ec0800000000000000
+      internalID: -3581262156376399924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_14
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 0
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1f5394342f5dfcd0800000000000000
+      internalID: -2522755607152074977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_15
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 0
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd5ae3fbe34593f00800000000000000
+      internalID: 1097000612714685915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_16
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 0
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81604055c316410a0800000000000000
+      internalID: -6911792616354609640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_17
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 0
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fc8fd9e872411830800000000000000
+      internalID: 4040083427815296249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_18
+      rect:
+        serializedVersion: 2
+        x: 437
+        y: 0
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7e059d7eaadc2000800000000000000
+      internalID: 12625341941354109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_19
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 0
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42710cdd588f3a060800000000000000
+      internalID: 6963682702679611172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_20
+      rect:
+        serializedVersion: 2
+        x: 485
+        y: 0
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c04c0a05fbcce9780800000000000000
+      internalID: -8674270710205463540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_21
+      rect:
+        serializedVersion: 2
+        x: 509
+        y: 0
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 059e9113fd493cf20800000000000000
+      internalID: 3441758226563590480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_22
+      rect:
+        serializedVersion: 2
+        x: 533
+        y: 0
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec6da49bf22cf92c0800000000000000
+      internalID: -4422602798826596658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_23
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 0
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66bb2da5fa14f4420800000000000000
+      internalID: 2616382129924389734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_24
+      rect:
+        serializedVersion: 2
+        x: 581
+        y: 0
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3ed0a230c3185570800000000000000
+      internalID: 8455530016592158268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_25
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 0
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e7a6062b43223030800000000000000
+      internalID: 3472877068323563488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_26
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 0
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55946ff64b089ad20800000000000000
+      internalID: 3290302515231738197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_27
+      rect:
+        serializedVersion: 2
+        x: 653
+        y: 0
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15457e10967414b20800000000000000
+      internalID: 3116850933446169681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_28
+      rect:
+        serializedVersion: 2
+        x: 677
+        y: 0
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6773821856c963a0800000000000000
+      internalID: -6671583291402651797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_29
+      rect:
+        serializedVersion: 2
+        x: 701
+        y: 0
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e3a6c2e4b200ea20800000000000000
+      internalID: 3089472320298197987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_30
+      rect:
+        serializedVersion: 2
+        x: 725
+        y: 0
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78f2e3359e622d850800000000000000
+      internalID: 6400220804012715911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MDQ_Spritesheet_31
+      rect:
+        serializedVersion: 2
+        x: 749
+        y: 0
+        width: 14
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e2ea24e544e7c710800000000000000
+      internalID: 1713589172069655265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      MDQ_Spritesheet_0: 109327706072039215
+      MDQ_Spritesheet_1: -6669261400670837829
+      MDQ_Spritesheet_10: 7334298658490304807
+      MDQ_Spritesheet_11: -5642882506564465841
+      MDQ_Spritesheet_12: -5398825930454155276
+      MDQ_Spritesheet_13: -3581262156376399924
+      MDQ_Spritesheet_14: -2522755607152074977
+      MDQ_Spritesheet_15: 1097000612714685915
+      MDQ_Spritesheet_16: -6911792616354609640
+      MDQ_Spritesheet_17: 4040083427815296249
+      MDQ_Spritesheet_18: 12625341941354109
+      MDQ_Spritesheet_19: 6963682702679611172
+      MDQ_Spritesheet_2: 289259733032055581
+      MDQ_Spritesheet_20: -8674270710205463540
+      MDQ_Spritesheet_21: 3441758226563590480
+      MDQ_Spritesheet_22: -4422602798826596658
+      MDQ_Spritesheet_23: 2616382129924389734
+      MDQ_Spritesheet_24: 8455530016592158268
+      MDQ_Spritesheet_25: 3472877068323563488
+      MDQ_Spritesheet_26: 3290302515231738197
+      MDQ_Spritesheet_27: 3116850933446169681
+      MDQ_Spritesheet_28: -6671583291402651797
+      MDQ_Spritesheet_29: 3089472320298197987
+      MDQ_Spritesheet_3: -5625379926164812046
+      MDQ_Spritesheet_30: 6400220804012715911
+      MDQ_Spritesheet_31: 1713589172069655265
+      MDQ_Spritesheet_4: -6670615137583411179
+      MDQ_Spritesheet_5: -8404921979872218633
+      MDQ_Spritesheet_6: -2606633628477933360
+      MDQ_Spritesheet_7: -8312092400488861423
+      MDQ_Spritesheet_8: -3138260324113595600
+      MDQ_Spritesheet_9: 562576372572647180
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

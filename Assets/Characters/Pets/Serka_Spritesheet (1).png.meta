@@ -1,0 +1,949 @@
+fileFormatVersion: 2
+guid: f48f07aa3bdc8b04a9f3ab4e4e037cc5
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6755456872423396489
+    second: Serka_Spritesheet (1)_0
+  - first:
+      213: -3953393396336806333
+    second: Serka_Spritesheet (1)_1
+  - first:
+      213: -3074795426008239267
+    second: Serka_Spritesheet (1)_2
+  - first:
+      213: -579375667860198862
+    second: Serka_Spritesheet (1)_3
+  - first:
+      213: 8074430083668108310
+    second: Serka_Spritesheet (1)_4
+  - first:
+      213: 2389560029348789794
+    second: Serka_Spritesheet (1)_5
+  - first:
+      213: 1952948357057915973
+    second: Serka_Spritesheet (1)_6
+  - first:
+      213: 7677553828938121346
+    second: Serka_Spritesheet (1)_7
+  - first:
+      213: 2136263727974076238
+    second: Serka_Spritesheet (1)_8
+  - first:
+      213: -6537711771772041770
+    second: Serka_Spritesheet (1)_9
+  - first:
+      213: 2427874956170104859
+    second: Serka_Spritesheet (1)_10
+  - first:
+      213: -1492444059753261014
+    second: Serka_Spritesheet (1)_11
+  - first:
+      213: -454065320290239393
+    second: Serka_Spritesheet (1)_12
+  - first:
+      213: -1203831403470273612
+    second: Serka_Spritesheet (1)_13
+  - first:
+      213: 3354352186817959170
+    second: Serka_Spritesheet (1)_14
+  - first:
+      213: 1597275214654309779
+    second: Serka_Spritesheet (1)_15
+  - first:
+      213: 5124531767835991598
+    second: Serka_Spritesheet (1)_16
+  - first:
+      213: -6586157996946349135
+    second: Serka_Spritesheet (1)_17
+  - first:
+      213: 3853990992692068886
+    second: Serka_Spritesheet (1)_18
+  - first:
+      213: -2447270970214608941
+    second: Serka_Spritesheet (1)_19
+  - first:
+      213: -2654120196232490410
+    second: Serka_Spritesheet (1)_20
+  - first:
+      213: -2044149011353700585
+    second: Serka_Spritesheet (1)_21
+  - first:
+      213: -77225297914939071
+    second: Serka_Spritesheet (1)_22
+  - first:
+      213: 6370189646486791224
+    second: Serka_Spritesheet (1)_23
+  - first:
+      213: -5956174224665790457
+    second: Serka_Spritesheet (1)_24
+  - first:
+      213: -704912627784346291
+    second: Serka_Spritesheet (1)_25
+  - first:
+      213: 2666961939006916400
+    second: Serka_Spritesheet (1)_26
+  - first:
+      213: 5209906595666362401
+    second: Serka_Spritesheet (1)_27
+  - first:
+      213: -4728577431040674897
+    second: Serka_Spritesheet (1)_28
+  - first:
+      213: 1441900565173774340
+    second: Serka_Spritesheet (1)_29
+  - first:
+      213: -8640244026737043273
+    second: Serka_Spritesheet (1)_30
+  - first:
+      213: -3356702541800201736
+    second: Serka_Spritesheet (1)_31
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 23
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77b6bb734cbcf32a0800000000000000
+      internalID: -6755456872423396489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_1
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 0
+        width: 24
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34638f9e6a9b229c0800000000000000
+      internalID: -3953393396336806333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_2
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 0
+        width: 24
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5378cbd9d12455d0800000000000000
+      internalID: -3074795426008239267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_3
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23a20b556e4a5f7f0800000000000000
+      internalID: -579375667860198862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_4
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 0
+        width: 24
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 614e3c481632e0070800000000000000
+      internalID: 8074430083668108310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_5
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22e7eceaf2c692120800000000000000
+      internalID: 2389560029348789794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_6
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 0
+        width: 24
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54cae1ffe244a1b10800000000000000
+      internalID: 1952948357057915973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_7
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2800ccda7862c8a60800000000000000
+      internalID: 7677553828938121346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_8
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 0
+        width: 24
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4f427cca8885ad10800000000000000
+      internalID: 2136263727974076238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_9
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 0
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d543a728c16545a0800000000000000
+      internalID: -6537711771772041770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_10
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 0
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b101691c86b81b120800000000000000
+      internalID: 2427874956170104859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_11
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 0
+        width: 24
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a28d343f806c94be0800000000000000
+      internalID: -1492444059753261014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_12
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5cb6473ff5d2b9f0800000000000000
+      internalID: -454065320290239393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_13
+      rect:
+        serializedVersion: 2
+        x: 311
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b3c1ba77b12b4fe0800000000000000
+      internalID: -1203831403470273612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_14
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 0
+        width: 24
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 205d6d2ba8d0d8e20800000000000000
+      internalID: 3354352186817959170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_15
+      rect:
+        serializedVersion: 2
+        x: 359
+        y: 0
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39581025859aa2610800000000000000
+      internalID: 1597275214654309779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_16
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 0
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2e911eed7efd1740800000000000000
+      internalID: 5124531767835991598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_17
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 0
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b32a6d52344994a0800000000000000
+      internalID: -6586157996946349135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_18
+      rect:
+        serializedVersion: 2
+        x: 431
+        y: 0
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61247f673602c7530800000000000000
+      internalID: 3853990992692068886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_19
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 0
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3df8b3fc40c890ed0800000000000000
+      internalID: -2447270970214608941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_20
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 0
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6525f506ebbaa2bd0800000000000000
+      internalID: -2654120196232490410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_21
+      rect:
+        serializedVersion: 2
+        x: 503
+        y: 0
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 717fb46fd49b1a3e0800000000000000
+      internalID: -2044149011353700585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_22
+      rect:
+        serializedVersion: 2
+        x: 527
+        y: 0
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1493b1e2004adeef0800000000000000
+      internalID: -77225297914939071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_23
+      rect:
+        serializedVersion: 2
+        x: 551
+        y: 0
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83467b69bb5776850800000000000000
+      internalID: 6370189646486791224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_24
+      rect:
+        serializedVersion: 2
+        x: 575
+        y: 0
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 708357e891b675da0800000000000000
+      internalID: -5956174224665790457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_25
+      rect:
+        serializedVersion: 2
+        x: 599
+        y: 0
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d451a3723b5a736f0800000000000000
+      internalID: -704912627784346291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_26
+      rect:
+        serializedVersion: 2
+        x: 623
+        y: 0
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0378efbd0c3f20520800000000000000
+      internalID: 2666961939006916400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_27
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 0
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12088ab027e4d4840800000000000000
+      internalID: 5209906595666362401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_28
+      rect:
+        serializedVersion: 2
+        x: 671
+        y: 0
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa334e921e7b06eb0800000000000000
+      internalID: -4728577431040674897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_29
+      rect:
+        serializedVersion: 2
+        x: 695
+        y: 0
+        width: 24
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4082e9cace8a20410800000000000000
+      internalID: 1441900565173774340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_30
+      rect:
+        serializedVersion: 2
+        x: 719
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b8d5ade5dfa71880800000000000000
+      internalID: -8640244026737043273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Serka_Spritesheet (1)_31
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f12953a2d89a61d0800000000000000
+      internalID: -3356702541800201736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Serka_Spritesheet (1)_0: -6755456872423396489
+      Serka_Spritesheet (1)_1: -3953393396336806333
+      Serka_Spritesheet (1)_10: 2427874956170104859
+      Serka_Spritesheet (1)_11: -1492444059753261014
+      Serka_Spritesheet (1)_12: -454065320290239393
+      Serka_Spritesheet (1)_13: -1203831403470273612
+      Serka_Spritesheet (1)_14: 3354352186817959170
+      Serka_Spritesheet (1)_15: 1597275214654309779
+      Serka_Spritesheet (1)_16: 5124531767835991598
+      Serka_Spritesheet (1)_17: -6586157996946349135
+      Serka_Spritesheet (1)_18: 3853990992692068886
+      Serka_Spritesheet (1)_19: -2447270970214608941
+      Serka_Spritesheet (1)_2: -3074795426008239267
+      Serka_Spritesheet (1)_20: -2654120196232490410
+      Serka_Spritesheet (1)_21: -2044149011353700585
+      Serka_Spritesheet (1)_22: -77225297914939071
+      Serka_Spritesheet (1)_23: 6370189646486791224
+      Serka_Spritesheet (1)_24: -5956174224665790457
+      Serka_Spritesheet (1)_25: -704912627784346291
+      Serka_Spritesheet (1)_26: 2666961939006916400
+      Serka_Spritesheet (1)_27: 5209906595666362401
+      Serka_Spritesheet (1)_28: -4728577431040674897
+      Serka_Spritesheet (1)_29: 1441900565173774340
+      Serka_Spritesheet (1)_3: -579375667860198862
+      Serka_Spritesheet (1)_30: -8640244026737043273
+      Serka_Spritesheet (1)_31: -3356702541800201736
+      Serka_Spritesheet (1)_4: 8074430083668108310
+      Serka_Spritesheet (1)_5: 2389560029348789794
+      Serka_Spritesheet (1)_6: 1952948357057915973
+      Serka_Spritesheet (1)_7: 7677553828938121346
+      Serka_Spritesheet (1)_8: 2136263727974076238
+      Serka_Spritesheet (1)_9: -6537711771772041770
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

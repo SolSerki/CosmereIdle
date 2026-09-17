@@ -1,0 +1,949 @@
+fileFormatVersion: 2
+guid: b2339cdecd17121439464ecc5b7edc9d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3452499884846109364
+    second: Juzaed_Spritesheet (1)_0
+  - first:
+      213: -567836535373895437
+    second: Juzaed_Spritesheet (1)_1
+  - first:
+      213: -5505848139545864497
+    second: Juzaed_Spritesheet (1)_2
+  - first:
+      213: -1438465911297593665
+    second: Juzaed_Spritesheet (1)_3
+  - first:
+      213: 6182485033863385230
+    second: Juzaed_Spritesheet (1)_4
+  - first:
+      213: 3560741646956631533
+    second: Juzaed_Spritesheet (1)_5
+  - first:
+      213: -1780940712453177727
+    second: Juzaed_Spritesheet (1)_6
+  - first:
+      213: 3301453432318876490
+    second: Juzaed_Spritesheet (1)_7
+  - first:
+      213: 6163095399335850956
+    second: Juzaed_Spritesheet (1)_8
+  - first:
+      213: -6419496877813283387
+    second: Juzaed_Spritesheet (1)_9
+  - first:
+      213: 6317178993033331813
+    second: Juzaed_Spritesheet (1)_10
+  - first:
+      213: -3845422652326021378
+    second: Juzaed_Spritesheet (1)_11
+  - first:
+      213: -6286936602160908827
+    second: Juzaed_Spritesheet (1)_12
+  - first:
+      213: -7133019294151451785
+    second: Juzaed_Spritesheet (1)_13
+  - first:
+      213: -4269552600721155409
+    second: Juzaed_Spritesheet (1)_14
+  - first:
+      213: -3823114624445324255
+    second: Juzaed_Spritesheet (1)_15
+  - first:
+      213: -3093999231415343378
+    second: Juzaed_Spritesheet (1)_16
+  - first:
+      213: 8578717339988063507
+    second: Juzaed_Spritesheet (1)_17
+  - first:
+      213: 2295689027914523026
+    second: Juzaed_Spritesheet (1)_18
+  - first:
+      213: 3252900171391967156
+    second: Juzaed_Spritesheet (1)_19
+  - first:
+      213: -7239163830438761632
+    second: Juzaed_Spritesheet (1)_20
+  - first:
+      213: -9193996140136828943
+    second: Juzaed_Spritesheet (1)_21
+  - first:
+      213: -4261500483726011166
+    second: Juzaed_Spritesheet (1)_22
+  - first:
+      213: 8526094539566983049
+    second: Juzaed_Spritesheet (1)_23
+  - first:
+      213: 8286008457903466170
+    second: Juzaed_Spritesheet (1)_24
+  - first:
+      213: 7277998926522102023
+    second: Juzaed_Spritesheet (1)_25
+  - first:
+      213: 8591106187025455939
+    second: Juzaed_Spritesheet (1)_26
+  - first:
+      213: 8848055180515192921
+    second: Juzaed_Spritesheet (1)_27
+  - first:
+      213: -4642193666749039709
+    second: Juzaed_Spritesheet (1)_28
+  - first:
+      213: 2540031376366450915
+    second: Juzaed_Spritesheet (1)_29
+  - first:
+      213: -6236488489247929698
+    second: Juzaed_Spritesheet (1)_30
+  - first:
+      213: -1695909442943306570
+    second: Juzaed_Spritesheet (1)_31
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_0
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 0
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4daba895a14610d0800000000000000
+      internalID: -3452499884846109364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_1
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 0
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f8ec8afda3ae18f0800000000000000
+      internalID: -567836535373895437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_2
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 0
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc69f1fc94c4793b0800000000000000
+      internalID: -5505848139545864497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_3
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 0
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbe299fffda890ce0800000000000000
+      internalID: -1438465911297593665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_4
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 0
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e809890d1699cc550800000000000000
+      internalID: 6182485033863385230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_5
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 0
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de51acb89ab4a6130800000000000000
+      internalID: 3560741646956631533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_6
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 0
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18e723c9bd3d847e0800000000000000
+      internalID: -1780940712453177727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_7
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 0
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4b5cd3a76e11dd20800000000000000
+      internalID: 3301453432318876490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_8
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 0
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc3f14abc96b78550800000000000000
+      internalID: 6163095399335850956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_9
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 0
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c5c5310a9d59e6a0800000000000000
+      internalID: -6419496877813283387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_10
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 0
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 564cf4603d02ba750800000000000000
+      internalID: 6317178993033331813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_11
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 0
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef6fddcb87052aac0800000000000000
+      internalID: -3845422652326021378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_12
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 0
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e53cce487050c8a0800000000000000
+      internalID: -6286936602160908827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_13
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 0
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77b581c8ebc620d90800000000000000
+      internalID: -7133019294151451785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_14
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 0
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: faa9b2cd7808fb4c0800000000000000
+      internalID: -4269552600721155409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_15
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 0
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 124e55a318191fac0800000000000000
+      internalID: -3823114624445324255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_16
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 0
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee6282c7718ef05d0800000000000000
+      internalID: -3093999231415343378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_17
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 0
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 315f87ef7f9bd0770800000000000000
+      internalID: 8578717339988063507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_18
+      rect:
+        serializedVersion: 2
+        x: 437
+        y: 0
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2916b9ff10debdf10800000000000000
+      internalID: 2295689027914523026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_19
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 0
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bf10a5a87f942d20800000000000000
+      internalID: 3252900171391967156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_20
+      rect:
+        serializedVersion: 2
+        x: 485
+        y: 0
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06b67d7d9d2598b90800000000000000
+      internalID: -7239163830438761632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_21
+      rect:
+        serializedVersion: 2
+        x: 509
+        y: 0
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ffe4d0f83d586080800000000000000
+      internalID: -9193996140136828943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_22
+      rect:
+        serializedVersion: 2
+        x: 533
+        y: 0
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e41b5173eb1cd4c0800000000000000
+      internalID: -4261500483726011166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_23
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 0
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 987a9408fc5c25670800000000000000
+      internalID: 8526094539566983049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_24
+      rect:
+        serializedVersion: 2
+        x: 581
+        y: 0
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab6e7339ac0ddf270800000000000000
+      internalID: 8286008457903466170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_25
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 0
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70136039675a00560800000000000000
+      internalID: 7277998926522102023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_26
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 0
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34b10593f8db93770800000000000000
+      internalID: 8591106187025455939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_27
+      rect:
+        serializedVersion: 2
+        x: 653
+        y: 0
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 950b9a3ce4b9aca70800000000000000
+      internalID: 8848055180515192921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_28
+      rect:
+        serializedVersion: 2
+        x: 677
+        y: 0
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3abfada947d939fb0800000000000000
+      internalID: -4642193666749039709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_29
+      rect:
+        serializedVersion: 2
+        x: 701
+        y: 0
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e83ba24411004320800000000000000
+      internalID: 2540031376366450915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_30
+      rect:
+        serializedVersion: 2
+        x: 725
+        y: 0
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9a8098e2ca8379a0800000000000000
+      internalID: -6236488489247929698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juzaed_Spritesheet (1)_31
+      rect:
+        serializedVersion: 2
+        x: 749
+        y: 0
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b43222d85be678e0800000000000000
+      internalID: -1695909442943306570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Juzaed_Spritesheet (1)_0: -3452499884846109364
+      Juzaed_Spritesheet (1)_1: -567836535373895437
+      Juzaed_Spritesheet (1)_10: 6317178993033331813
+      Juzaed_Spritesheet (1)_11: -3845422652326021378
+      Juzaed_Spritesheet (1)_12: -6286936602160908827
+      Juzaed_Spritesheet (1)_13: -7133019294151451785
+      Juzaed_Spritesheet (1)_14: -4269552600721155409
+      Juzaed_Spritesheet (1)_15: -3823114624445324255
+      Juzaed_Spritesheet (1)_16: -3093999231415343378
+      Juzaed_Spritesheet (1)_17: 8578717339988063507
+      Juzaed_Spritesheet (1)_18: 2295689027914523026
+      Juzaed_Spritesheet (1)_19: 3252900171391967156
+      Juzaed_Spritesheet (1)_2: -5505848139545864497
+      Juzaed_Spritesheet (1)_20: -7239163830438761632
+      Juzaed_Spritesheet (1)_21: -9193996140136828943
+      Juzaed_Spritesheet (1)_22: -4261500483726011166
+      Juzaed_Spritesheet (1)_23: 8526094539566983049
+      Juzaed_Spritesheet (1)_24: 8286008457903466170
+      Juzaed_Spritesheet (1)_25: 7277998926522102023
+      Juzaed_Spritesheet (1)_26: 8591106187025455939
+      Juzaed_Spritesheet (1)_27: 8848055180515192921
+      Juzaed_Spritesheet (1)_28: -4642193666749039709
+      Juzaed_Spritesheet (1)_29: 2540031376366450915
+      Juzaed_Spritesheet (1)_3: -1438465911297593665
+      Juzaed_Spritesheet (1)_30: -6236488489247929698
+      Juzaed_Spritesheet (1)_31: -1695909442943306570
+      Juzaed_Spritesheet (1)_4: 6182485033863385230
+      Juzaed_Spritesheet (1)_5: 3560741646956631533
+      Juzaed_Spritesheet (1)_6: -1780940712453177727
+      Juzaed_Spritesheet (1)_7: 3301453432318876490
+      Juzaed_Spritesheet (1)_8: 6163095399335850956
+      Juzaed_Spritesheet (1)_9: -6419496877813283387
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

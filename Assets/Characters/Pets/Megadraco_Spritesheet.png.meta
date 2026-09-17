@@ -1,0 +1,949 @@
+fileFormatVersion: 2
+guid: 7d48811d04b95eb4aa4f83cb03bd5cca
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4170830673021980489
+    second: Megadraco_Spritesheet_0
+  - first:
+      213: 7078788511191236597
+    second: Megadraco_Spritesheet_1
+  - first:
+      213: -7395298066086740977
+    second: Megadraco_Spritesheet_2
+  - first:
+      213: 1539687326596567702
+    second: Megadraco_Spritesheet_3
+  - first:
+      213: 8492946042945732113
+    second: Megadraco_Spritesheet_4
+  - first:
+      213: -1103065165841768168
+    second: Megadraco_Spritesheet_5
+  - first:
+      213: -4307254555068792703
+    second: Megadraco_Spritesheet_6
+  - first:
+      213: -4004334082704308223
+    second: Megadraco_Spritesheet_7
+  - first:
+      213: -2629243326347394800
+    second: Megadraco_Spritesheet_8
+  - first:
+      213: 1545393660470880791
+    second: Megadraco_Spritesheet_9
+  - first:
+      213: 5043551303154951086
+    second: Megadraco_Spritesheet_10
+  - first:
+      213: 4043569650396152875
+    second: Megadraco_Spritesheet_11
+  - first:
+      213: 2349420720020895681
+    second: Megadraco_Spritesheet_12
+  - first:
+      213: -7800722925739023334
+    second: Megadraco_Spritesheet_13
+  - first:
+      213: 2709382694309547759
+    second: Megadraco_Spritesheet_14
+  - first:
+      213: -4863644217912496514
+    second: Megadraco_Spritesheet_15
+  - first:
+      213: -4056529146809713198
+    second: Megadraco_Spritesheet_16
+  - first:
+      213: -2011531279850141621
+    second: Megadraco_Spritesheet_17
+  - first:
+      213: 1199437926078230361
+    second: Megadraco_Spritesheet_18
+  - first:
+      213: 2874422210443949454
+    second: Megadraco_Spritesheet_19
+  - first:
+      213: 286133785007819673
+    second: Megadraco_Spritesheet_20
+  - first:
+      213: 4603741880023047581
+    second: Megadraco_Spritesheet_21
+  - first:
+      213: 486546729719193270
+    second: Megadraco_Spritesheet_22
+  - first:
+      213: -4342511500973792845
+    second: Megadraco_Spritesheet_23
+  - first:
+      213: -4260278304007027492
+    second: Megadraco_Spritesheet_24
+  - first:
+      213: -4194903054106892289
+    second: Megadraco_Spritesheet_25
+  - first:
+      213: 1529053046645392231
+    second: Megadraco_Spritesheet_26
+  - first:
+      213: -6185647353772005561
+    second: Megadraco_Spritesheet_27
+  - first:
+      213: 3813742071968920154
+    second: Megadraco_Spritesheet_28
+  - first:
+      213: 5151252472022830969
+    second: Megadraco_Spritesheet_29
+  - first:
+      213: 1769240141875875168
+    second: Megadraco_Spritesheet_30
+  - first:
+      213: 5170846694610558924
+    second: Megadraco_Spritesheet_31
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b0b834d99b3e16c0800000000000000
+      internalID: -4170830673021980489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 0
+        width: 23
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ff7ba955a8ec3260800000000000000
+      internalID: 7078788511191236597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 23
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0c34c2479f9e5990800000000000000
+      internalID: -7395298066086740977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 0
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69295f647711e5510800000000000000
+      internalID: 1539687326596567702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 0
+        width: 22
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11ef652bd610dd570800000000000000
+      internalID: 8492946042945732113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_5
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 0
+        width: 22
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 811e4e1731021b0f0800000000000000
+      internalID: -1103065165841768168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_6
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 0
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18001ff8dce8934c0800000000000000
+      internalID: -4307254555068792703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_7
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 0
+        width: 22
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1088b6e1e5fbd68c0800000000000000
+      internalID: -4004334082704308223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_8
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 0
+        width: 22
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0114ff0002d038bd0800000000000000
+      internalID: -2629243326347394800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_9
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 0
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71ae18aa857527510800000000000000
+      internalID: 1545393660470880791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_10
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 0
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea36207303b4ef540800000000000000
+      internalID: 5043551303154951086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_11
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 0
+        width: 22
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b24c96c5c25ad1830800000000000000
+      internalID: 4043569650396152875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_12
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 0
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c7b9c472b1da9020800000000000000
+      internalID: 2349420720020895681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_13
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a14641c34d34eb390800000000000000
+      internalID: -7800722925739023334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_14
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 0
+        width: 23
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fee49ee9439a99520800000000000000
+      internalID: 2709382694309547759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_15
+      rect:
+        serializedVersion: 2
+        x: 361
+        y: 0
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7e617d3a5dd08cb0800000000000000
+      internalID: -4863644217912496514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_16
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 0
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2dd736fbb3054b7c0800000000000000
+      internalID: -4056529146809713198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_17
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 0
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4802f165fa9514e0800000000000000
+      internalID: -2011531279850141621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_18
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 0
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95f260a507245a010800000000000000
+      internalID: 1199437926078230361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_19
+      rect:
+        serializedVersion: 2
+        x: 457
+        y: 0
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e85310465cff3e720800000000000000
+      internalID: 2874422210443949454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_20
+      rect:
+        serializedVersion: 2
+        x: 481
+        y: 0
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99b01a5592d88f300800000000000000
+      internalID: 286133785007819673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_21
+      rect:
+        serializedVersion: 2
+        x: 505
+        y: 0
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9ddc5429d6c3ef30800000000000000
+      internalID: 4603741880023047581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_22
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 0
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6be5a8f3caf80c600800000000000000
+      internalID: 486546729719193270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_23
+      rect:
+        serializedVersion: 2
+        x: 553
+        y: 0
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b1a8672ccc4cb3c0800000000000000
+      internalID: -4342511500973792845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_24
+      rect:
+        serializedVersion: 2
+        x: 577
+        y: 0
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd48b55547370e4c0800000000000000
+      internalID: -4260278304007027492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_25
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 0
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff7e1c8d5e5b8c5c0800000000000000
+      internalID: -4194903054106892289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_26
+      rect:
+        serializedVersion: 2
+        x: 625
+        y: 0
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 763070805a9483510800000000000000
+      internalID: 1529053046645392231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_27
+      rect:
+        serializedVersion: 2
+        x: 649
+        y: 0
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 747a594318a282aa0800000000000000
+      internalID: -6185647353772005561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_28
+      rect:
+        serializedVersion: 2
+        x: 673
+        y: 0
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a527ba855322de430800000000000000
+      internalID: 3813742071968920154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_29
+      rect:
+        serializedVersion: 2
+        x: 696
+        y: 0
+        width: 23
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97f064fa4dcec7740800000000000000
+      internalID: 5151252472022830969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_30
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 0
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06d8fd2098a9d8810800000000000000
+      internalID: 1769240141875875168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Megadraco_Spritesheet_31
+      rect:
+        serializedVersion: 2
+        x: 744
+        y: 0
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ccfd3442ca982c740800000000000000
+      internalID: 5170846694610558924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Megadraco_Spritesheet_0: -4170830673021980489
+      Megadraco_Spritesheet_1: 7078788511191236597
+      Megadraco_Spritesheet_10: 5043551303154951086
+      Megadraco_Spritesheet_11: 4043569650396152875
+      Megadraco_Spritesheet_12: 2349420720020895681
+      Megadraco_Spritesheet_13: -7800722925739023334
+      Megadraco_Spritesheet_14: 2709382694309547759
+      Megadraco_Spritesheet_15: -4863644217912496514
+      Megadraco_Spritesheet_16: -4056529146809713198
+      Megadraco_Spritesheet_17: -2011531279850141621
+      Megadraco_Spritesheet_18: 1199437926078230361
+      Megadraco_Spritesheet_19: 2874422210443949454
+      Megadraco_Spritesheet_2: -7395298066086740977
+      Megadraco_Spritesheet_20: 286133785007819673
+      Megadraco_Spritesheet_21: 4603741880023047581
+      Megadraco_Spritesheet_22: 486546729719193270
+      Megadraco_Spritesheet_23: -4342511500973792845
+      Megadraco_Spritesheet_24: -4260278304007027492
+      Megadraco_Spritesheet_25: -4194903054106892289
+      Megadraco_Spritesheet_26: 1529053046645392231
+      Megadraco_Spritesheet_27: -6185647353772005561
+      Megadraco_Spritesheet_28: 3813742071968920154
+      Megadraco_Spritesheet_29: 5151252472022830969
+      Megadraco_Spritesheet_3: 1539687326596567702
+      Megadraco_Spritesheet_30: 1769240141875875168
+      Megadraco_Spritesheet_31: 5170846694610558924
+      Megadraco_Spritesheet_4: 8492946042945732113
+      Megadraco_Spritesheet_5: -1103065165841768168
+      Megadraco_Spritesheet_6: -4307254555068792703
+      Megadraco_Spritesheet_7: -4004334082704308223
+      Megadraco_Spritesheet_8: -2629243326347394800
+      Megadraco_Spritesheet_9: 1545393660470880791
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
