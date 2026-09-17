@@ -1,0 +1,949 @@
+fileFormatVersion: 2
+guid: 23be6ef364f91614cb4305ff205bf979
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2712184372149006618
+    second: Juanmant_Spritesheet_0
+  - first:
+      213: 2615184341172426381
+    second: Juanmant_Spritesheet_1
+  - first:
+      213: -4787218999409167747
+    second: Juanmant_Spritesheet_2
+  - first:
+      213: -8605796547070397652
+    second: Juanmant_Spritesheet_3
+  - first:
+      213: -7729839351038403832
+    second: Juanmant_Spritesheet_4
+  - first:
+      213: 1723397280242801899
+    second: Juanmant_Spritesheet_5
+  - first:
+      213: -6746698957826088771
+    second: Juanmant_Spritesheet_6
+  - first:
+      213: -1576338200485582488
+    second: Juanmant_Spritesheet_7
+  - first:
+      213: -8487827097427915701
+    second: Juanmant_Spritesheet_8
+  - first:
+      213: 2910858957674781788
+    second: Juanmant_Spritesheet_9
+  - first:
+      213: -7424399578649829048
+    second: Juanmant_Spritesheet_10
+  - first:
+      213: 1007602522574982784
+    second: Juanmant_Spritesheet_11
+  - first:
+      213: -5082466526037723459
+    second: Juanmant_Spritesheet_12
+  - first:
+      213: 6289266313060821999
+    second: Juanmant_Spritesheet_13
+  - first:
+      213: -6339387225379095406
+    second: Juanmant_Spritesheet_14
+  - first:
+      213: 4449830287891537621
+    second: Juanmant_Spritesheet_15
+  - first:
+      213: 2101780075858394794
+    second: Juanmant_Spritesheet_16
+  - first:
+      213: 1386529000856877651
+    second: Juanmant_Spritesheet_17
+  - first:
+      213: -352525089470970955
+    second: Juanmant_Spritesheet_18
+  - first:
+      213: -5656045601854331668
+    second: Juanmant_Spritesheet_19
+  - first:
+      213: 4221905722483450170
+    second: Juanmant_Spritesheet_20
+  - first:
+      213: 4789015103003547711
+    second: Juanmant_Spritesheet_21
+  - first:
+      213: 4902691371681786496
+    second: Juanmant_Spritesheet_22
+  - first:
+      213: -3801741634937793277
+    second: Juanmant_Spritesheet_23
+  - first:
+      213: -2369056093365435443
+    second: Juanmant_Spritesheet_24
+  - first:
+      213: -1674008640728394314
+    second: Juanmant_Spritesheet_25
+  - first:
+      213: 3730691079494899955
+    second: Juanmant_Spritesheet_26
+  - first:
+      213: 8475069342959170850
+    second: Juanmant_Spritesheet_27
+  - first:
+      213: 1001826405588920376
+    second: Juanmant_Spritesheet_28
+  - first:
+      213: 3968812664811174969
+    second: Juanmant_Spritesheet_29
+  - first:
+      213: 99152600704173416
+    second: Juanmant_Spritesheet_30
+  - first:
+      213: -1799919676794908818
+    second: Juanmant_Spritesheet_31
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_0
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a11be43115d93a520800000000000000
+      internalID: 2712184372149006618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 0
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d861fbd6d400b4420800000000000000
+      internalID: 2615184341172426381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 0
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d72373e0fa1609db0800000000000000
+      internalID: -4787218999409167747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c23f59ac2a1129880800000000000000
+      internalID: -8605796547070397652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 0
+        width: 13
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80b158e80181ab490800000000000000
+      internalID: -7729839351038403832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_5
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 0
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bec1fb702bcbae710800000000000000
+      internalID: 1723397280242801899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_6
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 0
+        width: 13
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db0274c1b09ee52a0800000000000000
+      internalID: -6746698957826088771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_7
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 0
+        width: 13
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 869ad2a22c8bf1ae0800000000000000
+      internalID: -1576338200485582488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_8
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 0
+        width: 13
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4ccfdea93e253a80800000000000000
+      internalID: -8487827097427915701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_9
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 0
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5c1873bcc2756820800000000000000
+      internalID: 2910858957674781788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_10
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 0
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 841640c5beb37f890800000000000000
+      internalID: -7424399578649829048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_11
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 0
+        width: 13
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08e8ed0e729bbfd00800000000000000
+      internalID: 1007602522574982784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_12
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db635b46f937779b0800000000000000
+      internalID: -5082466526037723459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_13
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: feb22d7c366f74750800000000000000
+      internalID: 6289266313060821999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_14
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 0
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29c31a1f7e8f508a0800000000000000
+      internalID: -6339387225379095406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_15
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 0
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5de9c841219f0cd30800000000000000
+      internalID: 4449830287891537621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_16
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 0
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aae7881e7d50b2d10800000000000000
+      internalID: 2101780075858394794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_17
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 0
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35af9d6b7c0fd3310800000000000000
+      internalID: 1386529000856877651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_18
+      rect:
+        serializedVersion: 2
+        x: 437
+        y: 0
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b38ba38c449b1bf0800000000000000
+      internalID: -352525089470970955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_19
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 0
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce4ef0cfd70b181b0800000000000000
+      internalID: -5656045601854331668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_20
+      rect:
+        serializedVersion: 2
+        x: 485
+        y: 0
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a31a0dfc2e8379a30800000000000000
+      internalID: 4221905722483450170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_21
+      rect:
+        serializedVersion: 2
+        x: 509
+        y: 0
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f38d186ecdff57240800000000000000
+      internalID: 4789015103003547711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_22
+      rect:
+        serializedVersion: 2
+        x: 533
+        y: 0
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08a2774b3dbd90440800000000000000
+      internalID: 4902691371681786496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_23
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 0
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30558b120208d3bc0800000000000000
+      internalID: -3801741634937793277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_24
+      rect:
+        serializedVersion: 2
+        x: 581
+        y: 0
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc38afde80c6f1fd0800000000000000
+      internalID: -2369056093365435443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_25
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 0
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b51372b20ab4c8e0800000000000000
+      internalID: -1674008640728394314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_26
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 0
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f8130055c316c330800000000000000
+      internalID: 3730691079494899955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_27
+      rect:
+        serializedVersion: 2
+        x: 653
+        y: 0
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22572e12aae7d9570800000000000000
+      internalID: 8475069342959170850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_28
+      rect:
+        serializedVersion: 2
+        x: 677
+        y: 0
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 838ebb7dec337ed00800000000000000
+      internalID: 1001826405588920376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_29
+      rect:
+        serializedVersion: 2
+        x: 701
+        y: 0
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93c342a471e041730800000000000000
+      internalID: 3968812664811174969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_30
+      rect:
+        serializedVersion: 2
+        x: 725
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8654787d3c2406100800000000000000
+      internalID: 99152600704173416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Juanmant_Spritesheet_31
+      rect:
+        serializedVersion: 2
+        x: 749
+        y: 0
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6f476027966507e0800000000000000
+      internalID: -1799919676794908818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Juanmant_Spritesheet_0: 2712184372149006618
+      Juanmant_Spritesheet_1: 2615184341172426381
+      Juanmant_Spritesheet_10: -7424399578649829048
+      Juanmant_Spritesheet_11: 1007602522574982784
+      Juanmant_Spritesheet_12: -5082466526037723459
+      Juanmant_Spritesheet_13: 6289266313060821999
+      Juanmant_Spritesheet_14: -6339387225379095406
+      Juanmant_Spritesheet_15: 4449830287891537621
+      Juanmant_Spritesheet_16: 2101780075858394794
+      Juanmant_Spritesheet_17: 1386529000856877651
+      Juanmant_Spritesheet_18: -352525089470970955
+      Juanmant_Spritesheet_19: -5656045601854331668
+      Juanmant_Spritesheet_2: -4787218999409167747
+      Juanmant_Spritesheet_20: 4221905722483450170
+      Juanmant_Spritesheet_21: 4789015103003547711
+      Juanmant_Spritesheet_22: 4902691371681786496
+      Juanmant_Spritesheet_23: -3801741634937793277
+      Juanmant_Spritesheet_24: -2369056093365435443
+      Juanmant_Spritesheet_25: -1674008640728394314
+      Juanmant_Spritesheet_26: 3730691079494899955
+      Juanmant_Spritesheet_27: 8475069342959170850
+      Juanmant_Spritesheet_28: 1001826405588920376
+      Juanmant_Spritesheet_29: 3968812664811174969
+      Juanmant_Spritesheet_3: -8605796547070397652
+      Juanmant_Spritesheet_30: 99152600704173416
+      Juanmant_Spritesheet_31: -1799919676794908818
+      Juanmant_Spritesheet_4: -7729839351038403832
+      Juanmant_Spritesheet_5: 1723397280242801899
+      Juanmant_Spritesheet_6: -6746698957826088771
+      Juanmant_Spritesheet_7: -1576338200485582488
+      Juanmant_Spritesheet_8: -8487827097427915701
+      Juanmant_Spritesheet_9: 2910858957674781788
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

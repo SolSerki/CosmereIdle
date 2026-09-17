@@ -33,4 +33,9 @@ public class MascotaController : MonoBehaviour
             }
         }
     }
+
+    public void CambiarEscala(float multiplicador)
+    {
+    transform.localScale = new Vector3(multiplicador, multiplicador, multiplicador);
+    }
 }

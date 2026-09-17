@@ -1,0 +1,949 @@
+fileFormatVersion: 2
+guid: f70427c35e1a17e468c6397bb2725136
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3399397252061077777
+    second: Kato_Spritesheet (5)_0
+  - first:
+      213: -4688664657439005739
+    second: Kato_Spritesheet (5)_1
+  - first:
+      213: -5142873197731826028
+    second: Kato_Spritesheet (5)_2
+  - first:
+      213: 8631802769839222497
+    second: Kato_Spritesheet (5)_3
+  - first:
+      213: 6761351253639996085
+    second: Kato_Spritesheet (5)_4
+  - first:
+      213: 3425627476640431176
+    second: Kato_Spritesheet (5)_5
+  - first:
+      213: -1984682963013526655
+    second: Kato_Spritesheet (5)_6
+  - first:
+      213: -3429008964792257734
+    second: Kato_Spritesheet (5)_7
+  - first:
+      213: 7177052612774907105
+    second: Kato_Spritesheet (5)_8
+  - first:
+      213: 8655285754593694037
+    second: Kato_Spritesheet (5)_9
+  - first:
+      213: 2564863635050137249
+    second: Kato_Spritesheet (5)_10
+  - first:
+      213: -6183080671184250730
+    second: Kato_Spritesheet (5)_11
+  - first:
+      213: 6852589886319181408
+    second: Kato_Spritesheet (5)_12
+  - first:
+      213: -1104609412471247613
+    second: Kato_Spritesheet (5)_13
+  - first:
+      213: -6377196807266720947
+    second: Kato_Spritesheet (5)_14
+  - first:
+      213: -6703011995455719239
+    second: Kato_Spritesheet (5)_15
+  - first:
+      213: -23959413723424134
+    second: Kato_Spritesheet (5)_16
+  - first:
+      213: -5553648258946632190
+    second: Kato_Spritesheet (5)_17
+  - first:
+      213: 220246222557451459
+    second: Kato_Spritesheet (5)_18
+  - first:
+      213: -781019364974884344
+    second: Kato_Spritesheet (5)_19
+  - first:
+      213: -4611622627444811859
+    second: Kato_Spritesheet (5)_20
+  - first:
+      213: -3678659656154163150
+    second: Kato_Spritesheet (5)_21
+  - first:
+      213: 9216659724581463178
+    second: Kato_Spritesheet (5)_22
+  - first:
+      213: 6486034104127218933
+    second: Kato_Spritesheet (5)_23
+  - first:
+      213: -4987925486162849313
+    second: Kato_Spritesheet (5)_24
+  - first:
+      213: 7251996033568642380
+    second: Kato_Spritesheet (5)_25
+  - first:
+      213: 3036887322669081724
+    second: Kato_Spritesheet (5)_26
+  - first:
+      213: 312161954013855853
+    second: Kato_Spritesheet (5)_27
+  - first:
+      213: -2567266349376647401
+    second: Kato_Spritesheet (5)_28
+  - first:
+      213: 2672800106651055202
+    second: Kato_Spritesheet (5)_29
+  - first:
+      213: -2053189279130324516
+    second: Kato_Spritesheet (5)_30
+  - first:
+      213: -1437827851418358693
+    second: Kato_Spritesheet (5)_31
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_0
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 0
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: feed574c53ae2d0d0800000000000000
+      internalID: -3399397252061077777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_1
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 0
+        width: 14
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d36b6ee5548eeeb0800000000000000
+      internalID: -4688664657439005739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_2
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 0
+        width: 14
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49631542318d0a8b0800000000000000
+      internalID: -5142873197731826028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_3
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 0
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1eeef7bc2e25ac770800000000000000
+      internalID: 8631802769839222497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_4
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 0
+        width: 12
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b2aada542525dd50800000000000000
+      internalID: 6761351253639996085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_5
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 0
+        width: 15
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84c78fd4a064a8f20800000000000000
+      internalID: 3425627476640431176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_6
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 0
+        width: 12
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18b1fc54c5df474e0800000000000000
+      internalID: -1984682963013526655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_7
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 0
+        width: 12
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a337de1a386b960d0800000000000000
+      internalID: -3429008964792257734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_8
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 0
+        width: 12
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ecccbe53530a9360800000000000000
+      internalID: 7177052612774907105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_9
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 0
+        width: 12
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5515e004980cd1870800000000000000
+      internalID: 8655285754593694037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_10
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 0
+        width: 12
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a60b7803e9389320800000000000000
+      internalID: 2564863635050137249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_11
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 0
+        width: 12
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6989a7093e8413aa0800000000000000
+      internalID: -6183080671184250730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_12
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 0
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06e3d7de13a491f50800000000000000
+      internalID: 6852589886319181408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_13
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 0
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30d29128793aba0f0800000000000000
+      internalID: -1104609412471247613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_14
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 0
+        width: 14
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d43ac18aa45af77a0800000000000000
+      internalID: -6377196807266720947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_15
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 0
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b8fdadaa1e1af2a0800000000000000
+      internalID: -6703011995455719239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_16
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 0
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7a1df74a01eaaff0800000000000000
+      internalID: -23959413723424134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_17
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 0
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 206f40e355a7de2b0800000000000000
+      internalID: -5553648258946632190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_18
+      rect:
+        serializedVersion: 2
+        x: 437
+        y: 0
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c498a2c5c87e0300800000000000000
+      internalID: 220246222557451459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_19
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 0
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80a88fb86034925f0800000000000000
+      internalID: -781019364974884344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_20
+      rect:
+        serializedVersion: 2
+        x: 485
+        y: 0
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da79ffc57a93000c0800000000000000
+      internalID: -4611622627444811859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_21
+      rect:
+        serializedVersion: 2
+        x: 509
+        y: 0
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 238de597886c2fcc0800000000000000
+      internalID: -3678659656154163150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_22
+      rect:
+        serializedVersion: 2
+        x: 533
+        y: 0
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a84e353003728ef70800000000000000
+      internalID: 9216659724581463178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_23
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 0
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f4629937a5030a50800000000000000
+      internalID: 6486034104127218933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_24
+      rect:
+        serializedVersion: 2
+        x: 581
+        y: 0
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd1552f823457cab0800000000000000
+      internalID: -4987925486162849313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_25
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 0
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c45966548f344a460800000000000000
+      internalID: 7251996033568642380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_26
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 0
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c74e39a0ee0352a20800000000000000
+      internalID: 3036887322669081724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_27
+      rect:
+        serializedVersion: 2
+        x: 653
+        y: 0
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d60436da4a5055400800000000000000
+      internalID: 312161954013855853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_28
+      rect:
+        serializedVersion: 2
+        x: 677
+        y: 0
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71f47917bdc3f5cd0800000000000000
+      internalID: -2567266349376647401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_29
+      rect:
+        serializedVersion: 2
+        x: 701
+        y: 0
+        width: 14
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 264ff803981b71520800000000000000
+      internalID: 2672800106651055202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_30
+      rect:
+        serializedVersion: 2
+        x: 725
+        y: 0
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd1fbc89a3b9183e0800000000000000
+      internalID: -2053189279130324516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kato_Spritesheet (5)_31
+      rect:
+        serializedVersion: 2
+        x: 749
+        y: 0
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5cab04ef2fcb0ce0800000000000000
+      internalID: -1437827851418358693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Kato_Spritesheet (5)_0: -3399397252061077777
+      Kato_Spritesheet (5)_1: -4688664657439005739
+      Kato_Spritesheet (5)_10: 2564863635050137249
+      Kato_Spritesheet (5)_11: -6183080671184250730
+      Kato_Spritesheet (5)_12: 6852589886319181408
+      Kato_Spritesheet (5)_13: -1104609412471247613
+      Kato_Spritesheet (5)_14: -6377196807266720947
+      Kato_Spritesheet (5)_15: -6703011995455719239
+      Kato_Spritesheet (5)_16: -23959413723424134
+      Kato_Spritesheet (5)_17: -5553648258946632190
+      Kato_Spritesheet (5)_18: 220246222557451459
+      Kato_Spritesheet (5)_19: -781019364974884344
+      Kato_Spritesheet (5)_2: -5142873197731826028
+      Kato_Spritesheet (5)_20: -4611622627444811859
+      Kato_Spritesheet (5)_21: -3678659656154163150
+      Kato_Spritesheet (5)_22: 9216659724581463178
+      Kato_Spritesheet (5)_23: 6486034104127218933
+      Kato_Spritesheet (5)_24: -4987925486162849313
+      Kato_Spritesheet (5)_25: 7251996033568642380
+      Kato_Spritesheet (5)_26: 3036887322669081724
+      Kato_Spritesheet (5)_27: 312161954013855853
+      Kato_Spritesheet (5)_28: -2567266349376647401
+      Kato_Spritesheet (5)_29: 2672800106651055202
+      Kato_Spritesheet (5)_3: 8631802769839222497
+      Kato_Spritesheet (5)_30: -2053189279130324516
+      Kato_Spritesheet (5)_31: -1437827851418358693
+      Kato_Spritesheet (5)_4: 6761351253639996085
+      Kato_Spritesheet (5)_5: 3425627476640431176
+      Kato_Spritesheet (5)_6: -1984682963013526655
+      Kato_Spritesheet (5)_7: -3429008964792257734
+      Kato_Spritesheet (5)_8: 7177052612774907105
+      Kato_Spritesheet (5)_9: 8655285754593694037
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
