@@ -52,6 +52,22 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 2712184372149006618, guid: 23be6ef364f91614cb4305ff205bf979, type: 3}
+    - target: {fileID: 4592602632518650890, guid: 78c0b61eb425e0445ac3d15e3508cb1a, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: e635871ca6e96f245a15ffa5e002af88, type: 2}
+    - target: {fileID: 6494443000529023240, guid: 78c0b61eb425e0445ac3d15e3508cb1a, type: 3}
+      propertyPath: m_Size.y
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 6494443000529023240, guid: 78c0b61eb425e0445ac3d15e3508cb1a, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6494443000529023240, guid: 78c0b61eb425e0445ac3d15e3508cb1a, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.24
+      objectReference: {fileID: 0}
     - target: {fileID: 6679933237084633982, guid: 78c0b61eb425e0445ac3d15e3508cb1a, type: 3}
       propertyPath: m_Name
       value: Juanmant

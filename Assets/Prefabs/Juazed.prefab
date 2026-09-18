@@ -56,6 +56,18 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 22100000, guid: ce68d7444bcd6834cba50209ef6f8f28, type: 2}
+    - target: {fileID: 6494443000529023240, guid: 78c0b61eb425e0445ac3d15e3508cb1a, type: 3}
+      propertyPath: m_Size.y
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 6494443000529023240, guid: 78c0b61eb425e0445ac3d15e3508cb1a, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6494443000529023240, guid: 78c0b61eb425e0445ac3d15e3508cb1a, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.24
+      objectReference: {fileID: 0}
     - target: {fileID: 6679933237084633982, guid: 78c0b61eb425e0445ac3d15e3508cb1a, type: 3}
       propertyPath: m_Name
       value: Juazed
