@@ -21,6 +21,12 @@ public class UIController : MonoBehaviour
     [Header("Prefabs de Personajes")]
     [SerializeField] private GameObject _prefabJoch;
 
+    private void Start()
+    {
+        // Fuerza el estado correcto apenas carga la escena de menú
+        _panelInicio.SetActive(true);
+        _panelSeleccion.SetActive(false);
+    }
     private void OnEnable()
     {
         _btnAbrirSeleccion.onClick.AddListener(AbrirSeleccion);
