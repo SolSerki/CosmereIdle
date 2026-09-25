@@ -174,11 +174,13 @@ MonoBehaviour:
   - {fileID: 593231678271340000, guid: 24f1271b80ce5cf47be34a39d4ab28d8, type: 3}
   - {fileID: 593231678271340000, guid: cbecc88f255f03c4983d412b60202b7a, type: 3}
   - {fileID: 593231678271340000, guid: 9d1b37ee3b26f0a48bc00f3413888f8c, type: 3}
+  - {fileID: 5086052951704865951, guid: a3b183aa4e2d67b4d908b75c378ad9a5, type: 3}
   selectionMarker: {fileID: 7696682977939817099, guid: 846255fa956db7f4691803b6746a3c37, type: 3}
   panelBackground: {fileID: 4294247927166590344, guid: b0448aa5bb4d7a243847d383aed65581, type: 3}
   gridColumns: 0
   cellSize: {x: 1.4, y: 1.6}
   panelPadding: {x: 0.4, y: 0.7}
+  menuBand: 1
   unselectedTint: {r: 1, g: 1, b: 1, a: 0.35}
   markerHeight: 1.12
   petSpacing: 1.6
@@ -306,6 +308,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4024669942295894751, guid: 6faa9a92f2408ee4a9a54fe80acffed2, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 6152170238246778155, guid: 6faa9a92f2408ee4a9a54fe80acffed2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -353,7 +359,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4470152046789589262, guid: 6faa9a92f2408ee4a9a54fe80acffed2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 6faa9a92f2408ee4a9a54fe80acffed2, type: 3}
 --- !u!1001 &1092913982354485335
 PrefabInstance:
@@ -363,6 +372,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 561093630287893956, guid: 653b19f4e828b96438b7da8d9a7aee8c, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 661612257146307821, guid: 653b19f4e828b96438b7da8d9a7aee8c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -410,7 +423,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1722078366331072781, guid: 653b19f4e828b96438b7da8d9a7aee8c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 653b19f4e828b96438b7da8d9a7aee8c, type: 3}
 --- !u!1001 &2502058432740581891
 PrefabInstance:
@@ -420,6 +436,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4165835683323877643, guid: 193e5ee9e62ed8a49a69c6d057a10686, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 8271901698157303415, guid: 193e5ee9e62ed8a49a69c6d057a10686, type: 3}
       propertyPath: m_Name
       value: DebugPickerButton
@@ -467,7 +487,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8666659147468244275, guid: 193e5ee9e62ed8a49a69c6d057a10686, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 193e5ee9e62ed8a49a69c6d057a10686, type: 3}
 --- !u!1001 &7530921732004851624
 PrefabInstance:
@@ -477,6 +500,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 910960485191343127, guid: 2a9569bcb846d0247a7e0be144391738, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 4601647392670362576, guid: 2a9569bcb846d0247a7e0be144391738, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -524,7 +551,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8627398560788572532, guid: 2a9569bcb846d0247a7e0be144391738, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 2a9569bcb846d0247a7e0be144391738, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
