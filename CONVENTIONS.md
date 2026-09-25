@@ -153,14 +153,38 @@ Dos detalles de Win32 que no son obvios:
   ventana es click-through no recibe mensajes de mouse, así que Unity dejaría
   de ver el cursor justo cuando hay que decidir si volver a capturarlo.
 
+### La ventana tiene dos formas
+
+`DesktopWindow` es dueño de la ventana del SO y sabe cambiarle la forma sin
+cambiar de escena:
+
+| Forma | Qué es | Quién la pide |
+|---|---|---|
+| `Strip` | Franja del ancho de la pantalla, 200 px de alto, apoyada sobre la barra de tareas | Es la forma por defecto; vuelve con `SetStrip()` al confirmar |
+| `Panel` | Cuadrado centrado en la pantalla | `SetPanel(lado)`, desde `CharacterPicker` al abrir la selección |
+
+No se cambia de escena a propósito: la ventana transparente se configura sobre
+la cámara de `Main`, así que cargar otra escena destruiría esa cámara y habría
+que rearmar transparencia, click-through y posicionamiento al volver.
+
+El lado del panel **no es un número fijo**: `CharacterPicker` lo calcula a
+partir de su cuadrícula, para que sumar personajes no se coma el borde.
+
 ### Pixel perfect
 
 ```
-orthographicSize = altoDeLaFranja / (2 × pixelsPerUnit)
+orthographicSize = altoDeLaVentana / (2 × pixelsPerUnit)
 ```
 
-Con franja de 120 px y PPU 100 → `0.6`. Si alguien cambia el alto de la franja
-y no recalcula esto, el pixel art empieza a temblar.
+**Nadie toca `orthographicSize` a mano.** Lo fija `DesktopWindow` cada vez que
+la ventana cambia de forma, porque el alto de la ventana y el zoom de la cámara
+son la misma decisión: si se tocan por separado, el pixel art deja de caer
+sobre la grilla de píxeles de la pantalla y tiembla al moverse.
+
+El efecto secundario bueno es que **una unidad de mundo siempre mide 100 px en
+pantalla**, en la franja y en el panel. Por eso los personajes y los botones se
+ven exactamente del mismo tamaño en los dos, aunque las ventanas midan
+distinto: 200 px de alto → `1.0`, 640 px → `3.2`.
 
 ---
 

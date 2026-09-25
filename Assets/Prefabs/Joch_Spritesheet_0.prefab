@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 440999315346974120}
   - component: {fileID: 6711095080790463524}
   - component: {fileID: 6494443000529023240}
+  - component: {fileID: 2223005389710007967}
   m_Layer: 0
   m_Name: Joch_Spritesheet_0
   m_TagString: Untagged
@@ -31,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.26, y: -0.167, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -193,3 +194,20 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.24, y: 0.32}
   m_EdgeRadius: 0
+--- !u!114 &2223005389710007967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6679933237084633982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67866a88fd9ae5b458cdfe001a593447, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetSpeech
+  phrases: {fileID: 4900000, guid: 72de3b586ac8e304b816af707ffbc4e9, type: 3}
+  fallbackPhrases: {fileID: 4900000, guid: d1295b77cfb3074408fccb2fe354479d, type: 3}
+  bubblePrefab: {fileID: 1716076718346636111, guid: 1a43295e74e2ce343b8315af70695c46, type: 3}
+  bubbleHeight: 1.15
+  bubbleSeconds: 2.8

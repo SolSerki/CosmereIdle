@@ -16,6 +16,21 @@ public class DebugTopmostButton : DebugIconButton
     [SerializeField] private Color offColor = new Color(1f, 1f, 1f, 0.25f);
     [SerializeField] private Color hoverTint = new Color(1f, 1f, 1f, 1f);
 
+    /// <summary>
+    /// El tooltip cuenta el estado actual, igual que el color. Un texto fijo
+    /// ("siempre visible") no diria si esta prendido o apagado.
+    /// </summary>
+    protected override string TooltipText
+    {
+        get
+        {
+            DesktopWindow window = DesktopWindow.Instance;
+            bool on = window == null || window.AlwaysOnTop;
+
+            return on ? "Siempre visible" : "Detrás de las ventanas";
+        }
+    }
+
     protected override Color GetColor(bool hovering)
     {
         DesktopWindow window = DesktopWindow.Instance;

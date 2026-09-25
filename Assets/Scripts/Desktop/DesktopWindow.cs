@@ -2,8 +2,15 @@ using System;
 using UnityEngine;
 
 /// <summary>
-/// Convierte la ventana del player en una franja transparente apoyada sobre la
-/// barra de tareas. Es el unico lugar que toca la ventana del SO.
+/// Dueño de la ventana del SO. Tiene dos formas y sabe pasar de una a la otra:
+///
+///   Strip  - franja del ancho de la pantalla apoyada sobre la barra de tareas.
+///            Es donde viven las mascotas.
+///   Panel  - cuadrado centrado en la pantalla. Es la pantalla de seleccion.
+///
+/// Es el unico lugar que toca la ventana del SO, y tambien el unico que fija el
+/// orthographicSize de la camara: los dos valores son la misma decision, y si se
+/// tocan por separado el pixel art deja de caer sobre la grilla de la pantalla.
 ///
 /// Requisitos que NO se configuran desde aca y sin los cuales esto no funciona.
 /// Los tres primeros ya nos costaron un dia cada uno:
@@ -19,14 +26,33 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class DesktopWindow : MonoBehaviour
 {
+    public enum WindowMode
+    {
+        /// <summary>Franja del ancho de la pantalla, sobre la barra de tareas.</summary>
+        Strip,
+
+        /// <summary>Cuadrado centrado en la pantalla.</summary>
+        Panel
+    }
+
     public static DesktopWindow Instance { get; private set; }
 
     [Header("Franja")]
     [Tooltip("Alto de la franja en pixeles de pantalla. El ancho es el de la pantalla.")]
-    [SerializeField] private int stripHeight = 120;
+    [SerializeField] private int stripHeight = 200;
 
     [Tooltip("Corrimiento vertical en pixeles. Positivo baja la franja sobre la barra de tareas.")]
     [SerializeField] private int verticalOffset = 0;
+
+    [Header("Panel")]
+    [Tooltip("Lado del panel cuadrado, en pixeles. Lo pisa quien llame a SetPanel(), " +
+             "que lo calcula para que le entre su contenido.")]
+    [SerializeField] private int panelSide = 640;
+
+    [Tooltip("Pixeles de sprite por unidad de mundo. TIENE que ser el mismo PPU con el " +
+             "que se importan los sprites (100). Si no coincide, el pixel art se ve " +
+             "borroso y tiembla al moverse.")]
+    [SerializeField] private float pixelsPerUnit = 100f;
 
     [Header("Siempre visible")]
     [Tooltip("Si esta prendido la franja queda por encima de todas las ventanas. " +
@@ -46,19 +72,25 @@ public class DesktopWindow : MonoBehaviour
     [Tooltip("Cada cuanto se re-chequea la barra de tareas y se reafirma el z-order.")]
     [SerializeField] private float refreshInterval = 1f;
 
-    /// <summary>Rectangulo que ocupa la franja, en pixeles de pantalla (origen arriba-izquierda).</summary>
+    /// <summary>Rectangulo que ocupa la ventana, en pixeles de pantalla (origen arriba-izquierda).</summary>
     public RectInt Bounds { get; private set; }
 
     /// <summary>Posicion del cursor en coordenadas de mundo, valga o no el foco.</summary>
     public Vector3 CursorWorldPosition { get; private set; }
 
-    /// <summary>Si el cursor esta sobre algo clickeable de la franja.</summary>
+    /// <summary>Si el cursor esta sobre algo clickeable de la ventana.</summary>
     public bool CursorOverContent { get; private set; }
 
     /// <summary>Flanco de bajada del boton izquierdo, leido global (sin depender del foco).</summary>
     public bool LeftPressedThisFrame { get; private set; }
 
     public bool AlwaysOnTop => alwaysOnTop;
+
+    /// <summary>Que forma tiene la ventana ahora mismo.</summary>
+    public WindowMode Mode { get; private set; } = WindowMode.Strip;
+
+    /// <summary>Para que quien arme un layout pueda pasar de unidades de mundo a pixeles.</summary>
+    public float PixelsPerUnit => pixelsPerUnit;
 
     private IntPtr hwnd = IntPtr.Zero;
     private Camera cam;
@@ -83,10 +115,9 @@ public class DesktopWindow : MonoBehaviour
         }
 
         MakeTransparentOverlay();
-        Reposition();
-#else
-        Bounds = new RectInt(0, 0, Screen.width, stripHeight);
 #endif
+
+        Reposition();
     }
 
     private void Update()
@@ -106,6 +137,29 @@ public class DesktopWindow : MonoBehaviour
             Reposition();
         }
 #endif
+    }
+
+    // ------------------------------------------------------------------
+    // Forma de la ventana
+    // ------------------------------------------------------------------
+
+    /// <summary>Vuelve a la franja sobre la barra de tareas.</summary>
+    public void SetStrip()
+    {
+        Mode = WindowMode.Strip;
+        Reposition();
+    }
+
+    /// <summary>
+    /// Pasa a un cuadrado centrado en la pantalla. El lado lo decide quien llama,
+    /// porque depende de su contenido; aca solo se recorta para que el panel nunca
+    /// salga mas grande que el monitor.
+    /// </summary>
+    public void SetPanel(int sidePixels)
+    {
+        panelSide = sidePixels;
+        Mode = WindowMode.Panel;
+        Reposition();
     }
 
     // ------------------------------------------------------------------
@@ -173,7 +227,7 @@ public class DesktopWindow : MonoBehaviour
 
     private void MakeTransparentOverlay()
     {
-        // Sin bordes ni barra de titulo: la franja es solo contenido.
+        // Sin bordes ni barra de titulo: la ventana es solo contenido.
         Win32.SetWindowLong(hwnd, Win32.GWL_STYLE, Win32.WS_POPUP | Win32.WS_VISIBLE);
 
         ApplyClickThrough(true);
@@ -235,19 +289,50 @@ public class DesktopWindow : MonoBehaviour
 
     private void Reposition()
     {
-        RectInt target = CalculateStrip();
+        RectInt target = CalculateBounds();
 
         if (hwnd != IntPtr.Zero)
         {
+            // El panel va topmost si o si, aunque el usuario haya elegido que la
+            // franja se esconda detras de las demas apps: una pantalla de seleccion
+            // tapada por otra ventana parece una app colgada.
+            bool onTop = alwaysOnTop || Mode == WindowMode.Panel;
+
             Win32.SetWindowPos(hwnd,
-                alwaysOnTop ? Win32.HWND_TOPMOST : Win32.HWND_NOTOPMOST,
+                onTop ? Win32.HWND_TOPMOST : Win32.HWND_NOTOPMOST,
                 target.x, target.y, target.width, target.height,
                 Win32.SWP_NOACTIVATE | Win32.SWP_SHOWWINDOW | Win32.SWP_FRAMECHANGED);
         }
 
         Bounds = target;
+        ApplyCamera(target.height);
     }
 
+    /// <summary>
+    /// El zoom de la camara sale del alto de la ventana, no al reves. Es la regla de
+    /// pixel perfect: orthographicSize = altoEnPixeles / (2 * PPU). Con eso una unidad
+    /// de mundo mide siempre PPU pixeles, asi que los personajes y los botones se ven
+    /// exactamente del mismo tamaño en la franja y en el panel, aunque midan distinto.
+    /// </summary>
+    private void ApplyCamera(int heightPixels)
+    {
+        if (cam == null || !cam.orthographic) return;
+
+        cam.orthographicSize = heightPixels / (2f * Mathf.Max(1f, pixelsPerUnit));
+    }
+
+    private RectInt CalculateBounds()
+    {
+#if UNITY_STANDALONE_WIN
+        return Mode == WindowMode.Panel ? CalculatePanel() : CalculateStrip();
+#else
+        return Mode == WindowMode.Panel
+            ? new RectInt(0, 0, panelSide, panelSide)
+            : new RectInt(0, 0, Screen.width, Mathf.Max(1, stripHeight));
+#endif
+    }
+
+#if UNITY_STANDALONE_WIN
     private RectInt CalculateStrip()
     {
         int screenW = Win32.GetSystemMetrics(Win32.SM_CXSCREEN);
@@ -267,4 +352,17 @@ public class DesktopWindow : MonoBehaviour
         int height = Mathf.Max(1, stripHeight);
         return new RectInt(0, bottom - height, screenW, height);
     }
+
+    private RectInt CalculatePanel()
+    {
+        int screenW = Win32.GetSystemMetrics(Win32.SM_CXSCREEN);
+        int screenH = Win32.GetSystemMetrics(Win32.SM_CYSCREEN);
+
+        // Si el plantel crece hasta no entrar en pantalla, preferimos recortar el
+        // panel antes que abrir una ventana mas grande que el monitor.
+        int side = Mathf.Clamp(panelSide, 64, Mathf.Min(screenW, screenH));
+
+        return new RectInt((screenW - side) / 2, (screenH - side) / 2, side, side);
+    }
+#endif
 }

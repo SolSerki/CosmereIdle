@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2223005389710007967, guid: 78c0b61eb425e0445ac3d15e3508cb1a, type: 3}
+      propertyPath: phrases
+      value: 
+      objectReference: {fileID: 4900000, guid: 966117facd4df3245a230e461c04928c, type: 3}
     - target: {fileID: 4592602632518650890, guid: 78c0b61eb425e0445ac3d15e3508cb1a, type: 3}
       propertyPath: m_Controller
       value: 
@@ -71,6 +75,10 @@ PrefabInstance:
     - target: {fileID: 6494443000529023240, guid: 78c0b61eb425e0445ac3d15e3508cb1a, type: 3}
       propertyPath: m_Offset.y
       value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6494443000529023240, guid: 78c0b61eb425e0445ac3d15e3508cb1a, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6494443000529023240, guid: 78c0b61eb425e0445ac3d15e3508cb1a, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.y
