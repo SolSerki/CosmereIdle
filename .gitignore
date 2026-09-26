@@ -17,7 +17,13 @@
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
-/[Bb]uild/
+# El build SÍ va al repo: es la forma de que Kato y Joch lo prueben sin abrir
+# Unity. Ojo que pesa ~190 MB y que git se guarda cada versión para siempre.
+# /[Bb]uild/
+
+# Símbolos de depuración de Burst. Unity los marca "DoNotShip", no hacen falta
+# para jugar, y se regeneran en cada build.
+*_BurstDebugInformation_DoNotShip/
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
