@@ -185,7 +185,7 @@ public class DesktopWindow : MonoBehaviour
     /// Unity dejaria de ver el cursor justo cuando hace falta decidir si volver
     /// a capturarlo. GetCursorPos es global y no tiene ese problema.
     /// </summary>
-    private void UpdateCursor()
+private void UpdateCursor()
     {
         bool leftDown = false;
 
@@ -205,7 +205,13 @@ public class DesktopWindow : MonoBehaviour
 
         leftDown = Win32.IsLeftMouseDown();
 #else
-        Vector2 screenPoint = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+        // NUEVO: Fallback para que los clics funcionen en el Editor usando InputSystem[cite: 2]
+        Vector2 screenPoint = Vector2.zero;
+        if (UnityEngine.InputSystem.Mouse.current != null)
+        {
+            screenPoint = UnityEngine.InputSystem.Mouse.current.position.ReadValue();
+            leftDown = UnityEngine.InputSystem.Mouse.current.leftButton.isPressed;
+        }
 #endif
 
         if (cam != null)
