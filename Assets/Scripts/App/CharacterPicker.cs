@@ -1,17 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using TMPro; // Requerido para TextMeshPro
 
 /// <summary>
-/// Selector de personajes. Abre un panel cuadrado en el medio de la pantalla con
-/// todo el plantel en cuadricula, se pueden marcar varios, y al confirmar la
-/// ventana vuelve a ser la franja y los elegidos quedan como mascotas. La
-/// seleccion se recuerda entre sesiones.
-///
-/// La ventana cambia de forma pero la escena NO cambia: la ventana transparente
-/// la maneja DesktopWindow desde la camara de Main, asi que si se cargara otra
-/// escena esa camara se destruiria, la franja perderia el click-through y el
-/// posicionamiento, y habria que rearmar todo al volver.
+/// Selector de personajes con scroll vertical y etiquetas de nombres.
 /// </summary>
 public class CharacterPicker : MonoBehaviour
 {
@@ -24,56 +17,35 @@ public class CharacterPicker : MonoBehaviour
     [SerializeField] private GameObject selectionMarker;
 
     [Header("Panel de seleccion")]
-    [Tooltip("Fondo del panel. Ademas de dar superficie, su collider es lo que hace " +
-             "que mientras se elige el cuadrado entero se coma los clicks en vez de " +
-             "dejarlos pasar al escritorio.")]
+    [Tooltip("Fondo del panel.")]
     [SerializeField] private GameObject panelBackground;
 
-    [Tooltip("Columnas de la cuadricula. 0 = automatico (raiz cuadrada del plantel), " +
-             "que es lo que mantiene el panel mas o menos cuadrado cuando se suman " +
-             "personajes.")]
     [SerializeField] private int gridColumns = 0;
-
-    [Tooltip("Tamaño de cada celda de la cuadricula, en unidades de mundo. " +
-             "Un personaje mide 0.96 x 0.96.")]
-    [SerializeField] private Vector2 cellSize = new Vector2(1.4f, 1.6f);
-
-    [Tooltip("Aire entre la cuadricula y el borde del panel, en unidades de mundo. " +
-             "El de arriba tambien deja lugar para los botones de la esquina.")]
+    [SerializeField] private Vector2 cellSize = new Vector2(1.4f, 1.8f); // Aumentamos un poco Y para dar lugar al texto
     [SerializeField] private Vector2 panelPadding = new Vector2(0.4f, 1.5f);
-
-    [Tooltip("Franja que se reserva abajo de todo para el menu (elegir / continuar / " +
-             "cerrar). El panel crece para que entre, en vez de que el menu se coma " +
-             "la ultima fila de personajes.")]
     [SerializeField] private float menuBand = 1f;
-
-    [Tooltip("Color de los que NO estan elegidos: se apagan para que resalten los elegidos.")]
     [SerializeField] private Color unselectedTint = new Color(1f, 1f, 1f, 0.35f);
-
-    [Tooltip("Altura del marcador sobre los pies. Va a altura fija y no sobre la " +
-             "cabeza de cada uno porque no miden todos lo mismo y quedaria un serrucho.")]
     [SerializeField] private float markerHeight = 1.12f;
 
-    [Header("Mascotas")]
-    [Tooltip("Separacion entre mascotas al confirmar. Despues cada una camina sola.")]
-    [SerializeField] private float petSpacing = 1.6f;
+    [Header("Etiquetas de Nombres")]
+    [Tooltip("Distancia hacia abajo desde los pies del personaje para ubicar el texto.")]
+    [SerializeField] private float nameOffsetY = 0.25f;
+    [Tooltip("Tamaño de la fuente para el nombre.")]
+    [SerializeField] private float nameFontSize = 2.5f;
+    [Tooltip("Fuente TMP a utilizar (opcional, si queda vacío usa la estándar).")]
+    [SerializeField] private TMP_FontAsset fontAsset;
 
+    [Header("Mascotas")]
+    [SerializeField] private float petSpacing = 1.6f;
     [SerializeField] private string prefsKey = "cosmereidle.personajes";
 
     [Header("Scroll de Personajes")]
-    [Tooltip("Máximo de filas visibles a la vez. Evita que la ventana crezca infinitamente.")]
     [SerializeField] private int maxVisibleRows = 2;
-    [Tooltip("Distancia desde los personajes hasta las flechas.")]
     [SerializeField] private float arrowOffset = 0.5f; 
-    [Tooltip("Objeto de la flecha Arriba en la escena (necesita Collider2D).")]
     [SerializeField] private GameObject upArrowCollider;
-    [Tooltip("Objeto de la flecha Abajo en la escena (necesita Collider2D).")]
     [SerializeField] private GameObject downArrowCollider;
 
-    /// <summary>Si el panel de seleccion esta en pantalla.</summary>
     public bool IsPicking { get; private set; }
-
-    /// <summary>Cuantos personajes hay marcados ahora mismo.</summary>
     public int SelectedCount => selected.Count;
 
     private readonly List<GameObject> row = new List<GameObject>();
@@ -85,7 +57,6 @@ public class CharacterPicker : MonoBehaviour
     private GameObject panel;
     private Camera cam;
 
-    // Variables para controlar el estado del scroll
     private int currentRowOffset = 0; 
     private int totalRows = 0;
     private int currentColumns = 1;
@@ -96,12 +67,6 @@ public class CharacterPicker : MonoBehaviour
         cam = Camera.main;
     }
 
-    /// <summary>
-    /// Siempre se arranca en la pantalla de seleccion, aunque ya haya elegidos de
-    /// la sesion pasada: es la unica pantalla donde estan todas las acciones
-    /// (elegir spren, continuar, cerrar). Los recordados vienen ya marcados, asi
-    /// que para quien no quiere cambiar nada es un solo click en Continuar.
-    /// </summary>
     private void Start()
     {
         LoadSelection();
@@ -115,12 +80,8 @@ public class CharacterPicker : MonoBehaviour
         DesktopWindow window = DesktopWindow.Instance;
         if (window == null || !window.LeftPressedThisFrame) return;
 
-        // OverlapPointAll y no OverlapPoint: abajo de los personajes esta el
-        // collider del panel, y con un solo resultado podria tocarnos ese y
-        // perderiamos el click.
         foreach (var hit in Physics2D.OverlapPointAll(window.CursorWorldPosition))
         {
-            // 1. Chequear si se tocó alguna flecha de scroll
             if (upArrowCollider != null && hit.transform == upArrowCollider.transform)
             {
                 if (currentRowOffset > 0)
@@ -141,7 +102,6 @@ public class CharacterPicker : MonoBehaviour
                 return;
             }
 
-            // 2. Chequear si se tocó a un personaje activo
             for (int i = 0; i < row.Count; i++)
             {
                 if (row[i] == null || !row[i].activeSelf) continue;
@@ -155,19 +115,11 @@ public class CharacterPicker : MonoBehaviour
         }
     }
 
-    // ------------------------------------------------------------------
-    // Seleccion
-    // ------------------------------------------------------------------
-
-    /// <summary>
-    /// Abre el panel: calcula la cuadricula, le pide a la ventana un cuadrado del
-    /// tamaño justo, y reparte el plantel.
-    /// </summary>
     public void ShowPicker()
     {
         ClearPets();
         ClearRow();
-        currentRowOffset = 0; // Reiniciamos el scroll arriba de todo
+        currentRowOffset = 0;
 
         int count = characters != null ? characters.Length : 0;
         if (count == 0)
@@ -179,49 +131,85 @@ public class CharacterPicker : MonoBehaviour
         currentColumns = gridColumns > 0 ? gridColumns : Mathf.CeilToInt(Mathf.Sqrt(count));
         totalRows = Mathf.CeilToInt(count / (float)currentColumns);
 
-        // Limitamos las filas para que la ventana calcule su tamaño máximo en base a maxVisibleRows
         int visibleRowsForWindow = Mathf.Min(totalRows, maxVisibleRows);
 
-        // El alto de la cuadricula no es filas * celda: se mide de los pies de la
-        // fila de abajo al tope del marcador de la de arriba, que es lo que ocupa.
         float gridWidth = currentColumns * cellSize.x;
         float gridHeight = (visibleRowsForWindow - 1) * cellSize.y + markerHeight;
-        
-        // Abajo de la cuadricula va el menu, y el panel tiene que contener a los dos.
         float contentHeight = gridHeight + menuBand;
 
-        // La ventana es cuadrada, asi que el lado lo manda la dimension mas grande.
         float side = Mathf.Max(gridWidth + panelPadding.x * 2f,
                                contentHeight + panelPadding.y * 2f);
 
-        // Primero la ventana: cambiarle la forma le cambia el orthographicSize a la
-        // camara, y todo lo que viene abajo se ubica en unidades de mundo.
         DesktopWindow window = DesktopWindow.Instance;
         if (window != null)
             window.SetPanel(Mathf.RoundToInt(side * window.PixelsPerUnit));
 
         ShowPanel(side);
 
-        // Instanciamos todos los personajes pero aún no les asignamos posición
+        // Instanciar personajes y crear su texto abajo
         for (int i = 0; i < count; i++)
         {
             var instance = Instantiate(characters[i], Vector3.zero, Quaternion.identity, transform);
             instance.name = characters[i].name;
             Freeze(instance);
+            
+            // Creamos el texto hijo para el nombre del personaje
+            CreateNameLabel(instance, characters[i].name);
+
             row.Add(instance);
             cellFeet.Add(Vector2.zero);
         }
 
         IsPicking = true;
-        
-        // Esta nueva función calculará qué personajes se ven y dónde
         UpdateGridPositions();
     }
 
     /// <summary>
-    /// Calcula las posiciones de los personajes según el offset actual del scroll,
-    /// ocultando los que queden por fuera del rango visible.
+    /// Crea un objeto TextMeshPro como hijo del personaje para que se mueva y oculte con él.
     /// </summary>
+ /// <summary>
+    /// Crea un texto TextMeshPro proporcionado a la escala de la mascota.
+    /// </summary>
+    /// <summary>
+    /// Crea un texto TextMeshPro centrado y ajustado al tamaño de la celda.
+    /// </summary>
+    private void CreateNameLabel(GameObject parent, string rawName)
+    {
+        // 1. Limpiamos nombres técnicos como "Joch_Spritesheet_0" -> "Joch"
+        string cleanName = rawName.Replace("(Clone)", "").Trim();
+        if (cleanName.Contains("_"))
+        {
+            cleanName = cleanName.Split('_')[0];
+        }
+
+        GameObject textObj = new GameObject("CharacterNameLabel");
+        textObj.transform.SetParent(parent.transform, false);
+
+        // Alineado justo abajo de los pies (-0.08f es ideal para no chocar la fila inferior)
+        textObj.transform.localPosition = new Vector3(0f, -0.08f, 0f);
+
+        TextMeshPro tmp = textObj.AddComponent<TextMeshPro>();
+        tmp.text = cleanName;
+        // Top y Center para que el origen sea la parte superior del texto
+        tmp.alignment = TextAlignmentOptions.Top;
+        tmp.sortingOrder = 15; // Por encima de fondos y sprites
+
+        RectTransform rt = textObj.GetComponent<RectTransform>();
+        if (rt != null) 
+        {
+            // Pivot arriba al centro para un anclaje predecible
+            rt.pivot = new Vector2(0.5f, 1f);
+            rt.sizeDelta = new Vector2(cellSize.x * 0.95f, 0.35f);
+        }
+
+        tmp.fontSize = 0.32f;
+        tmp.enableWordWrapping = false;
+        tmp.overflowMode = TextOverflowModes.Ellipsis;
+
+        if (fontAsset != null)
+            tmp.font = fontAsset;
+    }
+
     private void UpdateGridPositions()
     {
         int count = row.Count;
@@ -229,12 +217,7 @@ public class CharacterPicker : MonoBehaviour
         
         float gridHeight = (visibleRows - 1) * cellSize.y + markerHeight;
         float contentHeight = gridHeight + menuBand;
-        
-        // Cuadricula y menu se centran juntos, y dentro de eso el menu ocupa la
-        // franja de abajo: por eso la cuadricula queda un poco corrida hacia arriba.
         float contentBottom = -contentHeight * 0.5f;
-        
-        // Esta es la altura de los pies de la fila superior
         float topFeetY = contentBottom + menuBand + (visibleRows - 1) * cellSize.y;
 
         for (int i = 0; i < count; i++)
@@ -250,9 +233,6 @@ public class CharacterPicker : MonoBehaviour
 
             row[i].SetActive(true);
             int relativeRow = rowIndex - currentRowOffset;
-            
-            // La ultima fila puede quedar incompleta; asi se centra sola en vez de
-            // quedar pegada a la izquierda.
             int inThisRow = Mathf.Min(currentColumns, count - rowIndex * currentColumns);
 
             var feet = new Vector2(
@@ -263,8 +243,6 @@ public class CharacterPicker : MonoBehaviour
             cellFeet[i] = feet;
         }
 
-        // --- POSICIONAMIENTO AUTOMÁTICO DE FLECHAS ---
-        
         if (upArrowCollider != null) 
         {
             upArrowCollider.SetActive(currentRowOffset > 0);
@@ -297,10 +275,6 @@ public class CharacterPicker : MonoBehaviour
         RefreshIndicators();
     }
 
-    /// <summary>
-    /// Confirma la seleccion. Sin nada marcado no hace nada: es preferible que el
-    /// boton no responda a quedarse sin ninguna mascota y sin saber por que.
-    /// </summary>
     public void Confirm()
     {
         if (selected.Count == 0) return;
@@ -309,18 +283,12 @@ public class CharacterPicker : MonoBehaviour
         ClearRow();
         IsPicking = false;
 
-        // La ventana vuelve a ser franja ANTES de instanciar: SpawnPets apoya los
-        // pies en FloorY(), que sale del orthographicSize que acaba de cambiar.
         DesktopWindow window = DesktopWindow.Instance;
         if (window != null) window.SetStrip();
 
         SpawnPets();
-
-        Debug.Log("[CharacterPicker] Confirmado: " + string.Join(", ",
-            selected.OrderBy(i => i).Select(i => characters[i].name)));
     }
 
-    /// <summary>Apaga los no elegidos y pone un marcador arriba de los elegidos.</summary>
     private void RefreshIndicators()
     {
         foreach (var m in markers) if (m != null) Destroy(m);
@@ -334,7 +302,11 @@ public class CharacterPicker : MonoBehaviour
             var sprite = row[i].GetComponent<SpriteRenderer>();
             if (sprite != null) sprite.color = on ? Color.white : unselectedTint;
 
-            // IMPORTANTE: Si el personaje está oculto por el scroll, no dibujamos el marcador
+            // También podemos atenuar el texto si el personaje no está seleccionado
+            var label = row[i].GetComponentInChildren<TextMeshPro>();
+            if (label != null)
+                label.color = on ? Color.white : unselectedTint;
+
             if (!on || selectionMarker == null || i >= cellFeet.Count || !row[i].activeSelf) continue;
 
             var marker = Instantiate(selectionMarker,
@@ -343,10 +315,6 @@ public class CharacterPicker : MonoBehaviour
             markers.Add(marker);
         }
     }
-
-    // ------------------------------------------------------------------
-    // Mascotas
-    // ------------------------------------------------------------------
 
     private void SpawnPets()
     {
@@ -364,11 +332,6 @@ public class CharacterPicker : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// En el panel los personajes tienen que quedarse quietos. Se desactivan los
-    /// componentes ANTES de que corra su Start, asi MascotaController nunca
-    /// arranca su corrutina.
-    /// </summary>
     private void Freeze(GameObject instance)
     {
         var walker = instance.GetComponent<StripWalker>();
@@ -377,7 +340,6 @@ public class CharacterPicker : MonoBehaviour
         var mascota = instance.GetComponent<MascotaController>();
         if (mascota != null) mascota.enabled = false;
         
-        // Si no, el click que elige tambien le saca un globo de dialogo.
         var speech = instance.GetComponent<PetSpeech>();
         if (speech != null) speech.enabled = false;
     }
@@ -399,8 +361,6 @@ public class CharacterPicker : MonoBehaviour
         pets.Clear();
     }
 
-    // ------------------------------------------------------------------
-
     private void SaveSelection()
     {
         PlayerPrefs.SetString(prefsKey, string.Join(",", selected.OrderBy(i => i)));
@@ -415,6 +375,5 @@ public class CharacterPicker : MonoBehaviour
                 selected.Add(i);
     }
 
-    /// <summary>Piso de la franja. Con el pivot abajo, apoya los pies exactamente.</summary>
     private float FloorY() => cam != null ? -cam.orthographicSize : -1f;
 }
