@@ -174,7 +174,12 @@ public abstract class DebugIconButton : MonoBehaviour
         float scale = Mathf.Max(0.01f, menuIconScale);
         transform.localScale = Vector3.one * scale;
 
-        float halfWidth = cam.orthographicSize * cam.aspect;
+        DesktopWindow window = DesktopWindow.Instance;
+        
+        // En vez de usar el aspect de la cámara (que en el Editor abarca las barras negras),
+        // usamos el ancho real del panel en unidades de mundo:
+        float panelWorldWidth = (cam.orthographicSize * 2f); // Panel cuadrado: ancho = alto
+        float halfWidth = panelWorldWidth * 0.5f;
         float bottom = cam.transform.position.y - cam.orthographicSize;
 
         int count = Mathf.Max(1, menuRow.Count);
@@ -190,9 +195,6 @@ public abstract class DebugIconButton : MonoBehaviour
         if (label != null)
         {
             Transform holder = label.transform.parent != null ? label.transform.parent : label.transform;
-
-            // El texto cuelga del icono, asi que hereda su escala: hay que deshacerla
-            // o la etiqueta se ve al doble del tamaño que dice el prefab.
             holder.localScale = Vector3.one / scale;
             holder.position = new Vector3(x, bottom + menuLabelY, 0f);
 
@@ -200,8 +202,6 @@ public abstract class DebugIconButton : MonoBehaviour
             label.rectTransform.sizeDelta = new Vector2(slotWidth - 0.12f, 0.4f);
         }
 
-        // La zona clickeable es toda la celda y no solo el icono: la etiqueta
-        // tambien tiene que responder al hover y al click.
         const float hitTop = 0.2f;
         const float hitBottom = 0.04f;
 

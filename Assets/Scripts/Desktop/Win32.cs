@@ -1,6 +1,8 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
+using UnityEngine;
 using System.Text;
 
 /// <summary>
@@ -196,4 +198,60 @@ internal static class Win32
         autoHide = (SHAppBarMessage(ABM_GETSTATE, ref stateData).ToInt64() & ABS_AUTOHIDE) != 0;
         return true;
     }
+
+    // --- Gestión de Monitores ---
+    public struct MonitorArea
+    {
+        public int Index;
+        public int X;
+        public int Y;
+        public int Width;
+        public int Height;
+    }
+
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+    private struct MONITORINFO
+    {
+        public int cbSize;
+        public RECT rcMonitor;
+        public RECT rcWork;
+        public uint dwFlags;
+    }
+
+    private delegate bool MonitorEnumProc(IntPtr hMonitor, IntPtr hdcMonitor, ref RECT lprcMonitor, IntPtr dwData);
+
+    [DllImport("user32.dll")]
+    private static extern bool EnumDisplayMonitors(IntPtr hdc, IntPtr lprcClip, MonitorEnumProc lpfnEnum, IntPtr dwData);
+
+    [DllImport("user32.dll", CharSet = CharSet.Auto)]
+    private static extern bool GetMonitorInfo(IntPtr hMonitor, ref MONITORINFO lpmi);
+
+    internal static List<MonitorArea> GetMonitors()
+    {
+        List<MonitorArea> list = new List<MonitorArea>();
+        int idx = 0;
+
+        EnumDisplayMonitors(IntPtr.Zero, IntPtr.Zero, (IntPtr hMonitor, IntPtr hdcMonitor, ref RECT lprcMonitor, IntPtr dwData) =>
+        {
+            MONITORINFO mi = new MONITORINFO();
+            mi.cbSize = Marshal.SizeOf(typeof(MONITORINFO));
+            if (GetMonitorInfo(hMonitor, ref mi))
+            {
+                list.Add(new MonitorArea
+            {
+                Index = idx++,
+                X = mi.rcWork.left,
+                Y = mi.rcWork.top,
+                Width = mi.rcWork.right - mi.rcWork.left,
+                Height = mi.rcWork.bottom - mi.rcWork.top
+            });
+            }
+            return true;
+        }, IntPtr.Zero);
+
+        return list;
+    }
 }
+
+

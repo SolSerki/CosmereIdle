@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -97,12 +98,16 @@ public class DesktopWindow : MonoBehaviour
     private float nextRefresh;
     private bool clickThroughApplied;
     private bool leftWasDown;
+    private int currentMonitorIndex = 0;
 
     private void Awake()
     {
         Instance = this;
         cam = GetComponent<Camera>();
         if (cam == null) cam = Camera.main;
+
+        // Cargar monitor guardado
+        currentMonitorIndex = PlayerPrefs.GetInt("CosmereIdle_MonitorIndex", 0);
 
 #if !UNITY_EDITOR && UNITY_STANDALONE_WIN
         hwnd = Win32.FindPlayerWindow();
@@ -185,7 +190,7 @@ public class DesktopWindow : MonoBehaviour
     /// Unity dejaria de ver el cursor justo cuando hace falta decidir si volver
     /// a capturarlo. GetCursorPos es global y no tiene ese problema.
     /// </summary>
-private void UpdateCursor()
+    private void UpdateCursor()
     {
         bool leftDown = false;
 
@@ -205,7 +210,6 @@ private void UpdateCursor()
 
         leftDown = Win32.IsLeftMouseDown();
 #else
-        // NUEVO: Fallback para que los clics funcionen en el Editor usando InputSystem[cite: 2]
         Vector2 screenPoint = Vector2.zero;
         if (UnityEngine.InputSystem.Mouse.current != null)
         {
@@ -233,24 +237,15 @@ private void UpdateCursor()
 
     private void MakeTransparentOverlay()
     {
-        // Sin bordes ni barra de titulo: la ventana es solo contenido.
         Win32.SetWindowLong(hwnd, Win32.GWL_STYLE, Win32.WS_POPUP | Win32.WS_VISIBLE);
 
         ApplyClickThrough(true);
 
-        // Tiene que ir DESPUES de prender WS_EX_LAYERED: los atributos de capa se
-        // resetean cada vez que ese bit pasa de 0 a 1. Alpha 255 = capa totalmente
-        // opaca, o sea que no tinta nada; el alpha real lo sigue aportando DWM.
         Win32.SetLayeredWindowAttributes(hwnd, 0, 255, Win32.LWA_ALPHA);
 
         EnablePerPixelAlpha();
     }
 
-    /// <summary>
-    /// Alpha por pixel real. El truco es pedirle a DWM un "blur behind" con una
-    /// region VACIA: no difumina nada, pero prende el camino de composicion que
-    /// respeta el alpha de cada pixel. El alpha lo aporta la camara.
-    /// </summary>
     private void EnablePerPixelAlpha()
     {
         IntPtr emptyRegion = Win32.CreateRectRgn(0, 0, -1, -1);
@@ -270,22 +265,12 @@ private void UpdateCursor()
             Debug.LogError($"[DesktopWindow] DwmEnableBlurBehindWindow devolvio 0x{hr:X8}.");
     }
 
-    /// <summary>
-    /// Prende o apaga que el mouse atraviese la ventana. Se llama seguido, asi que
-    /// solo toca la API de Windows cuando el estado cambia de verdad.
-    /// </summary>
     private void ApplyClickThrough(bool value)
     {
         if (hwnd == IntPtr.Zero) return;
         if (clickThroughApplied == value && Time.frameCount > 1) return;
         clickThroughApplied = value;
 
-        // WS_EX_LAYERED va SIEMPRE, aunque no queramos click-through. La doc de
-        // Microsoft define el pass-through de mouse de WS_EX_TRANSPARENT solo para
-        // ventanas layered: "if the LAYERED window has the WS_EX_TRANSPARENT style
-        // ... the mouse events will be passed to other windows underneath". Suelto,
-        // WS_EX_TRANSPARENT solo habla de orden de pintado entre ventanas hermanas
-        // y no deja pasar un solo click.
         uint style = Win32.WS_EX_LAYERED | Win32.WS_EX_TOOLWINDOW;
         if (value) style |= Win32.WS_EX_TRANSPARENT;
         Win32.SetWindowLong(hwnd, Win32.GWL_EXSTYLE, style);
@@ -299,9 +284,6 @@ private void UpdateCursor()
 
         if (hwnd != IntPtr.Zero)
         {
-            // El panel va topmost si o si, aunque el usuario haya elegido que la
-            // franja se esconda detras de las demas apps: una pantalla de seleccion
-            // tapada por otra ventana parece una app colgada.
             bool onTop = alwaysOnTop || Mode == WindowMode.Panel;
 
             Win32.SetWindowPos(hwnd,
@@ -314,12 +296,6 @@ private void UpdateCursor()
         ApplyCamera(target.height);
     }
 
-    /// <summary>
-    /// El zoom de la camara sale del alto de la ventana, no al reves. Es la regla de
-    /// pixel perfect: orthographicSize = altoEnPixeles / (2 * PPU). Con eso una unidad
-    /// de mundo mide siempre PPU pixeles, asi que los personajes y los botones se ven
-    /// exactamente del mismo tamaño en la franja y en el panel, aunque midan distinto.
-    /// </summary>
     private void ApplyCamera(int heightPixels)
     {
         if (cam == null || !cam.orthographic) return;
@@ -339,36 +315,68 @@ private void UpdateCursor()
     }
 
 #if UNITY_STANDALONE_WIN
+    private Win32.MonitorArea GetTargetMonitorArea()
+    {
+        var monitors = Win32.GetMonitors();
+        if (monitors != null && monitors.Count > 0)
+        {
+            int idx = Mathf.Clamp(currentMonitorIndex, 0, monitors.Count - 1);
+            return monitors[idx];
+        }
+
+        return new Win32.MonitorArea
+        {
+            Index = 0,
+            X = 0,
+            Y = 0,
+            Width = Win32.GetSystemMetrics(Win32.SM_CXSCREEN),
+            Height = Win32.GetSystemMetrics(Win32.SM_CYSCREEN)
+        };
+    }
+
     private RectInt CalculateStrip()
     {
-        int screenW = Win32.GetSystemMetrics(Win32.SM_CXSCREEN);
-        int screenH = Win32.GetSystemMetrics(Win32.SM_CYSCREEN);
+        var monitor = GetTargetMonitorArea();
 
-        int bottom = screenH;
+        int screenW = monitor.Width;
+        int screenH = monitor.Height;
+        int bottom = monitor.Y + screenH;
 
-        if (Win32.TryGetTaskbar(out Win32.RECT bar, out uint edge, out bool autoHide) && !autoHide)
+        // Si es el monitor principal (Index 0), respetamos la barra de tareas si no se autooculta
+        if (monitor.Index == 0 && Win32.TryGetTaskbar(out Win32.RECT bar, out uint edge, out bool autoHide) && !autoHide)
         {
-            // Solo los bordes horizontales corren la franja. Con la barra a la
-            // izquierda o a la derecha el fondo de la pantalla sigue libre.
             if (edge == Win32.ABE_BOTTOM) bottom = bar.top;
         }
 
         bottom += verticalOffset;
 
         int height = Mathf.Max(1, stripHeight);
-        return new RectInt(0, bottom - height, screenW, height);
+        return new RectInt(monitor.X, bottom - height, screenW, height);
     }
 
     private RectInt CalculatePanel()
     {
-        int screenW = Win32.GetSystemMetrics(Win32.SM_CXSCREEN);
-        int screenH = Win32.GetSystemMetrics(Win32.SM_CYSCREEN);
+        var monitor = GetTargetMonitorArea();
 
-        // Si el plantel crece hasta no entrar en pantalla, preferimos recortar el
-        // panel antes que abrir una ventana mas grande que el monitor.
+        int screenW = monitor.Width;
+        int screenH = monitor.Height;
+
         int side = Mathf.Clamp(panelSide, 64, Mathf.Min(screenW, screenH));
 
-        return new RectInt((screenW - side) / 2, (screenH - side) / 2, side, side);
+        return new RectInt(
+            monitor.X + (screenW - side) / 2,
+            monitor.Y + (screenH - side) / 2,
+            side,
+            side);
     }
 #endif
+
+    public void SwitchToMonitor(int monitorIndex)
+    {
+        currentMonitorIndex = monitorIndex;
+        PlayerPrefs.SetInt("CosmereIdle_MonitorIndex", currentMonitorIndex);
+        PlayerPrefs.Save();
+
+        Reposition();
+    }
 }
