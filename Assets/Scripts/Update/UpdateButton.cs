@@ -1,21 +1,30 @@
 using UnityEngine;
 
 /// <summary>
-/// Aviso de version nueva. Solo aparece si GitHubUpdater encontro una: es un
-/// icono en la esquina que late para llamar la atencion, con el detalle en el
-/// tooltip. Click = actualizar ahora.
+/// Icono de actualizaciones en la esquina. Aparece en dos casos:
 ///
-/// Ademas, la primera vez que aparece una version, una de las mascotas lo dice
-/// en un globo: un icono que aparece solo en la esquina es facil de no ver.
+///   - Mientras se consulta a GitHub: tenue y latiendo despacio, para que se
+///     vea que esta buscando.
+///   - Si hay una version nueva: amarillo y latiendo, con el detalle en el
+///     tooltip. Click = actualizar ahora.
+///
+/// Con las mascotas en el escritorio, la primera vez que aparece una version
+/// una de ellas lo dice en un globo: un icono que aparece solo en la esquina es
+/// facil de no ver. En la pantalla de seleccion las mascotas estan congeladas y
+/// no hablan; ahi el aviso lo da UpdateStatusLabel.
 /// </summary>
 public class UpdateButton : DebugIconButton
 {
     [SerializeField] private Color idleColor = new Color(1f, 1f, 1f, 0.35f);
     [SerializeField] private Color highlightColor = new Color(1f, 0.8f, 0.25f, 1f);
     [SerializeField] private Color hoverColor = new Color(1f, 0.9f, 0.5f, 1f);
+    [SerializeField] private Color checkingColor = new Color(1f, 1f, 1f, 0.6f);
 
     [Tooltip("Latidos por segundo mientras espera que lo aprieten.")]
     [SerializeField] private float pulseSpeed = 1.2f;
+
+    [Tooltip("Latidos por segundo mientras busca versiones. Mas lento: no pide nada.")]
+    [SerializeField] private float checkingPulseSpeed = 0.6f;
 
     [Tooltip("Cada cuanto se busca una mascota para que avise, si todavia no hay ninguna.")]
     [SerializeField] private float announceRetrySeconds = 2f;
@@ -27,8 +36,12 @@ public class UpdateButton : DebugIconButton
 
     private static GitHubUpdater Updater => GitHubUpdater.Instance;
 
+    /// <summary>Solo busca, no hay nada nuevo (todavia).</summary>
+    private static bool OnlyChecking =>
+        Updater != null && Updater.IsChecking && Updater.State == GitHubUpdater.UpdateState.UpToDate;
+
     protected override bool IsAvailable =>
-        Updater != null && Updater.State != GitHubUpdater.UpdateState.UpToDate;
+        Updater != null && (Updater.State != GitHubUpdater.UpdateState.UpToDate || Updater.IsChecking);
 
     protected override string TooltipText
     {
@@ -36,6 +49,7 @@ public class UpdateButton : DebugIconButton
         {
             GitHubUpdater u = Updater;
             if (u == null) return "";
+            if (OnlyChecking) return "Buscando actualizaciones...";
 
             switch (u.State)
             {
@@ -60,16 +74,22 @@ public class UpdateButton : DebugIconButton
         GitHubUpdater u = Updater;
         if (u == null) return idleColor;
 
+        if (OnlyChecking) return Color.Lerp(idleColor, checkingColor, Pulse(checkingPulseSpeed));
+
         // Bajando o instalando: fijo, ya no hace falta llamar la atencion.
         if (u.State != GitHubUpdater.UpdateState.Available) return highlightColor;
         if (hovering) return hoverColor;
 
-        float t = 0.5f + 0.5f * Mathf.Sin(Time.unscaledTime * pulseSpeed * 2f * Mathf.PI);
-        return Color.Lerp(idleColor, highlightColor, t);
+        return Color.Lerp(idleColor, highlightColor, Pulse(pulseSpeed));
     }
+
+    private static float Pulse(float speed) =>
+        0.5f + 0.5f * Mathf.Sin(Time.unscaledTime * speed * 2f * Mathf.PI);
 
     protected override void OnClicked()
     {
+        // Mientras solo busca no hay nada que hacer todavia.
+        if (OnlyChecking) return;
         Updater?.InstallNow();
     }
 
@@ -85,22 +105,38 @@ public class UpdateButton : DebugIconButton
         if (u == null || u.LatestVersion == null) return;
 
         string phrase = null;
+        bool startup = u.IsStartupInstall;
 
-        if (u.IsStartupInstall && !announcedStartupInstall)
+        if (startup && !announcedStartupInstall)
             phrase = $"¡Me actualizo a la {u.LatestVersion}! Ya vuelvo.";
-        else if (!u.IsStartupInstall && u.State == GitHubUpdater.UpdateState.Available && announced != u.LatestVersion)
+        else if (!startup && u.State == GitHubUpdater.UpdateState.Available && announced != u.LatestVersion)
             phrase = $"¡Salió la versión {u.LatestVersion}! Tocá el icono amarillo de arriba.";
 
-        if (phrase == null || Time.unscaledTime < nextAnnounceTry) return;
+        if (phrase == null) return;
+
+        // En la pantalla de seleccion lo muestra el cartel del panel. Se da por
+        // anunciado: si no, al confirmar la seleccion una mascota repetiria algo
+        // que el usuario ya vio.
+        CharacterPicker picker = CharacterPicker.Instance;
+        if (picker != null && picker.IsPicking)
+        {
+            MarkAnnounced(u, startup);
+            return;
+        }
+
+        if (Time.unscaledTime < nextAnnounceTry) return;
         nextAnnounceTry = Time.unscaledTime + announceRetrySeconds;
 
-        // Si todavia no hay mascotas (pantalla de seleccion abierta), se reintenta.
         PetSpeech pet = FindAnyObjectByType<PetSpeech>();
         if (pet == null || !pet.isActiveAndEnabled) return;
 
         pet.Say(phrase);
+        MarkAnnounced(u, startup);
+    }
 
-        if (u.IsStartupInstall) announcedStartupInstall = true;
+    private void MarkAnnounced(GitHubUpdater u, bool startup)
+    {
+        if (startup) announcedStartupInstall = true;
         announced = u.LatestVersion;
     }
 }

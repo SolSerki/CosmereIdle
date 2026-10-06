@@ -61,7 +61,12 @@ InfoBeforeFile=Disclaimer.txt
 
 ; El juego corre sin barra de tareas y sin alt-tab, asi que si ya esta abierto
 ; nadie lo puede cerrar a mano. Esto lo cierra solo antes de sobrescribir.
-CloseApplications=yes
+;
+; "force" y no "yes": el juego no responde al pedido de cierre del Restart
+; Manager, y con "yes" en modo silencioso Inno elige Abortar y deshace todo.
+; Asi fallaba la actualizacion automatica. Antes de llegar a esto,
+; InitializeSetup (abajo) espera a que el juego se cierre solo.
+CloseApplications=force
 RestartApplications=no
 
 [Languages]
@@ -96,3 +101,70 @@ Filename: "{app}\{#ExeName}"; Description: "Abrir {#AppName} ahora"; \
 ; silencioso despues de cerrar el juego. Sin esta linea el juego no vuelve a
 ; abrirse, y como no tiene barra de tareas nadie se daria cuenta de que se fue.
 Filename: "{app}\{#ExeName}"; Flags: nowait; Check: WizardSilent
+
+[Code]
+// La actualizacion automatica lanza este instalador y recien despues cierra el
+// juego. El instalador arranca mas rapido de lo que el juego tarda en cerrarse,
+// asi que lo encontraba abierto y la instalacion se abortaba. En modo
+// silencioso se espera a que el juego (y su crash handler) terminen de salir.
+
+const
+  GameWaitMs = 20000;
+  GameWaitStepMs = 250;
+
+// Si hay un proceso del juego instalado corriendo. Se filtra por la carpeta
+// para no esperar a un build de prueba abierto desde el proyecto, ni al crash
+// handler de otro juego hecho en Unity (todos se llaman igual).
+function GameIsRunning(): Boolean;
+var
+  Locator, Service, Processes, Process: Variant;
+  ExePath: String;
+  I: Integer;
+begin
+  Result := False;
+  try
+    Locator := CreateOleObject('WbemScripting.SWbemLocator');
+    Service := Locator.ConnectServer('.', 'root\CIMV2');
+    Processes := Service.ExecQuery(
+      'SELECT ExecutablePath FROM Win32_Process ' +
+      'WHERE Name = ''{#ExeName}'' OR Name = ''UnityCrashHandler64.exe''');
+
+    for I := 0 to Processes.Count - 1 do
+    begin
+      Process := Processes.ItemIndex(I);
+
+      // De los procesos de otros usuarios WMI no da la ruta: viene Null.
+      ExePath := '';
+      if not VarIsNull(Process.ExecutablePath) then ExePath := Process.ExecutablePath;
+
+      if Pos('\{#AppName}\', ExePath) > 0 then
+      begin
+        Result := True;
+        Exit;
+      end;
+    end;
+  except
+    // Sin WMI no se puede saber: CloseApplications=force se encarga.
+    Result := False;
+  end;
+end;
+
+function InitializeSetup(): Boolean;
+var
+  Waited: Integer;
+begin
+  Result := True;
+  if not WizardSilent() then Exit;
+
+  Waited := 0;
+  while GameIsRunning() and (Waited < GameWaitMs) do
+  begin
+    Sleep(GameWaitStepMs);
+    Waited := Waited + GameWaitStepMs;
+  end;
+
+  if Waited >= GameWaitMs then
+    Log('El juego sigue abierto despues de esperar; lo cierra el Restart Manager.')
+  else
+    Log(Format('Juego cerrado (espere %d ms).', [Waited]));
+end;

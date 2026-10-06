@@ -273,21 +273,38 @@ va adjunto al release, que es de donde lo baja el juego.
 
 **Qué pasa del lado del jugador** (`Scripts/Update/`):
 
-- **Al abrir el juego**, si hay versión nueva, se baja e instala sola: el juego
-  se cierra, el instalador corre en silencio y lo vuelve a abrir. Una mascota
-  avisa "me actualizo, ya vuelvo".
+- **Al abrir el juego**, si hay versión nueva, se baja e instala sola, sin
+  esperar a que se elijan los personajes: el cartel de arriba de la pantalla
+  de selección muestra "Descargando la versión X... 45%" y después
+  "Instalando". El juego se cierra, el instalador corre en silencio y lo
+  vuelve a abrir.
 - **Con el juego abierto** revisa cada 6 horas, y si aparece una versión **solo
   avisa**: una mascota lo dice en un globo y aparece un icono amarillo que late
   en la esquina. Click ahí actualiza en el momento. Si no, se instala en el
   próximo inicio.
+- **Mientras consulta a GitHub** se ve: en la pantalla de selección el cartel
+  dice "Buscando actualizaciones...", y en la franja aparece el icono de la
+  esquina, tenue y latiendo despacio. Si no hay nada nuevo, el cartel queda en
+  "v1.1 · Al día".
 
 Detalles que importan:
 
+- **El juego lanza el instalador y recién después se cierra**, así que el
+  instalador arranca con el juego todavía abierto. Por eso `CosmereIdle.iss`
+  espera a que se cierre (`InitializeSetup`) y tiene `CloseApplications=force`.
+  Con `yes`, en modo silencioso Inno encontraba el juego abierto, elegía
+  "Abortar" y deshacía la instalación: así fallaba la primera versión. Como el
+  arreglo vive en el instalador, sirve también para las copias viejas.
 - **El tag tiene que coincidir con el Version del build.** Si publicás
   `v1.2` con un build que adentro dice `1.1`, el juego instala, vuelve a
-  arrancar, se ve en `1.1` y cree que sigue habiendo versión nueva. Para que
-  eso no se vuelva un loop de cerrar y reabrir, la instalación automática se
-  intenta **una sola vez por versión**; después queda solo el aviso.
+  arrancar, se ve en `1.1` y cree que sigue habiendo versión nueva. El juego
+  lo detecta por el log del instalador: si la instalación terminó bien y la
+  versión no cambió, no reintenta y queda solo el aviso. Si el instalador
+  falló, reintenta en los próximos inicios, **3 veces como mucho** por versión.
+- **Si algo falla, hay log.** En
+  `%USERPROFILE%\AppData\LocalLow\Comunidad CosmereAR\CosmereArgIdle\` están
+  el `Player.log` del juego (líneas `[GitHubUpdater]`) y `update-install.log`,
+  el del instalador.
 - **El nombre del adjunto tiene que terminar en `-setup.exe`.** Es como el
   juego lo encuentra entre los archivos del release.
 - **Solo se autoinstala la copia que vino del instalador** (la detecta por el
@@ -301,7 +318,8 @@ Detalles que importan:
 - El repo tiene que ser **público**: el juego consulta la API de GitHub sin
   token.
 
-El aviso usa `PetSpeech.Say` y un botón de la esquina (`UpdateButton`, slot 3).
+El aviso usa `PetSpeech.Say`, un botón de la esquina (`UpdateButton`, slot 3)
+y el cartel del panel (`UpdateStatusLabel`, dentro del prefab `Updater`).
 Cuando exista el menú de la bandeja, el botón se puede reemplazar por una
 entrada ahí sin tocar `GitHubUpdater`, que no tiene UI propia.
 
