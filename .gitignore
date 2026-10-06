@@ -21,6 +21,10 @@
 # Unity. Ojo que pesa ~190 MB y que git se guarda cada versión para siempre.
 # /[Bb]uild/
 
+# El instalador NO va al repo: se reparte adjunto a un Release de GitHub, que
+# es de donde lo baja la actualización automática. Ver CONVENTIONS.md.
+/[Ii]nstaller/[Oo]utput/
+
 # Símbolos de depuración de Burst. Unity los marca "DoNotShip", no hacen falta
 # para jugar, y se regeneran en cada build.
 *_BurstDebugInformation_DoNotShip/
