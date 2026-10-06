@@ -102,6 +102,19 @@ public class StripWalker : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Cambia la dirección de marcha y actualiza flipX coherentemente.
+    /// 1 = derecha, -1 = izquierda.
+    /// </summary>
+    public void SetDirection(int newDirection)
+    {
+        direction = newDirection >= 0 ? 1 : -1;
+        if (sprite != null)
+        {
+            sprite.flipX = direction < 0;
+        }
+    }
+
     private void Turn(int newDirection, float clampX)
     {
         direction = newDirection;

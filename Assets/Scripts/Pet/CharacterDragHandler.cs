@@ -73,21 +73,35 @@ public class CharacterDragHandler : MonoBehaviour
                 }
             }
 
+            // Movimiento y sincronización de dirección
             if (IsDragging)
             {
                 float targetX = mouseWorld.x + dragOffset.x;
 
+                // Límites de la cámara en la franja
                 float halfWidth = cam.orthographicSize * cam.aspect;
                 float left = cam.transform.position.x - halfWidth + edgePadding;
                 float right = cam.transform.position.x + halfWidth - edgePadding;
 
                 float clampedX = Mathf.Clamp(targetX, left, right);
 
-                if (orientWithDrag && sprite != null)
+                // Orientar visualmente y sincronizar la dirección interna de StripWalker
+                if (orientWithDrag)
                 {
                     float deltaX = clampedX - lastPosX;
-                    if (deltaX > 0.01f) sprite.flipX = false;
-                    else if (deltaX < -0.01f) sprite.flipX = true;
+
+                    if (deltaX > 0.01f)
+                    {
+                        // Se mueve a la derecha
+                        if (walker != null) walker.SetDirection(1);
+                        else if (sprite != null) sprite.flipX = false;
+                    }
+                    else if (deltaX < -0.01f)
+                    {
+                        // Se mueve a la izquierda
+                        if (walker != null) walker.SetDirection(-1);
+                        else if (sprite != null) sprite.flipX = true;
+                    }
                 }
 
                 lastPosX = clampedX;
