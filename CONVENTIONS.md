@@ -249,24 +249,33 @@ política de Dragonsteel, y el instalador lo muestra antes de instalar.
 ### Publicar una versión
 
 El juego instalado se actualiza solo desde los
-[Releases de GitHub](https://github.com/SolSerki/CosmereIdle/releases). Para
-sacar una versión:
+[Releases de GitHub](https://github.com/SolSerki/CosmereIdle/releases).
 
-1. Subí el **Version** en Player Settings (`1.0` → `1.1`).
-2. `Tools > CosmereIdle > Buildear`. Al terminar abre la carpeta con
-   `Installer/Output/CosmereIdle-1.1-setup.exe`.
-3. Creá el release con el tag **igual al Version**, con una `v` adelante, y
-   el instalador adjunto:
+**No todo commit es una versión.** Se commitea como siempre; una versión es el
+momento en que decidís que los jugadores reciban lo que hay.
 
-```bash
-gh release create v1.1 "Installer/Output/CosmereIdle-1.1-setup.exe" --title "v1.1" --notes "Qué cambió"
-```
+Para sacarla: **`Tools > CosmereIdle > Publicar versión...`**. Escribís el
+número nuevo (viene sugerido) y qué cambió, y el menú hace todo:
 
-   Se corre desde la carpeta del proyecto (`My project (1)`), con la
-   [CLI de GitHub](https://cli.github.com) instalada y logueada (`gh auth login`).
-   Sin `gh`, lo mismo se hace desde la web: *Releases > Draft a new release*,
-   tag `v1.1` y el `.exe` arrastrado a los adjuntos. Commiteá y pusheá antes,
-   así el tag apunta al código que tiene el instalador.
+1. Sube el **Version** de Player Settings.
+2. Buildea el juego y el instalador.
+3. Commitea (`Versión 1.3`) y pushea.
+4. Crea el release `v1.3` en GitHub con el instalador adjunto.
+
+Antes de tocar nada revisa que gh esté logueado, que tu rama no esté atrás de
+GitHub y que el tag no exista. Si tenés cambios sin commitear te los muestra y
+no publica hasta que marques que entran en la versión.
+
+Necesita la [CLI de GitHub](https://cli.github.com), una vez por máquina:
+`winget install --id GitHub.cli` y `gh auth login`. Si la instalás con Unity
+abierto, el menú igual la encuentra.
+
+Si algo falla a mitad de camino, el cartel dice en qué paso quedó. Si el
+problema fue al subir, deja copiado el comando para terminar a mano.
+
+A mano es lo mismo, en ese orden: Version, `Tools > CosmereIdle > Buildear`,
+commit y push, y `gh release create v1.3 "Installer/Output/CosmereIdle-1.3-setup.exe"
+--title v1.3 --notes "..."` desde la carpeta del proyecto.
 
 El instalador **no se commitea** (`Installer/Output/` está en el `.gitignore`):
 va adjunto al release, que es de donde lo baja el juego.

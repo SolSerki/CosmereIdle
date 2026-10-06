@@ -209,7 +209,7 @@ public static class CosmereIdleBuild
     /// vive en un solo lado (Player Settings) y no hay que acordarse de
     /// cambiarlo en dos archivos.
     /// </summary>
-    private static void WriteVersionInclude()
+    internal static void WriteVersionInclude()
     {
         string dir = Path.GetDirectoryName(VersionInclude);
         if (!string.IsNullOrEmpty(dir)) Directory.CreateDirectory(dir);
@@ -243,62 +243,16 @@ public static class CosmereIdleBuild
 
         string script = Path.GetFullPath(InstallerScript);
         DateTime started = DateTime.Now;
-        var log = new StringBuilder();
 
-        var start = new ProcessStartInfo(iscc, $"/Q \"{script}\"")
-        {
-            UseShellExecute = false,
-            CreateNoWindow = true,
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            WorkingDirectory = Path.GetDirectoryName(script)
-        };
-
-        int exitCode;
-        try
-        {
-            using (Process process = Process.Start(start))
-            {
-                // Lectura asincronica: si ISCC llena el buffer de salida y nadie
-                // lo lee, se queda esperando y WaitForExit no vuelve nunca.
-                process.OutputDataReceived += (_, e) => { if (e.Data != null) lock (log) log.AppendLine(e.Data); };
-                process.ErrorDataReceived += (_, e) => { if (e.Data != null) lock (log) log.AppendLine(e.Data); };
-                process.BeginOutputReadLine();
-                process.BeginErrorReadLine();
-
-                // Comprimir ~40 MB con lzma2/max tarda. Sin barra de progreso
-                // parece que Unity se colgo.
-                while (!process.WaitForExit(250))
-                {
-                    if ((DateTime.Now - started).TotalMilliseconds > InstallerTimeoutMs)
-                    {
-                        process.Kill();
-                        break;
-                    }
-
-                    if (!Application.isBatchMode)
-                        EditorUtility.DisplayProgressBar("Instalador",
-                            $"Comprimiendo con Inno Setup... {(int)(DateTime.Now - started).TotalSeconds}s", 0.5f);
-                }
-
-                process.WaitForExit(); // vacia los eventos de salida pendientes
-                exitCode = process.ExitCode;
-            }
-        }
-        catch (Exception e)
-        {
-            error = $"No pude ejecutar Inno Setup: {e.Message}";
-            Debug.LogError("[Instalador] " + error);
-            return null;
-        }
-        finally
-        {
-            if (!Application.isBatchMode) EditorUtility.ClearProgressBar();
-        }
+        // Comprimir ~40 MB con lzma2/max tarda: RunTool muestra la barra.
+        int exitCode = RunTool(iscc, $"/Q \"{script}\"", Path.GetDirectoryName(script),
+                               "Comprimiendo con Inno Setup", InstallerTimeoutMs, out string output);
 
         if (exitCode != 0)
         {
-            error = $"Inno Setup terminó con código {exitCode}:\n{log.ToString().Trim()}";
+            error = exitCode == ToolNotStarted
+                ? $"No pude ejecutar Inno Setup: {output}"
+                : $"Inno Setup terminó con código {exitCode}:\n{output}";
             Debug.LogError("[Instalador] " + error);
             return null;
         }
@@ -317,6 +271,86 @@ public static class CosmereIdleBuild
         Debug.Log($"[Instalador] Listo: {setup} ({new FileInfo(setup).Length / (1024 * 1024)} MB, " +
                   $"{(int)(DateTime.Now - started).TotalSeconds}s)");
         return setup;
+    }
+
+    /// <summary>Lo que devuelve RunTool si el programa ni siquiera arranco.</summary>
+    internal const int ToolNotStarted = -1;
+
+    /// <summary>
+    /// Corre un programa de consola, espera a que termine y devuelve su codigo
+    /// de salida, con stdout y stderr juntos en <paramref name="output"/>.
+    /// Muestra una barra de progreso con <paramref name="what"/> y los segundos
+    /// que lleva, porque Unity queda congelado mientras tanto y sin barra parece
+    /// colgado. Si no arranca devuelve ToolNotStarted y el motivo en output.
+    /// </summary>
+    internal static int RunTool(string exe, string arguments, string workingDirectory,
+                                string what, int timeoutMs, out string output)
+    {
+        var log = new StringBuilder();
+        DateTime started = DateTime.Now;
+
+        var start = new ProcessStartInfo(exe, arguments)
+        {
+            UseShellExecute = false,
+            CreateNoWindow = true,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            StandardOutputEncoding = Encoding.UTF8,
+            StandardErrorEncoding = Encoding.UTF8,
+            WorkingDirectory = workingDirectory
+        };
+
+        // Nadie puede contestar una pregunta por consola desde aca: si git o gh
+        // quisieran preguntar algo, se quedarian esperando para siempre.
+        start.EnvironmentVariables["GIT_TERMINAL_PROMPT"] = "0";
+        start.EnvironmentVariables["GH_PROMPT_DISABLED"] = "1";
+
+        try
+        {
+            using (Process process = Process.Start(start))
+            {
+                // Lectura asincronica: si el programa llena el buffer de salida y
+                // nadie lo lee, se queda esperando y WaitForExit no vuelve nunca.
+                process.OutputDataReceived += (_, e) => { if (e.Data != null) lock (log) log.AppendLine(e.Data); };
+                process.ErrorDataReceived += (_, e) => { if (e.Data != null) lock (log) log.AppendLine(e.Data); };
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
+
+                bool timedOut = false;
+                while (!process.WaitForExit(250))
+                {
+                    if ((DateTime.Now - started).TotalMilliseconds > timeoutMs)
+                    {
+                        process.Kill();
+                        timedOut = true;
+                        break;
+                    }
+
+                    if (!Application.isBatchMode)
+                        EditorUtility.DisplayProgressBar("CosmereIdle",
+                            $"{what}... {(int)(DateTime.Now - started).TotalSeconds}s", 0.5f);
+                }
+
+                process.WaitForExit(); // vacia los eventos de salida pendientes
+
+                lock (log)
+                {
+                    if (timedOut) log.AppendLine($"(cortado: pasaron más de {timeoutMs / 1000}s)");
+                    output = log.ToString().Trim();
+                }
+
+                return process.ExitCode;
+            }
+        }
+        catch (Exception e)
+        {
+            output = e.Message;
+            return ToolNotStarted;
+        }
+        finally
+        {
+            if (!Application.isBatchMode) EditorUtility.ClearProgressBar();
+        }
     }
 
     /// <summary>
