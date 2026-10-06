@@ -27,6 +27,8 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class DesktopWindow : MonoBehaviour
 {
+
+
     public enum WindowMode
     {
         /// <summary>Franja del ancho de la pantalla, sobre la barra de tareas.</summary>
@@ -75,6 +77,13 @@ public class DesktopWindow : MonoBehaviour
 
     /// <summary>Rectangulo que ocupa la ventana, en pixeles de pantalla (origen arriba-izquierda).</summary>
     public RectInt Bounds { get; private set; }
+
+    /// <summary>Si el botón izquierdo se mantiene presionado actualmente.</summary>
+    public bool IsLeftDown => leftWasDown;
+
+    /// <summary>Bandera para avisar a DesktopWindow que estamos arrastrando y no debe volver click-through la ventana.</summary>
+    public bool IsDraggingContent { get; set; }
+
 
     /// <summary>Posicion del cursor en coordenadas de mundo, valga o no el foco.</summary>
     public Vector3 CursorWorldPosition { get; private set; }
@@ -125,17 +134,16 @@ public class DesktopWindow : MonoBehaviour
         Reposition();
     }
 
-    private void Update()
+  private void Update()
     {
         UpdateCursor();
-
 #if !UNITY_EDITOR && UNITY_STANDALONE_WIN
         if (hwnd == IntPtr.Zero) return;
+        
+        // Si el cursor está sobre contenido O estamos arrastrando algo, NO debe ser click-through
+        bool interceptInput = CursorOverContent || IsDraggingContent;
+        if (autoClickThrough) ApplyClickThrough(!interceptInput);
 
-        if (autoClickThrough) ApplyClickThrough(!CursorOverContent);
-
-        // La barra de tareas se mueve, cambia de alto y se autooculta; y otras apps
-        // topmost nos pueden pasar por encima. Re-chequear sale barato.
         if (Time.unscaledTime >= nextRefresh)
         {
             nextRefresh = Time.unscaledTime + refreshInterval;
@@ -143,7 +151,6 @@ public class DesktopWindow : MonoBehaviour
         }
 #endif
     }
-
     // ------------------------------------------------------------------
     // Forma de la ventana
     // ------------------------------------------------------------------

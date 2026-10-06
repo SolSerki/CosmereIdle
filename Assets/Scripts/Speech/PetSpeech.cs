@@ -40,24 +40,38 @@ public class PetSpeech : MonoBehaviour
     private SpeechBubble bubble;
     private int lastIndex = -1;
 
+    private CharacterDragHandler dragHandler;
+    private bool isWaitingClickRelease;
+
     private void Awake()
     {
         body = GetComponent<Collider2D>();
+        dragHandler = GetComponent<CharacterDragHandler>();
         clickPhrases = LoadClickPhrases();
     }
 
     private void Update()
     {
         DesktopWindow window = DesktopWindow.Instance;
-        if (window == null || !window.LeftPressedThisFrame) return;
+        if (window == null) return;
 
-        // El picker congela este componente mientras la fila esta abierta, asi
-        // que si llegamos aca el click es para hablar y no para elegir.
-        if (!body.OverlapPoint(window.CursorWorldPosition)) return;
+        // Clic inicial sobre el personaje
+        if (window.LeftPressedThisFrame && body.OverlapPoint(window.CursorWorldPosition))
+        {
+            isWaitingClickRelease = true;
+        }
 
-        Say(NextPhrase());
+        // Al soltar el clic
+        if (isWaitingClickRelease && !window.IsLeftDown)
+        {
+            isWaitingClickRelease = false;
+
+            if (dragHandler == null || !dragHandler.IsDragging)
+            {
+                Say(NextPhrase());
+            }
+        }
     }
-
     public void Say(string phrase)
     {
         if (string.IsNullOrEmpty(phrase) || bubblePrefab == null) return;

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6711095080790463524}
   - component: {fileID: 6494443000529023240}
   - component: {fileID: 2223005389710007967}
+  - component: {fileID: -4484322165125264614}
   m_Layer: 0
   m_Name: Joch_Spritesheet_0
   m_TagString: Untagged
@@ -211,3 +212,18 @@ MonoBehaviour:
   bubblePrefab: {fileID: 1716076718346636111, guid: 1a43295e74e2ce343b8315af70695c46, type: 3}
   bubbleHeight: 1.15
   bubbleSeconds: 2.8
+--- !u!114 &-4484322165125264614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6679933237084633982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 424323ead55715c418b70db56359f85e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterDragHandler
+  edgePadding: 0.3
+  dragDistanceThreshold: 0.05
+  orientWithDrag: 1

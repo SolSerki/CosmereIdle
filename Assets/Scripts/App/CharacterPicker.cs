@@ -332,7 +332,7 @@ public class CharacterPicker : MonoBehaviour
         }
     }
 
-    private void Freeze(GameObject instance)
+   private void Freeze(GameObject instance)
     {
         var walker = instance.GetComponent<StripWalker>();
         if (walker != null) walker.enabled = false;
@@ -342,8 +342,10 @@ public class CharacterPicker : MonoBehaviour
         
         var speech = instance.GetComponent<PetSpeech>();
         if (speech != null) speech.enabled = false;
-    }
 
+        var drag = instance.GetComponent<CharacterDragHandler>();
+        if (drag != null) drag.enabled = false;
+    }
     private void ClearRow()
     {
         foreach (var go in row) if (go != null) Destroy(go);

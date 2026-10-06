@@ -62,9 +62,11 @@ public class StripWalker : MonoBehaviour
                              "Va a caminar todo el tiempo.");
     }
 
+    public bool IsPaused { get; set; }
     private void Update()
     {
         if (cam == null) return;
+        if (IsPaused) return;
         if (!ShouldWalk()) return;
 
         transform.position += Vector3.right * (direction * speed * Time.deltaTime);
