@@ -66,6 +66,7 @@ Assets/
     Desktop/              ventana, transparencia, barra de tareas        [Serka]
     Speech/               frases y globo de diálogo                       [Joch]
     App/                  bandeja del sistema, settings, preferencias     [Joch]
+    Update/               actualización automática desde GitHub
   Settings/               InputSystem_Actions y afines
 ```
 
@@ -201,6 +202,115 @@ tiene otra forma de cerrarse ni de cambiar settings. Los reemplaza el menú del
 icono de bandeja.
 
 ---
+---
+
+## Buildear y repartir
+
+**El build va por `Tools > CosmereIdle > Buildear`, no por la ventana de Build
+Profiles.** El menú hace dos cosas que a mano se olvidan:
+
+- Pasa la lista de escenas a mano (`Main.unity` y nada más). La lista del
+  proyecto ya se ensució una vez con `Menu.unity` y a partir de ahí el build
+  salía distinto según quién lo hacía.
+- Antes de compilar revisa los ajustes de los que depende la ventana
+  transparente. Si alguno está mal **corta y no buildea**: un build con esos
+  ajustes mal compila igual, pero se ve con el fondo negro, y no hay forma de
+  enterarse hasta correr el `.exe`.
+
+Si corta, `Tools > CosmereIdle > Arreglar ajustes de ventana` los deja bien.
+Es un menú aparte a propósito: cambiar Player Settings por atrás de quien
+apretó "buildear" es el tipo de sorpresa que después nadie entiende.
+
+Queda un ajuste que el chequeo **no** puede ver, porque vive en la escena y no
+en Player Settings: la Main Camera tiene que estar en Solid Color con alpha 0 y
+con HDR apagado.
+
+### Instalador
+
+`Installer/CosmereIdle.iss`. **Lo compila el mismo `Buildear`** al terminar
+el build, y sale en `Installer/Output/`. Para eso quien buildea necesita
+[Inno Setup](https://jrsoftware.org/isdl.php) 6.3 o más nuevo instalado; el
+menú lo busca solo, esté instalado para todos o solo para el usuario. Si no
+está, el build del juego sale igual y avisa que falta el instalador.
+
+Si el build ya está hecho y solo querés rearmar el instalador:
+`Tools > CosmereIdle > Compilar solo el instalador`.
+
+Instala **sin pedir administrador**, en la carpeta del usuario. Para un juego
+fan sin firma digital eso importa: un instalador que abre el cartel de UAC
+espanta a la mitad de la gente.
+
+El número de versión sale de Player Settings: el build escribe
+`Installer/Version.iss` y el `.iss` lo incluye. No se toca a mano.
+
+`Installer/Disclaimer.txt` tiene el aviso de contenido fan que exige la
+política de Dragonsteel, y el instalador lo muestra antes de instalar.
+
+### Publicar una versión
+
+El juego instalado se actualiza solo desde los
+[Releases de GitHub](https://github.com/SolSerki/CosmereIdle/releases). Para
+sacar una versión:
+
+1. Subí el **Version** en Player Settings (`1.0` → `1.1`).
+2. `Tools > CosmereIdle > Buildear`. Al terminar abre la carpeta con
+   `Installer/Output/CosmereIdle-1.1-setup.exe`.
+3. Creá el release con el tag **igual al Version**, con una `v` adelante, y
+   el instalador adjunto:
+
+```bash
+gh release create v1.1 "Installer/Output/CosmereIdle-1.1-setup.exe" --title "v1.1" --notes "Qué cambió"
+```
+
+   Se corre desde la carpeta del proyecto (`My project (1)`), con la
+   [CLI de GitHub](https://cli.github.com) instalada y logueada (`gh auth login`).
+   Sin `gh`, lo mismo se hace desde la web: *Releases > Draft a new release*,
+   tag `v1.1` y el `.exe` arrastrado a los adjuntos. Commiteá y pusheá antes,
+   así el tag apunta al código que tiene el instalador.
+
+El instalador **no se commitea** (`Installer/Output/` está en el `.gitignore`):
+va adjunto al release, que es de donde lo baja el juego.
+
+**Qué pasa del lado del jugador** (`Scripts/Update/`):
+
+- **Al abrir el juego**, si hay versión nueva, se baja e instala sola: el juego
+  se cierra, el instalador corre en silencio y lo vuelve a abrir. Una mascota
+  avisa "me actualizo, ya vuelvo".
+- **Con el juego abierto** revisa cada 6 horas, y si aparece una versión **solo
+  avisa**: una mascota lo dice en un globo y aparece un icono amarillo que late
+  en la esquina. Click ahí actualiza en el momento. Si no, se instala en el
+  próximo inicio.
+
+Detalles que importan:
+
+- **El tag tiene que coincidir con el Version del build.** Si publicás
+  `v1.2` con un build que adentro dice `1.1`, el juego instala, vuelve a
+  arrancar, se ve en `1.1` y cree que sigue habiendo versión nueva. Para que
+  eso no se vuelva un loop de cerrar y reabrir, la instalación automática se
+  intenta **una sola vez por versión**; después queda solo el aviso.
+- **El nombre del adjunto tiene que terminar en `-setup.exe`.** Es como el
+  juego lo encuentra entre los archivos del release.
+- **Solo se autoinstala la copia que vino del instalador** (la detecta por el
+  `unins000.exe` al lado). Un build suelto, como el de la carpeta `Build/`,
+  avisa igual, pero el botón abre la página del release en vez de instalar.
+  Si no fuera así, abrir el build de prueba instalaría otra copia en otro lado.
+- **En el Editor no revisa.** Para probarlo, `checkInEditor` en el prefab
+  `Updater`; aun así en el Editor nunca instala.
+- Los drafts y los pre-releases **no** cuentan: GitHub no los devuelve como
+  "latest". Sirven para subir una versión de prueba sin que le llegue a nadie.
+- El repo tiene que ser **público**: el juego consulta la API de GitHub sin
+  token.
+
+El aviso usa `PetSpeech.Say` y un botón de la esquina (`UpdateButton`, slot 3).
+Cuando exista el menú de la bandeja, el botón se puede reemplazar por una
+entrada ahí sin tocar `GitHubUpdater`, que no tiene UI propia.
+
+### No existe el "exe único"
+
+El `.exe` son ~600 KB de lanzador; el juego vive en `_Data`, `UnityPlayer.dll`
+y `MonoBleedingEdge`, al lado. Sacarlo de la carpeta no arranca. Para repartir:
+zip (lo que espera itch.io) o el instalador.
+
 
 ## Lo que NO estamos haciendo todavía
 
