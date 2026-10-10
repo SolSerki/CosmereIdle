@@ -161,8 +161,41 @@ cambiar de escena:
 
 | Forma | Qué es | Quién la pide |
 |---|---|---|
-| `Strip` | Franja del ancho de la pantalla, 200 px de alto, apoyada sobre la barra de tareas | Es la forma por defecto; vuelve con `SetStrip()` al confirmar |
+| `Strip` | Franja donde caminan las mascotas. Por defecto ocupa el ancho de la pantalla, mide 200 px de alto y va apoyada sobre la barra de tareas | Es la forma por defecto; vuelve con `SetStrip()` al confirmar |
 | `Panel` | Cuadrado centrado en la pantalla | `SetPanel(lado)`, desde `CharacterPicker` al abrir la selección |
+
+### Mover y escalar la franja
+
+El jugador la acomoda desde el menú de la esquina de abajo a la derecha
+(`CornerMenu`), en **Mover y escalar** (`LayoutEditor`):
+
+- arrastrando el marco la mueve,
+- las manijas de las **cuatro esquinas** cambian el tamaño de la ventana,
+- los botones **- / +** cambian el tamaño de los personajes.
+
+**El tamaño de la ventana y el de los personajes son independientes.** La
+franja se guarda en `CosmereIdle_StageRect` y el tamaño de los personajes en
+`CosmereIdle_PetScale`. **Restablecer** devuelve la franja a la de siempre (no
+toca el tamaño de los personajes). Se puede poner encima de la barra de tareas
+y pasar de un monitor a otro. La franja automática (la que nadie tocó) crece
+con el tamaño de los personajes para que siempre entren.
+
+`DesktopWindow` piensa la franja como un **escenario** (`Stage`) anclado al
+mundo **por el piso**: el borde de abajo está siempre en `DesktopWindow.FloorY`
+(`y = -1`), mida lo que mida la ventana. Redimensionar solo cambia cuánto mundo
+se ve. Para saber dónde termina la franja se usa `DesktopWindow.StageWorldRect`,
+**no los bordes de la cámara**: la ventana puede ser más grande que la franja
+(el menú abierto pide lugar extra con `SetOverlay` si la franja es muy baja).
+
+El tamaño de los personajes va de a **0.25** (0.5x a 3x): están a 4x, así que
+cada píxel del sprite cae en un número entero de píxeles de pantalla. La
+interfaz (menú, botones) no se achica con ellos: lleva `DesktopWindow.UiScale`.
+
+Los botones de la app (`DebugIconButton`) ya no van en la esquina de arriba en
+la franja: los acomoda el `CornerMenu` como filas del menú, ordenados por
+`slot` (el más alto arriba). Los avisos (`PinnedNextToLauncher`, hoy solo
+actualizaciones) van sueltos al lado del botón del menú. En el panel siguen
+igual que antes.
 
 No se cambia de escena a propósito: la ventana transparente se configura sobre
 la cámara de `Main`, así que cargar otra escena destruiría esa cámara y habría
@@ -174,7 +207,7 @@ partir de su cuadrícula, para que sumar personajes no se coma el borde.
 ### Pixel perfect
 
 ```
-orthographicSize = altoDeLaVentana / (2 × pixelsPerUnit)
+orthographicSize = altoDeLaVentana / (2 × pixelsPerUnit × tamañoDeLosPersonajes)
 ```
 
 **Nadie toca `orthographicSize` a mano.** Lo fija `DesktopWindow` cada vez que
@@ -182,10 +215,12 @@ la ventana cambia de forma, porque el alto de la ventana y el zoom de la cámara
 son la misma decisión: si se tocan por separado, el pixel art deja de caer
 sobre la grilla de píxeles de la pantalla y tiembla al moverse.
 
-El efecto secundario bueno es que **una unidad de mundo siempre mide 100 px en
-pantalla**, en la franja y en el panel. Por eso los personajes y los botones se
-ven exactamente del mismo tamaño en los dos, aunque las ventanas midan
-distinto: 200 px de alto → `1.0`, 640 px → `3.2`.
+El efecto secundario bueno es que **a escala 1 una unidad de mundo mide 100 px
+en pantalla**, en la franja y en el panel. Por eso los personajes y los botones
+se ven exactamente del mismo tamaño en los dos, aunque las ventanas midan
+distinto: 200 px de alto → `1.0`, 640 px → `3.2`. Si el jugador cambia el
+tamaño de los personajes, una unidad mide `100 × tamaño` px; el panel va
+siempre a tamaño 1.
 
 ---
 

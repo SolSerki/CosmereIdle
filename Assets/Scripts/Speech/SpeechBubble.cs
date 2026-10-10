@@ -80,7 +80,14 @@ public class SpeechBubble : MonoBehaviour
 
         // Que no se salga por los costados de la franja.
         var cam = Camera.main;
-        if (cam != null)
+        DesktopWindow window = DesktopWindow.Instance;
+        if (window != null)
+        {
+            Rect stage = window.StageWorldRect;
+            float halfBubble = background.size.x * 0.5f;
+            p.x = Mathf.Clamp(p.x, stage.xMin + halfBubble + 0.05f, stage.xMax - halfBubble - 0.05f);
+        }
+        else if (cam != null)
         {
             float halfBubble = background.size.x * 0.5f;
             float limit = cam.orthographicSize * cam.aspect - halfBubble - 0.05f;

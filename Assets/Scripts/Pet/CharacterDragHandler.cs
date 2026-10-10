@@ -46,6 +46,13 @@ public class CharacterDragHandler : MonoBehaviour
 
         Vector3 mouseWorld = window.CursorWorldPosition;
 
+        // Mientras se acomoda la franja, arrastrar es mover la franja entera.
+        if (LayoutEditor.IsEditing)
+        {
+            if (isHolding) EndDrag(window);
+            return;
+        }
+
         // Clic inicial sobre el personaje
         if (window.LeftPressedThisFrame && body.OverlapPoint(mouseWorld))
         {
@@ -78,10 +85,11 @@ public class CharacterDragHandler : MonoBehaviour
             {
                 float targetX = mouseWorld.x + dragOffset.x;
 
-                // Límites de la cámara en la franja
-                float halfWidth = cam.orthographicSize * cam.aspect;
-                float left = cam.transform.position.x - halfWidth + edgePadding;
-                float right = cam.transform.position.x + halfWidth - edgePadding;
+                // Límites de la franja (no de la cámara: con el menú de la
+                // esquina abierto la ventana puede ser más ancha)
+                Rect stage = window.StageWorldRect;
+                float left = stage.xMin + edgePadding;
+                float right = stage.xMax - edgePadding;
 
                 float clampedX = Mathf.Clamp(targetX, left, right);
 

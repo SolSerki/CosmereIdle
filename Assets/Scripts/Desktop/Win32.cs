@@ -200,6 +200,11 @@ internal static class Win32
     }
 
     // --- Gestión de Monitores ---
+    /// <summary>
+    /// X/Y/Width/Height son el area de trabajo (sin la barra de tareas).
+    /// Full es el monitor entero: es donde se puede poner la franja a mano,
+    /// incluso encima de la barra de tareas.
+    /// </summary>
     public struct MonitorArea
     {
         public int Index;
@@ -207,6 +212,7 @@ internal static class Win32
         public int Y;
         public int Width;
         public int Height;
+        public RectInt Full;
     }
 
 
@@ -244,7 +250,9 @@ internal static class Win32
                 X = mi.rcWork.left,
                 Y = mi.rcWork.top,
                 Width = mi.rcWork.right - mi.rcWork.left,
-                Height = mi.rcWork.bottom - mi.rcWork.top
+                Height = mi.rcWork.bottom - mi.rcWork.top,
+                Full = new RectInt(mi.rcMonitor.left, mi.rcMonitor.top,
+                                   mi.rcMonitor.Width, mi.rcMonitor.Height)
             });
             }
             return true;

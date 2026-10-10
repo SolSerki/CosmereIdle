@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using TMPro; // Requerido para TextMeshPro
 
 /// <summary>
@@ -41,15 +44,45 @@ public class CharacterPicker : MonoBehaviour
 
     [Header("Scroll de Personajes")]
     [SerializeField] private int maxVisibleRows = 2;
-    [SerializeField] private float arrowOffset = 0.5f; 
-    [SerializeField] private GameObject upArrowCollider;
-    [SerializeField] private GameObject downArrowCollider;
+    [Tooltip("Cuantas filas tarda en desvanecerse un personaje que sale del area visible.")]
+    [SerializeField] private float edgeFadeRows = 0.6f;
+    [Tooltip("Filas que avanza cada muesca de la rueda del mouse.")]
+    [SerializeField] private float wheelRowsPerNotch = 0.5f;
+    [Tooltip("Que tan rapido alcanza el scroll a la rueda. Mas alto = mas seco.")]
+    [SerializeField] private float scrollSmoothing = 14f;
+
+    [Header("Barra de scroll")]
+    [Tooltip("Riel de la barra. Necesita SpriteRenderer y BoxCollider2D: click en el riel salta ahi.")]
+    [FormerlySerializedAs("upArrowCollider")]
+    [SerializeField] private GameObject scrollTrack;
+    [Tooltip("Manija de la barra. Necesita SpriteRenderer y BoxCollider2D.")]
+    [FormerlySerializedAs("downArrowCollider")]
+    [SerializeField] private GameObject scrollThumb;
+    [SerializeField] private float scrollbarWidth = 0.12f;
+    [Tooltip("Ancho extra del collider para que la barra sea facil de agarrar.")]
+    [SerializeField] private float scrollbarGrabWidth = 0.36f;
+    [Tooltip("Distancia entre el borde de la cuadricula y la barra.")]
+    [SerializeField] private float scrollbarGap = 0.08f;
+    [Tooltip("Distancia minima entre la barra y el borde del panel.")]
+    [SerializeField] private float scrollbarMargin = 0.2f;
+    [SerializeField] private float minThumbHeight = 0.4f;
+    [Tooltip("Lugar que ocupa el nombre debajo de los pies; la barra baja hasta ahi.")]
+    [SerializeField] private float labelBand = 0.4f;
+    [SerializeField] private Color trackColor = new Color(1f, 1f, 1f, 0.1f);
+    [SerializeField] private Color thumbColor = new Color(1f, 1f, 1f, 0.4f);
+    [SerializeField] private Color thumbActiveColor = new Color(1f, 1f, 1f, 0.75f);
 
     public bool IsPicking { get; private set; }
     public int SelectedCount => selected.Count;
 
+    // Todas estas listas van por casillero de la cuadricula. displayOrder
+    // traduce casillero -> indice en `characters`, que es lo que se guarda.
+    private readonly List<int> displayOrder = new List<int>();
     private readonly List<GameObject> row = new List<GameObject>();
+    private readonly List<SpriteRenderer> rowSprites = new List<SpriteRenderer>();
+    private readonly List<TextMeshPro> rowLabels = new List<TextMeshPro>();
     private readonly List<Vector2> cellFeet = new List<Vector2>();
+    private readonly List<float> visibility = new List<float>();
     private readonly List<GameObject> markers = new List<GameObject>();
     private readonly List<GameObject> pets = new List<GameObject>();
     private readonly HashSet<int> selected = new HashSet<int>();
@@ -57,9 +90,25 @@ public class CharacterPicker : MonoBehaviour
     private GameObject panel;
     private Camera cam;
 
-    private int currentRowOffset = 0; 
     private int totalRows = 0;
+    private int visibleRows = 1;
     private int currentColumns = 1;
+    private float topFeetY;
+
+    // El scroll se mide en filas: 0 es la primera fila arriba de todo,
+    // MaxScroll es la ultima abajo de todo. Es continuo para que la lista
+    // pueda quedar a mitad de camino entre dos filas.
+    private float scroll;
+    private float targetScroll;
+    private float appliedScroll = float.NaN;
+    private float MaxScroll => Mathf.Max(0, totalRows - visibleRows);
+    private bool CanScroll => MaxScroll > 0;
+
+    private float trackTop;
+    private float trackBottom;
+    private float thumbHeight;
+    private bool draggingThumb;
+    private float thumbGrabOffset;
 
     private void Awake()
     {
@@ -78,48 +127,131 @@ public class CharacterPicker : MonoBehaviour
         if (!IsPicking) return;
 
         DesktopWindow window = DesktopWindow.Instance;
-        if (window == null || !window.LeftPressedThisFrame) return;
+        if (window == null) return;
 
-        foreach (var hit in Physics2D.OverlapPointAll(window.CursorWorldPosition))
+        if (window.LeftPressedThisFrame) HandlePress(window);
+
+        if (draggingThumb)
         {
-            if (upArrowCollider != null && hit.transform == upArrowCollider.transform)
+            if (window.IsLeftDown) DragThumb(window);
+            else EndThumbDrag();
+        }
+        else
+        {
+            ReadWheel(window);
+        }
+
+        scroll = Mathf.Lerp(scroll, targetScroll, 1f - Mathf.Exp(-scrollSmoothing * Time.unscaledDeltaTime));
+        if (Mathf.Abs(scroll - targetScroll) < 0.001f) scroll = targetScroll;
+
+        if (scroll != appliedScroll) UpdateGridPositions();
+        UpdateThumbColor(window);
+    }
+
+    private void HandlePress(DesktopWindow window)
+    {
+        Vector3 cursor = window.CursorWorldPosition;
+        var hits = Physics2D.OverlapPointAll(cursor);
+
+        // La barra va primero: su collider es mas ancho que el dibujo y puede
+        // pisar el borde de la cuadricula.
+        if (CanScroll)
+        {
+            foreach (var hit in hits)
             {
-                if (currentRowOffset > 0)
+                if (IsPartOf(hit, scrollThumb))
                 {
-                    currentRowOffset--;
-                    UpdateGridPositions();
+                    BeginThumbDrag(window, cursor.y - scrollThumb.transform.position.y);
+                    return;
                 }
-                return;
             }
 
-            if (downArrowCollider != null && hit.transform == downArrowCollider.transform)
+            foreach (var hit in hits)
             {
-                if (currentRowOffset < totalRows - maxVisibleRows)
+                if (IsPartOf(hit, scrollTrack))
                 {
-                    currentRowOffset++;
-                    UpdateGridPositions();
+                    // Click en el riel: la manija salta debajo del cursor y
+                    // queda agarrada, asi se puede seguir arrastrando.
+                    BeginThumbDrag(window, 0f);
+                    DragThumb(window);
+                    return;
                 }
-                return;
             }
+        }
 
+        foreach (var hit in hits)
+        {
             for (int i = 0; i < row.Count; i++)
             {
-                if (row[i] == null || !row[i].activeSelf) continue;
+                // Un personaje que esta saliendo del area no se puede elegir:
+                // se ve a medias y probablemente el click era para otro.
+                if (row[i] == null || !row[i].activeSelf || visibility[i] < 0.5f) continue;
 
-                if (hit.transform == row[i].transform || hit.transform.IsChildOf(row[i].transform))
+                if (IsPartOf(hit, row[i]))
                 {
-                    Toggle(i);
+                    Toggle(displayOrder[i]);
                     return;
                 }
             }
         }
     }
 
+    private static bool IsPartOf(Collider2D hit, GameObject target) =>
+        target != null && (hit.transform == target.transform || hit.transform.IsChildOf(target.transform));
+
+    private void BeginThumbDrag(DesktopWindow window, float grabOffset)
+    {
+        draggingThumb = true;
+        thumbGrabOffset = grabOffset;
+        // Si el cursor se sale del panel mientras arrastra, la ventana tiene
+        // que seguir capturando el mouse; si no, el soltar se va al escritorio.
+        window.IsDraggingContent = true;
+    }
+
+    private void EndThumbDrag()
+    {
+        if (!draggingThumb) return;
+        draggingThumb = false;
+
+        DesktopWindow window = DesktopWindow.Instance;
+        if (window != null) window.IsDraggingContent = false;
+    }
+
+    private void DragThumb(DesktopWindow window)
+    {
+        float highest = trackTop - thumbHeight * 0.5f;
+        float lowest = trackBottom + thumbHeight * 0.5f;
+        if (highest - lowest <= 0f) return;
+
+        float thumbY = window.CursorWorldPosition.y - thumbGrabOffset;
+        float t = Mathf.InverseLerp(highest, lowest, thumbY);
+
+        // Arrastrando no se suaviza: la lista tiene que ir pegada a la mano.
+        targetScroll = scroll = t * MaxScroll;
+    }
+
+    private void ReadWheel(DesktopWindow window)
+    {
+        if (!CanScroll || !window.CursorOverContent) return;
+
+        Mouse mouse = Mouse.current;
+        if (mouse == null) return;
+
+        float wheel = mouse.scroll.ReadValue().y;
+        if (wheel == 0f) return;
+
+        // Segun la plataforma una muesca llega como 120 o como 1. Los
+        // touchpads mandan valores chicos y continuos, que se usan tal cual.
+        float notches = Mathf.Abs(wheel) >= 30f ? wheel / 120f : wheel;
+        targetScroll = Mathf.Clamp(targetScroll - notches * wheelRowsPerNotch, 0f, MaxScroll);
+    }
+
     public void ShowPicker()
     {
         ClearPets();
         ClearRow();
-        currentRowOffset = 0;
+        scroll = targetScroll = 0f;
+        appliedScroll = float.NaN;
 
         int count = characters != null ? characters.Length : 0;
         if (count == 0)
@@ -130,15 +262,20 @@ public class CharacterPicker : MonoBehaviour
 
         currentColumns = gridColumns > 0 ? gridColumns : Mathf.CeilToInt(Mathf.Sqrt(count));
         totalRows = Mathf.CeilToInt(count / (float)currentColumns);
-
-        int visibleRowsForWindow = Mathf.Min(totalRows, maxVisibleRows);
+        visibleRows = Mathf.Clamp(totalRows, 1, Mathf.Max(1, maxVisibleRows));
 
         float gridWidth = currentColumns * cellSize.x;
-        float gridHeight = (visibleRowsForWindow - 1) * cellSize.y + markerHeight;
+        float gridHeight = (visibleRows - 1) * cellSize.y + markerHeight;
         float contentHeight = gridHeight + menuBand;
 
-        float side = Mathf.Max(gridWidth + panelPadding.x * 2f,
-                               contentHeight + panelPadding.y * 2f);
+        // La barra va a la derecha de la cuadricula. Para que la cuadricula
+        // siga centrada, el lugar que ocupa se reserva de los dos lados.
+        float halfWidth = gridWidth * 0.5f + panelPadding.x;
+        if (CanScroll)
+            halfWidth = Mathf.Max(halfWidth,
+                gridWidth * 0.5f + scrollbarGap + scrollbarWidth + scrollbarMargin);
+
+        float side = Mathf.Max(halfWidth * 2f, contentHeight + panelPadding.y * 2f);
 
         DesktopWindow window = DesktopWindow.Instance;
         if (window != null)
@@ -146,22 +283,128 @@ public class CharacterPicker : MonoBehaviour
 
         ShowPanel(side);
 
+        float contentBottom = -contentHeight * 0.5f;
+        topFeetY = contentBottom + menuBand + (visibleRows - 1) * cellSize.y;
+        float bottomFeetY = topFeetY - (visibleRows - 1) * cellSize.y;
+        trackTop = topFeetY + markerHeight;
+        trackBottom = bottomFeetY - labelBand;
+        LayoutScrollbar(gridWidth * 0.5f + scrollbarGap + scrollbarWidth * 0.5f);
+
+        // Se muestran en orden alfabetico, pero la seleccion se sigue guardando
+        // por indice de `characters`: reordenar el array romperia la eleccion
+        // guardada de quien ya tenia personajes elegidos.
+        displayOrder.Clear();
+        displayOrder.AddRange(Enumerable.Range(0, count)
+            .OrderBy(i => DisplayName(characters[i].name), StringComparer.CurrentCultureIgnoreCase));
+
         // Instanciar personajes y crear su texto abajo
-        for (int i = 0; i < count; i++)
+        foreach (int c in displayOrder)
         {
-            var instance = Instantiate(characters[i], Vector3.zero, Quaternion.identity, transform);
-            instance.name = characters[i].name;
+            var instance = Instantiate(characters[c], Vector3.zero, Quaternion.identity, transform);
+            instance.name = characters[c].name;
             Freeze(instance);
-            
+
             // Creamos el texto hijo para el nombre del personaje
-            CreateNameLabel(instance, characters[i].name);
+            CreateNameLabel(instance, characters[c].name);
 
             row.Add(instance);
+            rowSprites.Add(instance.GetComponent<SpriteRenderer>());
+            rowLabels.Add(instance.GetComponentInChildren<TextMeshPro>());
             cellFeet.Add(Vector2.zero);
+            visibility.Add(1f);
+            markers.Add(null);
         }
 
         IsPicking = true;
         UpdateGridPositions();
+    }
+
+    /// <summary>
+    /// Ubica y dimensiona el riel una sola vez por apertura. La manija se
+    /// mueve despues, en <see cref="UpdateScrollbar"/>.
+    /// </summary>
+    private void LayoutScrollbar(float x)
+    {
+        bool show = CanScroll;
+        if (scrollTrack != null) scrollTrack.SetActive(show);
+        if (scrollThumb != null) scrollThumb.SetActive(show);
+        if (!show) return;
+
+        float trackLength = trackTop - trackBottom;
+        thumbHeight = Mathf.Clamp(trackLength * visibleRows / totalRows, minThumbHeight, trackLength);
+
+        if (scrollTrack != null)
+        {
+            scrollTrack.transform.position = new Vector3(x, (trackTop + trackBottom) * 0.5f, 0f);
+            SizeBar(scrollTrack, trackLength, trackColor);
+        }
+
+        if (scrollThumb != null)
+        {
+            scrollThumb.transform.position = new Vector3(x, trackTop - thumbHeight * 0.5f, 0f);
+            SizeBar(scrollThumb, thumbHeight, thumbColor);
+        }
+    }
+
+    private void SizeBar(GameObject bar, float height, Color color)
+    {
+        // Se estira con la escala y no con drawMode Sliced: el sprite cuadrado
+        // no esta importado como Full Rect y Sliced se queja.
+        var sprite = bar.GetComponent<SpriteRenderer>();
+        if (sprite == null || sprite.sprite == null) return;
+
+        sprite.drawMode = SpriteDrawMode.Simple;
+        sprite.color = color;
+
+        Vector2 native = sprite.sprite.bounds.size;
+        var scale = new Vector3(scrollbarWidth / native.x, height / native.y, 1f);
+        bar.transform.localScale = scale;
+
+        // El collider vive en espacio local, asi que se divide por la escala.
+        var box = bar.GetComponent<BoxCollider2D>();
+        if (box != null)
+        {
+            box.offset = Vector2.zero;
+            box.size = new Vector2(Mathf.Max(scrollbarWidth, scrollbarGrabWidth) / scale.x, native.y);
+        }
+    }
+
+    private void UpdateScrollbar()
+    {
+        if (!CanScroll || scrollThumb == null) return;
+
+        float t = scroll / MaxScroll;
+        float highest = trackTop - thumbHeight * 0.5f;
+        float lowest = trackBottom + thumbHeight * 0.5f;
+
+        Vector3 p = scrollThumb.transform.position;
+        scrollThumb.transform.position = new Vector3(p.x, Mathf.Lerp(highest, lowest, t), p.z);
+    }
+
+    private void UpdateThumbColor(DesktopWindow window)
+    {
+        if (!CanScroll || scrollThumb == null) return;
+
+        var sprite = scrollThumb.GetComponent<SpriteRenderer>();
+        if (sprite == null) return;
+
+        var box = scrollThumb.GetComponent<Collider2D>();
+        bool hovering = box != null && box.OverlapPoint(window.CursorWorldPosition);
+        sprite.color = draggingThumb || hovering ? thumbActiveColor : thumbColor;
+    }
+
+    /// <summary>
+    /// El nombre que ve el jugador. Limpia nombres técnicos como
+    /// "Joch_Spritesheet_0" -> "Joch".
+    /// </summary>
+    private static string DisplayName(string rawName)
+    {
+        string cleanName = rawName.Replace("(Clone)", "").Trim();
+        if (cleanName.Contains("_"))
+        {
+            cleanName = cleanName.Split('_')[0];
+        }
+        return cleanName;
     }
 
     /// <summary>
@@ -175,12 +418,7 @@ public class CharacterPicker : MonoBehaviour
     /// </summary>
     private void CreateNameLabel(GameObject parent, string rawName)
     {
-        // 1. Limpiamos nombres técnicos como "Joch_Spritesheet_0" -> "Joch"
-        string cleanName = rawName.Replace("(Clone)", "").Trim();
-        if (cleanName.Contains("_"))
-        {
-            cleanName = cleanName.Split('_')[0];
-        }
+        string cleanName = DisplayName(rawName);
 
         GameObject textObj = new GameObject("CharacterNameLabel");
         textObj.transform.SetParent(parent.transform, false);
@@ -213,26 +451,26 @@ public class CharacterPicker : MonoBehaviour
     private void UpdateGridPositions()
     {
         int count = row.Count;
-        int visibleRows = Mathf.Min(totalRows, maxVisibleRows);
-        
-        float gridHeight = (visibleRows - 1) * cellSize.y + markerHeight;
-        float contentHeight = gridHeight + menuBand;
-        float contentBottom = -contentHeight * 0.5f;
-        float topFeetY = contentBottom + menuBand + (visibleRows - 1) * cellSize.y;
 
         for (int i = 0; i < count; i++)
         {
             int rowIndex = i / currentColumns;
             int column = i % currentColumns;
 
-            if (rowIndex < currentRowOffset || rowIndex >= currentRowOffset + maxVisibleRows)
-            {
-                row[i].SetActive(false);
-                continue;
-            }
+            // Cuanto se paso la fila del area visible, en filas. Adentro es 0;
+            // a medida que sale se desvanece, y del todo afuera se apaga para
+            // que su collider no se coma clicks.
+            float relativeRow = rowIndex - scroll;
+            float outside = Mathf.Max(0f, Mathf.Max(-relativeRow, relativeRow - (visibleRows - 1)));
+            float alpha = edgeFadeRows > 0f
+                ? Mathf.Clamp01(1f - outside / edgeFadeRows)
+                : (outside > 0f ? 0f : 1f);
+            visibility[i] = alpha;
 
-            row[i].SetActive(true);
-            int relativeRow = rowIndex - currentRowOffset;
+            bool shown = alpha > 0f;
+            if (row[i].activeSelf != shown) row[i].SetActive(shown);
+            if (!shown) continue;
+
             int inThisRow = Mathf.Min(currentColumns, count - rowIndex * currentColumns);
 
             var feet = new Vector2(
@@ -243,19 +481,8 @@ public class CharacterPicker : MonoBehaviour
             cellFeet[i] = feet;
         }
 
-        if (upArrowCollider != null) 
-        {
-            upArrowCollider.SetActive(currentRowOffset > 0);
-            upArrowCollider.transform.position = new Vector3(0f, topFeetY + markerHeight + arrowOffset, 0f);
-        }
-        
-        if (downArrowCollider != null) 
-        {
-            downArrowCollider.SetActive(currentRowOffset < totalRows - maxVisibleRows);
-            float bottomFeetY = topFeetY - (visibleRows - 1) * cellSize.y;
-            downArrowCollider.transform.position = new Vector3(0f, bottomFeetY - arrowOffset, 0f);
-        }
-
+        appliedScroll = scroll;
+        UpdateScrollbar();
         RefreshIndicators();
     }
 
@@ -289,37 +516,58 @@ public class CharacterPicker : MonoBehaviour
         SpawnPets();
     }
 
+    /// <summary>
+    /// Tiñe cada personaje segun si esta elegido y cuanto se ve, y acomoda su
+    /// marcador. Corre en cada frame de scroll, asi que los marcadores no se
+    /// recrean: cada personaje tiene el suyo y se prende o se apaga.
+    /// </summary>
     private void RefreshIndicators()
     {
-        foreach (var m in markers) if (m != null) Destroy(m);
-        markers.Clear();
+        Color markerColor = Color.white;
+        var markerSprite = selectionMarker != null ? selectionMarker.GetComponent<SpriteRenderer>() : null;
+        if (markerSprite != null) markerColor = markerSprite.color;
 
         for (int i = 0; i < row.Count; i++)
         {
             if (row[i] == null) continue;
 
-            bool on = selected.Contains(i);
-            var sprite = row[i].GetComponent<SpriteRenderer>();
-            if (sprite != null) sprite.color = on ? Color.white : unselectedTint;
+            bool on = selected.Contains(displayOrder[i]);
+            Color tint = on ? Color.white : unselectedTint;
+            tint.a *= visibility[i];
+
+            if (rowSprites[i] != null) rowSprites[i].color = tint;
 
             // También podemos atenuar el texto si el personaje no está seleccionado
-            var label = row[i].GetComponentInChildren<TextMeshPro>();
-            if (label != null)
-                label.color = on ? Color.white : unselectedTint;
+            if (rowLabels[i] != null) rowLabels[i].color = tint;
 
-            if (!on || selectionMarker == null || i >= cellFeet.Count || !row[i].activeSelf) continue;
+            if (!on || selectionMarker == null || !row[i].activeSelf)
+            {
+                if (markers[i] != null) markers[i].SetActive(false);
+                continue;
+            }
 
-            var marker = Instantiate(selectionMarker,
-                new Vector3(cellFeet[i].x, cellFeet[i].y + markerHeight, 0f),
-                Quaternion.identity, transform);
-            markers.Add(marker);
+            if (markers[i] == null)
+                markers[i] = Instantiate(selectionMarker, transform);
+
+            var marker = markers[i];
+            marker.SetActive(true);
+            marker.transform.position = new Vector3(cellFeet[i].x, cellFeet[i].y + markerHeight, 0f);
+
+            var sprite = marker.GetComponent<SpriteRenderer>();
+            if (sprite != null)
+            {
+                Color c = markerColor;
+                c.a *= visibility[i];
+                sprite.color = c;
+            }
         }
     }
 
     private void SpawnPets()
     {
         ClearPets();
-        var chosen = selected.Where(i => i >= 0 && i < characters.Length).OrderBy(i => i).ToList();
+        // En la franja salen en el mismo orden que en la lista.
+        var chosen = displayOrder.Where(i => selected.Contains(i)).ToList();
         float floorY = FloorY();
         float start = -(chosen.Count - 1) * petSpacing * 0.5f;
 
@@ -348,13 +596,21 @@ public class CharacterPicker : MonoBehaviour
     }
     private void ClearRow()
     {
+        EndThumbDrag();
+
         foreach (var go in row) if (go != null) Destroy(go);
         row.Clear();
+        rowSprites.Clear();
+        rowLabels.Clear();
         cellFeet.Clear();
+        visibility.Clear();
         foreach (var m in markers) if (m != null) Destroy(m);
         markers.Clear();
         if (panel != null) Destroy(panel);
         panel = null;
+
+        if (scrollTrack != null) scrollTrack.SetActive(false);
+        if (scrollThumb != null) scrollThumb.SetActive(false);
     }
 
     private void ClearPets()
@@ -377,5 +633,12 @@ public class CharacterPicker : MonoBehaviour
                 selected.Add(i);
     }
 
-    private float FloorY() => cam != null ? -cam.orthographicSize : -1f;
+    // El piso es el borde de abajo de la franja, no de la camara: la ventana
+    // puede ser mas alta que la franja cuando el menu de la esquina esta abierto.
+    private float FloorY()
+    {
+        DesktopWindow window = DesktopWindow.Instance;
+        if (window != null) return window.StageWorldRect.yMin;
+        return cam != null ? -cam.orthographicSize : -1f;
+    }
 }

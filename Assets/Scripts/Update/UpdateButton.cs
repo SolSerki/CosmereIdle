@@ -43,6 +43,9 @@ public class UpdateButton : DebugIconButton
     protected override bool IsAvailable =>
         Updater != null && (Updater.State != GitHubUpdater.UpdateState.UpToDate || Updater.IsChecking);
 
+    /// <summary>Es un aviso: en la franja va al lado del menu, no escondido adentro.</summary>
+    public override bool PinnedNextToLauncher => true;
+
     protected override string TooltipText
     {
         get
@@ -110,7 +113,7 @@ public class UpdateButton : DebugIconButton
         if (startup && !announcedStartupInstall)
             phrase = $"¡Me actualizo a la {u.LatestVersion}! Ya vuelvo.";
         else if (!startup && u.State == GitHubUpdater.UpdateState.Available && announced != u.LatestVersion)
-            phrase = $"¡Salió la versión {u.LatestVersion}! Tocá el icono amarillo de arriba.";
+            phrase = $"¡Salió la versión {u.LatestVersion}! Tocá el icono amarillo de la esquina.";
 
         if (phrase == null) return;
 

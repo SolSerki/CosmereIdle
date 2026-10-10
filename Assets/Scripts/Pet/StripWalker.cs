@@ -67,18 +67,47 @@ public class StripWalker : MonoBehaviour
     {
         if (cam == null) return;
         if (IsPaused) return;
+
+        // La franja cambia de ancho en runtime (barra de tareas, o el jugador
+        // la achica): los bordes se recalculan cada frame.
+        GetWalkBounds(out float left, out float right);
+
+        // Si la franja se achico y lo dejo afuera, vuelve al borde aunque este
+        // quieto: si no, quedaria fuera de la ventana, invisible.
+        Vector3 p = transform.position;
+        if (p.x > right || p.x < left)
+        {
+            p.x = Mathf.Clamp(p.x, left, right);
+            transform.position = p;
+        }
+
         if (!ShouldWalk()) return;
 
         transform.position += Vector3.right * (direction * speed * Time.deltaTime);
 
-        // La ventana se redimensiona en runtime cuando cambia la barra de tareas,
-        // asi que el aspect puede cambiar: los bordes se recalculan cada frame.
-        float halfWidth = cam.orthographicSize * cam.aspect;
-        float left = cam.transform.position.x - halfWidth + edgePadding;
-        float right = cam.transform.position.x + halfWidth - edgePadding;
-
         if (direction > 0 && transform.position.x >= right) Turn(-1, right);
         else if (direction < 0 && transform.position.x <= left) Turn(1, left);
+    }
+
+    /// <summary>
+    /// Por donde puede caminar: el escenario de DesktopWindow, no lo que ve la
+    /// camara. La ventana puede ser mas ancha que la franja mientras el menu de
+    /// la esquina esta abierto.
+    /// </summary>
+    private void GetWalkBounds(out float left, out float right)
+    {
+        DesktopWindow window = DesktopWindow.Instance;
+        if (window != null)
+        {
+            Rect stage = window.StageWorldRect;
+            left = stage.xMin + edgePadding;
+            right = stage.xMax - edgePadding;
+            return;
+        }
+
+        float halfWidth = cam.orthographicSize * cam.aspect;
+        left = cam.transform.position.x - halfWidth + edgePadding;
+        right = cam.transform.position.x + halfWidth - edgePadding;
     }
 
     private bool ShouldWalk()
