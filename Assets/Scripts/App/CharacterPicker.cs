@@ -30,6 +30,17 @@ public class CharacterPicker : MonoBehaviour
     [SerializeField] private Color unselectedTint = new Color(1f, 1f, 1f, 0.35f);
     [SerializeField] private float markerHeight = 1.12f;
 
+    [Header("Encabezado")]
+    [Tooltip("Banner con el logo, arriba y centrado. Prefab con un SpriteRenderer.")]
+    [SerializeField] private GameObject bannerPrefab;
+
+    [Tooltip("Distancia del banner al borde de arriba del panel.")]
+    [SerializeField] private float bannerTopMargin = 0.14f;
+
+    [Tooltip("Lugar reservado arriba del panel para el banner y, debajo, el cartel de " +
+             "version (UpdateStatusLabel, que se ubica solo con su topMargin).")]
+    [SerializeField] private float headerBand = 1.15f;
+
     [Header("Etiquetas de Nombres")]
     [Tooltip("Distancia hacia abajo desde los pies del personaje para ubicar el texto.")]
     [SerializeField] private float nameOffsetY = 0.25f;
@@ -88,6 +99,7 @@ public class CharacterPicker : MonoBehaviour
     private readonly HashSet<int> selected = new HashSet<int>();
 
     private GameObject panel;
+    private GameObject banner;
     private Camera cam;
 
     private int totalRows = 0;
@@ -266,7 +278,6 @@ public class CharacterPicker : MonoBehaviour
 
         float gridWidth = currentColumns * cellSize.x;
         float gridHeight = (visibleRows - 1) * cellSize.y + markerHeight;
-        float contentHeight = gridHeight + menuBand;
 
         // La barra va a la derecha de la cuadricula. Para que la cuadricula
         // siga centrada, el lugar que ocupa se reserva de los dos lados.
@@ -275,7 +286,9 @@ public class CharacterPicker : MonoBehaviour
             halfWidth = Mathf.Max(halfWidth,
                 gridWidth * 0.5f + scrollbarGap + scrollbarWidth + scrollbarMargin);
 
-        float side = Mathf.Max(halfWidth * 2f, contentHeight + panelPadding.y * 2f);
+        // De arriba a abajo: encabezado (banner y cartel de version), la
+        // cuadricula, y la banda de los botones del menu.
+        float side = Mathf.Max(halfWidth * 2f, headerBand + gridHeight + menuBand + panelPadding.y);
 
         DesktopWindow window = DesktopWindow.Instance;
         if (window != null)
@@ -283,8 +296,13 @@ public class CharacterPicker : MonoBehaviour
 
         ShowPanel(side);
 
-        float contentBottom = -contentHeight * 0.5f;
-        topFeetY = contentBottom + menuBand + (visibleRows - 1) * cellSize.y;
+        // Si el panel quedo mas alto de lo justo (lo define el ancho), la
+        // cuadricula va centrada en el lugar que queda entre el encabezado y
+        // los botones, en vez de pegada a uno de los dos.
+        float regionTop = side * 0.5f - headerBand;
+        float regionBottom = -side * 0.5f + menuBand + panelPadding.y;
+        float gridTop = (regionTop + regionBottom + gridHeight) * 0.5f;
+        topFeetY = gridTop - markerHeight;
         float bottomFeetY = topFeetY - (visibleRows - 1) * cellSize.y;
         trackTop = topFeetY + markerHeight;
         trackBottom = bottomFeetY - labelBand;
@@ -488,12 +506,25 @@ public class CharacterPicker : MonoBehaviour
 
     private void ShowPanel(float side)
     {
-        if (panelBackground == null) return;
-        panel = Instantiate(panelBackground, Vector3.zero, Quaternion.identity, transform);
-        var sprite = panel.GetComponent<SpriteRenderer>();
-        if (sprite != null) sprite.size = new Vector2(side, side);
-        var box = panel.GetComponent<BoxCollider2D>();
-        if (box != null) box.size = new Vector2(side, side);
+        if (panelBackground != null)
+        {
+            panel = Instantiate(panelBackground, Vector3.zero, Quaternion.identity, transform);
+            var sprite = panel.GetComponent<SpriteRenderer>();
+            if (sprite != null) sprite.size = new Vector2(side, side);
+            var box = panel.GetComponent<BoxCollider2D>();
+            if (box != null) box.size = new Vector2(side, side);
+        }
+
+        if (bannerPrefab != null)
+        {
+            banner = Instantiate(bannerPrefab, transform);
+            var sprite = banner.GetComponent<SpriteRenderer>();
+            float height = sprite != null && sprite.sprite != null
+                ? sprite.sprite.bounds.size.y * banner.transform.lossyScale.y
+                : 0f;
+
+            banner.transform.position = new Vector3(0f, side * 0.5f - bannerTopMargin - height * 0.5f, 0f);
+        }
     }
 
     private void Toggle(int index)
@@ -608,6 +639,8 @@ public class CharacterPicker : MonoBehaviour
         markers.Clear();
         if (panel != null) Destroy(panel);
         panel = null;
+        if (banner != null) Destroy(banner);
+        banner = null;
 
         if (scrollTrack != null) scrollTrack.SetActive(false);
         if (scrollThumb != null) scrollThumb.SetActive(false);

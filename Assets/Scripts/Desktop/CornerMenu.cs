@@ -37,10 +37,11 @@ public class CornerMenu : MonoBehaviour
     public static CornerMenu Instance { get; private set; }
 
     [Header("Piezas")]
-    [Tooltip("Boton que abre y cierra el menu. Necesita BoxCollider2D. Se dibuja en modo Sliced.")]
+    [Tooltip("Boton que abre y cierra el menu. Necesita BoxCollider2D. Si el sprite tiene " +
+             "bordes 9-slice se estira como fondo; si no (el logo), se escala entero.")]
     [SerializeField] private SpriteRenderer launcher;
 
-    [Tooltip("Icono dentro del boton.")]
+    [Tooltip("Icono dentro del boton. Opcional: con el logo de boton no hace falta.")]
     [SerializeField] private SpriteRenderer launcherIcon;
 
     [Tooltip("Fondo del menu desplegado. Se dibuja en modo Sliced.")]
@@ -230,18 +231,37 @@ public class CornerMenu : MonoBehaviour
         if (launcher == null) return;
 
         launcher.enabled = true;
+        launcher.transform.position = launcherCenter;
+        launcher.color = hovering ? launcherHoverColor : launcherColor;
+
+        // Dos formas de boton: un fondo con bordes 9-slice (con su icono
+        // adentro), o una imagen que es el boton entero, como el logo. La
+        // imagen se escala para medir launcherSize; el fondo se estira.
+        Sprite art = launcher.sprite;
+        bool isImage = art != null && art.border == Vector4.zero;
+
+        Vector2 localSize;
+        if (isImage)
+        {
+            float fit = launcherSize / Mathf.Max(art.bounds.size.x, art.bounds.size.y);
+            launcher.drawMode = SpriteDrawMode.Simple;
+            launcher.transform.localScale = Vector3.one * (UiScale * fit);
+            localSize = art.bounds.size;
+        }
+        else
+        {
+            launcher.drawMode = SpriteDrawMode.Sliced;
+            launcher.transform.localScale = Vector3.one * UiScale;
+            launcher.size = Vector2.one * launcherSize;
+            localSize = launcher.size;
+        }
+
         if (launcherBox != null)
         {
             launcherBox.enabled = true;
-            launcherBox.size = Vector2.one * launcherSize;
+            launcherBox.size = localSize;
             launcherBox.offset = Vector2.zero;
         }
-
-        launcher.transform.localScale = Vector3.one * UiScale;
-        launcher.transform.position = launcherCenter;
-        launcher.drawMode = SpriteDrawMode.Sliced;
-        launcher.size = Vector2.one * launcherSize;
-        launcher.color = hovering ? launcherHoverColor : launcherColor;
 
         if (launcherIcon != null)
         {

@@ -278,6 +278,12 @@ espanta a la mitad de la gente.
 El número de versión sale de Player Settings: el build escribe
 `Installer/Version.iss` y el `.iss` lo incluye. No se toca a mano.
 
+El logo oficial (`Assets/Art/COSMEREARG_Logo2.png`) es el icono del `.exe`
+(Player Settings → Default Icon) y, como `Installer/CosmereIdle.ico`, el del
+instalador, los accesos directos y "Aplicaciones instaladas". El `.ico` **no
+se regenera solo**: si cambia el logo hay que volver a armarlo con todos los
+tamaños (16 a 256 px).
+
 `Installer/Disclaimer.txt` tiene el aviso de contenido fan que exige la
 política de Dragonsteel, y el instalador lo muestra antes de instalar.
 

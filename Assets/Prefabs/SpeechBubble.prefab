@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 837577011608987844}
   - component: {fileID: 3056660738723512910}
   - component: {fileID: 5532742098940265589}
+  - component: {fileID: 3327969726642798816}
   m_Layer: 0
   m_Name: SpeechBubble
   m_TagString: Untagged
@@ -85,7 +86,7 @@ SpriteRenderer:
   m_SortingOrder: 60
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 13f9d148ab5d2da4b8bf0e4177cdfa38, type: 3}
-  m_Color: {r: 0.08, g: 0.09, b: 0.12, a: 0.88}
+  m_Color: {r: 0.08, g: 0.09, b: 0.12, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -106,13 +107,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffd977801d7c85d498ed7218db87bd54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeechBubble
+  baseSortingOrder: 60
+  maxStack: 25
   background: {fileID: 3056660738723512910}
   label: {fileID: 3481202087356220747}
   tail: {fileID: 2384281461561405743}
   padding: {x: 0.18, y: 0.12}
   maxTextWidth: 2.6
   fadeSeconds: 0.12
-  baseAlpha: 0.88
+  baseAlpha: 1
+--- !u!210 &3327969726642798816
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716076718346636111}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+  m_Sort3DAs2D: 0
 --- !u!1 &6967174621826905037
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,7 +211,7 @@ SpriteRenderer:
   m_SortingOrder: 59
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: fdb2c2765eb77f047b9b6424c4155cfa, type: 3}
-  m_Color: {r: 0.08, g: 0.09, b: 0.12, a: 0.88}
+  m_Color: {r: 0.08, g: 0.09, b: 0.12, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

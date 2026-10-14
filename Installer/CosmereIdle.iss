@@ -59,6 +59,13 @@ WizardStyle=modern
 ; Aviso legal de contenido fan. Va antes de instalar, no escondido en un readme.
 InfoBeforeFile=Disclaimer.txt
 
+; Logo oficial (COSMEREARG_Logo2): en el instalador, en "Aplicaciones
+; instaladas" de Windows y en los accesos directos (ver [Icons]).
+; CosmereIdle.ico se genera desde Assets/Art/COSMEREARG_Logo2.png con todos
+; los tamaños que usa Windows; si cambia el logo, hay que regenerarlo.
+SetupIconFile=CosmereIdle.ico
+UninstallDisplayIcon={app}\CosmereIdle.ico
+
 ; El juego corre sin barra de tareas y sin alt-tab, asi que si ya esta abierto
 ; nadie lo puede cerrar a mano. Esto lo cierra solo antes de sobrescribir.
 ;
@@ -87,11 +94,17 @@ Source: "{#BuildDir}\*"; DestDir: "{app}"; \
     Flags: ignoreversion recursesubdirs createallsubdirs; \
     Excludes: "*_BurstDebugInformation_DoNotShip\*,*_BackUpThisFolder_ButDontShipItWithYourGame\*,*.pdb"
 
+; El icono va instalado al lado del juego: lo usan los accesos directos y el
+; desinstalador de Windows.
+Source: "CosmereIdle.ico"; DestDir: "{app}"; Flags: ignoreversion
+
 [Icons]
-Name: "{group}\{#AppName}"; Filename: "{app}\{#ExeName}"
+; Los accesos directos llevan el logo explicito y no el del .exe: asi se ven
+; bien aunque el build salga con otro icono.
+Name: "{group}\{#AppName}"; Filename: "{app}\{#ExeName}"; IconFilename: "{app}\CosmereIdle.ico"
 Name: "{group}\Desinstalar {#AppName}"; Filename: "{uninstallexe}"
-Name: "{autodesktop}\{#AppName}"; Filename: "{app}\{#ExeName}"; Tasks: desktopicon
-Name: "{userstartup}\{#AppName}"; Filename: "{app}\{#ExeName}"; Tasks: startupicon
+Name: "{autodesktop}\{#AppName}"; Filename: "{app}\{#ExeName}"; IconFilename: "{app}\CosmereIdle.ico"; Tasks: desktopicon
+Name: "{userstartup}\{#AppName}"; Filename: "{app}\{#ExeName}"; IconFilename: "{app}\CosmereIdle.ico"; Tasks: startupicon
 
 [Run]
 Filename: "{app}\{#ExeName}"; Description: "Abrir {#AppName} ahora"; \

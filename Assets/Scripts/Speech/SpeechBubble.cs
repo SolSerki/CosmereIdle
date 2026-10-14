@@ -1,14 +1,33 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 /// <summary>
 /// Globo de dialogo. Se estira segun el texto, sigue al personaje y se va solo.
 ///
 /// No tiene collider a proposito: es decorativo, y con uno DesktopWindow lo
 /// contaria como contenido clickeable y se comeria clicks del escritorio.
+///
+/// Cuando hay varios globos encimados (personajes superpuestos), cada uno se
+/// dibuja entero arriba del anterior: el fondo es opaco y el globo es un
+/// SortingGroup, asi el texto de uno de atras no se mezcla con el de adelante.
+/// El ultimo que aparecio queda arriba.
 /// </summary>
+[RequireComponent(typeof(SortingGroup))]
 public class SpeechBubble : MonoBehaviour
 {
+    /// <summary>Globos en pantalla, para apilarlos.</summary>
+    private static readonly List<SpeechBubble> live = new List<SpeechBubble>();
+    private static int nextLayer;
+
+    [Tooltip("Orden de dibujo del primer globo. Los siguientes van un escalon arriba cada uno. " +
+             "Tiene que quedar debajo del menu de la esquina (88).")]
+    [SerializeField] private int baseSortingOrder = 60;
+
+    [Tooltip("Cuantos globos se apilan antes de volver a empezar desde abajo.")]
+    [SerializeField] private int maxStack = 25;
+
     [SerializeField] private SpriteRenderer background;
     [SerializeField] private TextMeshPro label;
 
@@ -25,8 +44,9 @@ public class SpeechBubble : MonoBehaviour
     [Tooltip("Cuanto tarda en aparecer y en desvanecerse.")]
     [SerializeField] private float fadeSeconds = 0.12f;
 
-    [Tooltip("Opacidad del fondo cuando esta del todo visible. El texto siempre va opaco.")]
-    [SerializeField] private float baseAlpha = 0.88f;
+    [Tooltip("Opacidad del fondo cuando esta del todo visible. El texto siempre va opaco. " +
+             "En 1 a proposito: con globos encimados, uno translucido deja ver el de atras.")]
+    [SerializeField] private float baseAlpha = 1f;
 
     private Transform target;
     private float offsetY;
@@ -34,8 +54,19 @@ public class SpeechBubble : MonoBehaviour
     private float shownAt;
 
     /// <summary>Muestra una frase encima de un personaje.</summary>
+    private void OnEnable() => live.Add(this);
+    private void OnDisable() => live.Remove(this);
+
     public void Show(string phrase, Transform follow, float aboveFeet, float seconds)
     {
+        // El nuevo va arriba de todos los que estan en pantalla. Si no queda
+        // ninguno, la pila vuelve a empezar desde abajo.
+        if (live.Count <= 1) nextLayer = 0;
+        var group = GetComponent<SortingGroup>();
+        if (group == null) group = gameObject.AddComponent<SortingGroup>();
+        group.sortingOrder = baseSortingOrder + nextLayer % Mathf.Max(1, maxStack);
+        nextLayer++;
+
         target = follow;
         offsetY = aboveFeet;
         shownAt = Time.time;
@@ -78,7 +109,8 @@ public class SpeechBubble : MonoBehaviour
         p.y += offsetY;
         p.z = 0f;
 
-        // Que no se salga por los costados de la franja.
+        // Que no se salga por los costados de la franja, ni por arriba si
+        // levantaron al personaje arrastrandolo.
         var cam = Camera.main;
         DesktopWindow window = DesktopWindow.Instance;
         if (window != null)
@@ -86,6 +118,7 @@ public class SpeechBubble : MonoBehaviour
             Rect stage = window.StageWorldRect;
             float halfBubble = background.size.x * 0.5f;
             p.x = Mathf.Clamp(p.x, stage.xMin + halfBubble + 0.05f, stage.xMax - halfBubble - 0.05f);
+            p.y = Mathf.Min(p.y, stage.yMax - background.size.y * 0.5f - 0.05f);
         }
         else if (cam != null)
         {

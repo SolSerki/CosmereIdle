@@ -249,7 +249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UpdateStatusLabel
   label: {fileID: 6549981443612156711}
-  topMargin: 0.22
+  topMargin: 0.82
   normalColor: {r: 1, g: 1, b: 1, a: 0.55}
   highlightColor: {r: 1, g: 0.8, b: 0.25, a: 1}
   errorColor: {r: 1, g: 0.5, b: 0.45, a: 1}

@@ -185,6 +185,7 @@ MonoBehaviour:
   menuBand: 1
   unselectedTint: {r: 1, g: 1, b: 1, a: 0.35}
   markerHeight: 1.12
+  bannerPrefab: {fileID: 5206411878785936903, guid: d46024122f06d6f4dacb603ea51dbf8d, type: 3}
   nameOffsetY: 0.25
   nameFontSize: 2.5
   fontAsset: {fileID: 0}

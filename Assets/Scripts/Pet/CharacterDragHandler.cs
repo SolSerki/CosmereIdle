@@ -1,5 +1,11 @@
 using UnityEngine;
 
+/// <summary>
+/// Arrastrar al personaje con el mouse, en cualquier direccion dentro de la
+/// franja. Si se lo suelta en el aire, cae hasta el piso y recien ahi vuelve
+/// a caminar: StripWalker solo lo mueve de costado, asi que si no cayera se
+/// quedaria caminando en el aire.
+/// </summary>
 [RequireComponent(typeof(Collider2D))]
 public class CharacterDragHandler : MonoBehaviour
 {
@@ -12,6 +18,13 @@ public class CharacterDragHandler : MonoBehaviour
     [Tooltip("¿Orientar el sprite hacia donde se arrastra el mouse?")]
     [SerializeField] private bool orientWithDrag = true;
 
+    [Header("Caída")]
+    [Tooltip("Si al soltarlo en el aire cae hasta el piso.")]
+    [SerializeField] private bool fallToFloor = true;
+
+    [Tooltip("Aceleración de la caída, en unidades de mundo por segundo al cuadrado.")]
+    [SerializeField] private float gravity = 30f;
+
     private Camera cam;
     private SpriteRenderer sprite;
     private StripWalker walker;
@@ -20,10 +33,13 @@ public class CharacterDragHandler : MonoBehaviour
     private bool isHolding;
     private Vector3 dragOffset;
     private Vector3 startCursorWorld;
-    private float fixedY;
     private float lastPosX;
+    private float fallSpeed;
 
     public bool IsDragging { get; private set; }
+
+    /// <summary>Si esta cayendo despues de que lo soltaran en el aire.</summary>
+    public bool IsFalling { get; private set; }
 
     private void Awake()
     {
@@ -33,16 +49,15 @@ public class CharacterDragHandler : MonoBehaviour
         body = GetComponent<Collider2D>();
     }
 
-    private void Start()
-    {
-        fixedY = transform.position.y;
-    }
-
     private void Update()
     {
         DesktopWindow window = DesktopWindow.Instance;
         if (window == null) return;
         if (cam == null) cam = Camera.main;
+
+        // La caida sigue aunque se este acomodando la franja: si no, quedaria
+        // colgado en el aire hasta que el jugador termine.
+        if (IsFalling) Fall(window);
 
         Vector3 mouseWorld = window.CursorWorldPosition;
 
@@ -61,7 +76,6 @@ public class CharacterDragHandler : MonoBehaviour
             window.IsDraggingContent = true;
             startCursorWorld = mouseWorld;
             dragOffset = transform.position - mouseWorld;
-            fixedY = transform.position.y;
             lastPosX = transform.position.x;
             return;
         }
@@ -75,7 +89,14 @@ public class CharacterDragHandler : MonoBehaviour
             {
                 if (Vector2.Distance(startCursorWorld, mouseWorld) > dragDistanceThreshold)
                 {
+                    // Si lo agarran mientras cae, la caida se corta recien
+                    // aca: un click sin arrastre lo deja seguir cayendo.
+                    // Mientras se decidia, siguio cayendo: se lo agarra de
+                    // donde esta ahora para que no pegue un salto.
+                    if (IsFalling) dragOffset = transform.position - mouseWorld;
+
                     IsDragging = true;
+                    IsFalling = false;
                     if (walker != null) walker.IsPaused = true;
                 }
             }
@@ -83,20 +104,13 @@ public class CharacterDragHandler : MonoBehaviour
             // Movimiento y sincronización de dirección
             if (IsDragging)
             {
-                float targetX = mouseWorld.x + dragOffset.x;
-
-                // Límites de la franja (no de la cámara: con el menú de la
-                // esquina abierto la ventana puede ser más ancha)
-                Rect stage = window.StageWorldRect;
-                float left = stage.xMin + edgePadding;
-                float right = stage.xMax - edgePadding;
-
-                float clampedX = Mathf.Clamp(targetX, left, right);
+                Vector3 target = mouseWorld + dragOffset;
+                Vector2 clamped = ClampToStage(window, target);
 
                 // Orientar visualmente y sincronizar la dirección interna de StripWalker
                 if (orientWithDrag)
                 {
-                    float deltaX = clampedX - lastPosX;
+                    float deltaX = clamped.x - lastPosX;
 
                     if (deltaX > 0.01f)
                     {
@@ -112,8 +126,8 @@ public class CharacterDragHandler : MonoBehaviour
                     }
                 }
 
-                lastPosX = clampedX;
-                transform.position = new Vector3(clampedX, fixedY, transform.position.z);
+                lastPosX = clamped.x;
+                transform.position = new Vector3(clamped.x, clamped.y, transform.position.z);
             }
         }
         else
@@ -122,16 +136,58 @@ public class CharacterDragHandler : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Donde puede estar mientras se lo arrastra: dentro de la franja (no de la
+    /// camara: con el menu de la esquina abierto la ventana puede ser mas
+    /// ancha), con los pies entre el piso y una altura en la que la cabeza
+    /// todavia entra.
+    /// </summary>
+    private Vector2 ClampToStage(DesktopWindow window, Vector3 position)
+    {
+        Rect stage = window.StageWorldRect;
+        float height = sprite != null ? sprite.bounds.size.y : 0f;
+
+        float x = Mathf.Clamp(position.x, stage.xMin + edgePadding, stage.xMax - edgePadding);
+        float y = Mathf.Clamp(position.y, window.FloorY, Mathf.Max(window.FloorY, stage.yMax - height));
+        return new Vector2(x, y);
+    }
+
+    /// <summary>Cae con aceleracion hasta el piso y ahi vuelve a caminar.</summary>
+    private void Fall(DesktopWindow window)
+    {
+        fallSpeed += gravity * Time.deltaTime;
+
+        Vector3 p = transform.position;
+        p.y -= fallSpeed * Time.deltaTime;
+
+        if (p.y <= window.FloorY)
+        {
+            p.y = window.FloorY;
+            IsFalling = false;
+            if (walker != null) walker.IsPaused = false;
+        }
+
+        transform.position = p;
+    }
+
     private void EndDrag(DesktopWindow window)
     {
         isHolding = false;
         if (window != null) window.IsDraggingContent = false;
 
-        if (IsDragging)
+        if (!IsDragging) return;
+        IsDragging = false;
+
+        // Soltado en el aire: cae (y sigue en pausa hasta tocar el piso).
+        bool inTheAir = window != null && transform.position.y > window.FloorY + 0.001f;
+        if (fallToFloor && inTheAir)
         {
-            IsDragging = false;
-            if (walker != null) walker.IsPaused = false;
+            IsFalling = true;
+            fallSpeed = 0f;
+            return;
         }
+
+        if (walker != null) walker.IsPaused = false;
     }
 
     private void OnDisable()
