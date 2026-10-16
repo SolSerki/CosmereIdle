@@ -32,8 +32,30 @@ public class PetSpeech : MonoBehaviour
     [Tooltip("Altura del globo sobre los pies, en unidades de mundo.")]
     [SerializeField] private float bubbleHeight = 1.15f;
 
-    [Tooltip("Cuanto dura el globo en pantalla.")]
+    [Tooltip("Cuanto dura el globo en pantalla con una frase corta.")]
     [SerializeField] private float bubbleSeconds = 2.8f;
+
+    /// <summary>Desde cuantos caracteres una frase se queda mas tiempo.</summary>
+    [Serializable]
+    private struct ReadingTime
+    {
+        [Tooltip("Desde cuantos caracteres aplica (contando espacios).")]
+        public int fromCharacters;
+
+        [Tooltip("Cuantos segundos queda el globo en pantalla.")]
+        public float seconds;
+    }
+
+    [Tooltip("Frases largas: cuanto mas texto, mas tiempo queda el globo. Gana el umbral " +
+             "mas alto que la frase alcance; el orden de la lista no importa. Con menos " +
+             "caracteres que el primero, dura bubbleSeconds.")]
+    [SerializeField] private ReadingTime[] longerPhrases =
+    {
+        new ReadingTime { fromCharacters = 40, seconds = 3.2f },
+        new ReadingTime { fromCharacters = 80, seconds = 6f },
+        new ReadingTime { fromCharacters = 150, seconds = 9f },
+        new ReadingTime { fromCharacters = 220, seconds = 12f },
+    };
 
     private Collider2D body;
     private string[] clickPhrases;
@@ -81,7 +103,26 @@ public class PetSpeech : MonoBehaviour
 
         var instance = Instantiate(bubblePrefab, transform.position, Quaternion.identity);
         bubble = instance.GetComponent<SpeechBubble>();
-        bubble.Show(phrase, transform, bubbleHeight, bubbleSeconds);
+        bubble.Show(phrase, transform, bubbleHeight, SecondsFor(phrase));
+    }
+
+    /// <summary>
+    /// Cuanto tiempo tiene que quedar una frase para que se llegue a leer. Por
+    /// umbrales y no por una cuenta, para que se pueda ajustar a ojo desde el
+    /// Inspector sin pensar en caracteres por segundo.
+    /// </summary>
+    private float SecondsFor(string phrase)
+    {
+        int length = phrase.Trim().Length;
+        float seconds = bubbleSeconds;
+
+        if (longerPhrases == null) return seconds;
+
+        foreach (var threshold in longerPhrases)
+            if (length >= threshold.fromCharacters && threshold.seconds > seconds)
+                seconds = threshold.seconds;
+
+        return seconds;
     }
 
     /// <summary>

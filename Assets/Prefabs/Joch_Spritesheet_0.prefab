@@ -212,6 +212,15 @@ MonoBehaviour:
   bubblePrefab: {fileID: 1716076718346636111, guid: 1a43295e74e2ce343b8315af70695c46, type: 3}
   bubbleHeight: 1.15
   bubbleSeconds: 2.8
+  longerPhrases:
+  - fromCharacters: 40
+    seconds: 3.2
+  - fromCharacters: 80
+    seconds: 6
+  - fromCharacters: 150
+    seconds: 9
+  - fromCharacters: 220
+    seconds: 12
 --- !u!114 &-4484322165125264614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,3 +236,5 @@ MonoBehaviour:
   edgePadding: 0.3
   dragDistanceThreshold: 0.05
   orientWithDrag: 1
+  fallToFloor: 1
+  gravity: 30
