@@ -16,8 +16,11 @@ using UnityEngine;
 /// personajes pueden quedar chiquitos, pero un menu ilegible no sirve.
 ///
 /// Si la franja es muy baja para el menu abierto, le pide lugar a la ventana
-/// con SetOverlay. La ventana crece hacia arriba solo mientras el menu esta
-/// abierto; como es transparente, no se nota.
+/// con SetOverlay. La ventana crece solo mientras el menu esta abierto; como es
+/// transparente, no se nota. Normalmente se despliega hacia arriba, pero si
+/// arriba no entra en el monitor (la franja pegada al borde de arriba) se
+/// despliega hacia abajo. Nunca sale del monitor: un menu fuera de la pantalla
+/// no se puede cerrar ni usar para volver a acomodar la franja.
 /// </summary>
 [DefaultExecutionOrder(-50)]
 public class CornerMenu : MonoBehaviour
@@ -146,7 +149,7 @@ public class CornerMenu : MonoBehaviour
         {
             IsOpen = false;
             SetVisible(false, false);
-            if (window != null) window.SetOverlay(Vector2Int.zero);
+            if (window != null) window.SetOverlay(new RectInt());
             return;
         }
 
@@ -161,16 +164,13 @@ public class CornerMenu : MonoBehaviour
             stage.yMin + (margin + half) * UiScale,
             0f);
 
-        float panelWidth = rowWidth + panelPadding * 2f;
-        float panelHeight = rows.Count * rowHeight + panelPadding * 2f;
-        float panelBottom = launcherCenter.y + (half + panelGap) * UiScale;
-        float panelRight = stage.xMax - margin * UiScale;
+        float panelWidth = (rowWidth + panelPadding * 2f) * UiScale;
+        float panelHeight = (rows.Count * rowHeight + panelPadding * 2f) * UiScale;
+        panelRect = PlacePanel(window, stage, panelWidth, panelHeight, out bool opensDown);
 
-        panelRect = new Rect(
-            panelRight - panelWidth * UiScale,
-            panelBottom,
-            panelWidth * UiScale,
-            panelHeight * UiScale);
+        // Cerrar (slot 0) va siempre pegado al boton del menu: abajo de todo
+        // si se despliega hacia arriba, arriba de todo si se despliega hacia abajo.
+        if (opensDown) rows.Reverse();
 
         Vector3 cursor = window.CursorWorldPosition;
         bool overLauncher = launcherBox != null && launcherBox.OverlapPoint(cursor);
@@ -183,7 +183,7 @@ public class CornerMenu : MonoBehaviour
 
         if (rows.Count == 0) IsOpen = false;
 
-        RequestRoom(window, panelWidth, panelHeight);
+        RequestRoom(window);
         LayoutLauncher(overLauncher);
         LayoutPanel(cursor);
     }
@@ -206,24 +206,38 @@ public class CornerMenu : MonoBehaviour
     }
 
     /// <summary>
-    /// Cuanto lugar hace falta, en pixeles, desde la esquina de abajo a la
-    /// derecha del escenario. Con el menu cerrado el boton siempre entra.
+    /// Rectangulo del menu desplegado, en el mundo. Va pegado al borde derecho
+    /// de la franja, arriba del boton; si arriba no entra en el monitor y
+    /// abajo hay mas lugar, va abajo. Despues se recorta contra el monitor por
+    /// los cuatro lados, asi que nunca queda afuera.
     /// </summary>
-    private void RequestRoom(DesktopWindow window, float panelWidth, float panelHeight)
+    private Rect PlacePanel(DesktopWindow window, Rect stage, float width, float height, out bool opensDown)
     {
-        if (!IsOpen)
-        {
-            window.SetOverlay(Vector2Int.zero);
-            return;
-        }
+        Rect screen = window.DesktopToWorldRect(window.Limits);
+        float gap = (launcherSize * 0.5f + panelGap) * UiScale;
 
-        float pixelsPerUiUnit = 100f * window.UiPixelScale;
-        float width = margin + panelWidth;
-        float height = margin + launcherSize + panelGap + panelHeight;
+        float upBottom = launcherCenter.y + gap;
+        float downTop = launcherCenter.y - gap;
+        float roomUp = screen.yMax - upBottom;
+        float roomDown = downTop - screen.yMin;
+        opensDown = roomUp < height && roomDown > roomUp;
 
-        window.SetOverlay(new Vector2Int(
-            Mathf.CeilToInt(width * pixelsPerUiUnit),
-            Mathf.CeilToInt(height * pixelsPerUiUnit)));
+        float y = opensDown ? downTop - height : upBottom;
+        y = Mathf.Clamp(y, screen.yMin, Mathf.Max(screen.yMin, screen.yMax - height));
+
+        float x = stage.xMax - margin * UiScale - width;
+        x = Mathf.Clamp(x, screen.xMin, Mathf.Max(screen.xMin, screen.xMax - width));
+
+        return new Rect(x, y, width, height);
+    }
+
+    /// <summary>
+    /// Le pide a la ventana el lugar del menu desplegado. Con el menu cerrado
+    /// no pide nada: el boton esta dentro de la franja y siempre entra.
+    /// </summary>
+    private void RequestRoom(DesktopWindow window)
+    {
+        window.SetOverlay(IsOpen ? window.WorldToDesktopRect(panelRect) : new RectInt());
     }
 
     private void LayoutLauncher(bool hovering)

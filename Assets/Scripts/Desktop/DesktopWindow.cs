@@ -27,7 +27,7 @@ using UnityEngine;
 ///     propios botones y no mueve la ventana.
 ///
 /// La ventana puede ser mas grande que el escenario: el menu de la esquina pide
-/// lugar extra (SetOverlay) cuando se abre y el escenario es muy bajo. Como la
+/// lugar extra (SetOverlay) cuando se abre y no entra en el escenario. Como la
 /// ventana es transparente y click-through, ese lugar de mas no se ve.
 ///
 /// Requisitos que NO se configuran desde aca y sin los cuales esto no funciona.
@@ -126,6 +126,12 @@ public class DesktopWindow : MonoBehaviour
     /// </summary>
     public Rect StageWorldRect { get; private set; }
 
+    /// <summary>
+    /// El monitor en el que esta el escenario, en pixeles del escritorio. La
+    /// ventana nunca sale de aca, asi que nada que se dibuje afuera se ve.
+    /// </summary>
+    public RectInt Limits { get; private set; }
+
     /// <summary>Altura del piso de la franja en el mundo. No cambia nunca.</summary>
     public float FloorY => -stripHeight * 0.5f / Mathf.Max(1f, pixelsPerUnit);
 
@@ -204,9 +210,8 @@ public class DesktopWindow : MonoBehaviour
     private RectInt customRect;
     private float stageScale = 1f;
 
-    // Lugar extra que pide el menu, anclado a la esquina de abajo a la derecha
-    // del escenario.
-    private Vector2Int overlay;
+    // Lugar extra que pide el menu, en pixeles del escritorio. Vacio si no pide nada.
+    private RectInt overlay;
 
     private void Awake()
     {
@@ -376,15 +381,46 @@ public class DesktopWindow : MonoBehaviour
     }
 
     /// <summary>
-    /// Lugar extra que necesita alguien (el menu de la esquina) por encima y a
-    /// la izquierda de la esquina de abajo a la derecha del escenario, en
-    /// pixeles. Vector2Int.zero lo libera.
+    /// Lugar extra que necesita alguien (el menu de la esquina) fuera del
+    /// escenario, en pixeles del escritorio. Un rectangulo vacio lo libera.
+    /// La ventana crece para abarcarlo, pero nunca mas alla de <see cref="Limits"/>:
+    /// quien lo pide tiene que ubicarse adentro.
     /// </summary>
-    public void SetOverlay(Vector2Int sizePixels)
+    public void SetOverlay(RectInt rectPixels)
     {
-        if (overlay == sizePixels) return;
-        overlay = sizePixels;
+        if (overlay.Equals(rectPixels)) return;
+        overlay = rectPixels;
         Reposition();
+    }
+
+    /// <summary>
+    /// Pasa un rectangulo del mundo a pixeles del escritorio. Se mide contra el
+    /// escenario, que no se mueve cuando la ventana crece por el menu.
+    /// </summary>
+    public RectInt WorldToDesktopRect(Rect world)
+    {
+        float pixelsPerWorld = 1f / WorldUnitsPerPixel;
+        Rect s = StageWorldRect;
+
+        // En el escritorio la Y crece hacia abajo; en el mundo, hacia arriba.
+        int xMin = Stage.xMin + Mathf.FloorToInt((world.xMin - s.xMin) * pixelsPerWorld);
+        int xMax = Stage.xMin + Mathf.CeilToInt((world.xMax - s.xMin) * pixelsPerWorld);
+        int yMin = Stage.yMax - Mathf.CeilToInt((world.yMax - s.yMin) * pixelsPerWorld);
+        int yMax = Stage.yMax - Mathf.FloorToInt((world.yMin - s.yMin) * pixelsPerWorld);
+        return new RectInt(xMin, yMin, xMax - xMin, yMax - yMin);
+    }
+
+    /// <summary>La inversa de <see cref="WorldToDesktopRect"/>.</summary>
+    public Rect DesktopToWorldRect(RectInt pixels)
+    {
+        float unitsPerPixel = WorldUnitsPerPixel;
+        Rect s = StageWorldRect;
+
+        return new Rect(
+            s.xMin + (pixels.xMin - Stage.xMin) * unitsPerPixel,
+            s.yMin + (Stage.yMax - pixels.yMax) * unitsPerPixel,
+            pixels.width * unitsPerPixel,
+            pixels.height * unitsPerPixel);
     }
 
     private void MakeStageCustom()
@@ -538,13 +574,16 @@ public class DesktopWindow : MonoBehaviour
         RectInt stage = CalculateStage(out RectInt limits);
         RectInt target = stage;
 
-        // El menu pide lugar arriba y a la izquierda de su esquina. La ventana
-        // crece para abarcarlo, pero nunca mas alla del monitor.
-        if (Mode == WindowMode.Strip && (overlay.x > 0 || overlay.y > 0))
+        // El menu pide lugar fuera del escenario (arriba, o abajo si la franja
+        // esta pegada al borde de arriba). La ventana crece para abarcarlo,
+        // pero nunca mas alla del monitor.
+        if (Mode == WindowMode.Strip && overlay.width > 0 && overlay.height > 0)
         {
-            int xMin = Mathf.Max(limits.xMin, Mathf.Min(stage.xMin, stage.xMax - overlay.x));
-            int yMin = Mathf.Max(limits.yMin, Mathf.Min(stage.yMin, stage.yMax - overlay.y));
-            target = new RectInt(xMin, yMin, stage.xMax - xMin, stage.yMax - yMin);
+            int xMin = Mathf.Max(limits.xMin, Mathf.Min(stage.xMin, overlay.xMin));
+            int yMin = Mathf.Max(limits.yMin, Mathf.Min(stage.yMin, overlay.yMin));
+            int xMax = Mathf.Min(limits.xMax, Mathf.Max(stage.xMax, overlay.xMax));
+            int yMax = Mathf.Min(limits.yMax, Mathf.Max(stage.yMax, overlay.yMax));
+            target = new RectInt(xMin, yMin, xMax - xMin, yMax - yMin);
         }
 
         if (hwnd != IntPtr.Zero)
@@ -559,6 +598,7 @@ public class DesktopWindow : MonoBehaviour
 
         Stage = stage;
         Bounds = target;
+        Limits = limits;
         ApplyCamera(target, stage);
     }
 
