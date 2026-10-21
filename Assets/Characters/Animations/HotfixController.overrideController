@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: HotfixController
+  m_Controller: {fileID: 9100000, guid: 7da53b7bec5a97c4bb1f1b0867d0a670, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 7b087287c1d976042a5cc88900d64a06, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7221413fceab3754cb96cbb035e25d32, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 6381f82ff7e31954fb80942d773d1c83, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 283508172ae2ad44f844997918d31dfc, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: d389d61cb8c77c74ea34f0e9e7b399b4, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 6a33d59877096e54989a2b38783cadbf, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 270d806576f76dd4fb8f5da6a25988a2, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 8f88dffbbfdf86d48aaf73423cd5b193, type: 2}
