@@ -617,7 +617,7 @@ public class DesktopWindow : MonoBehaviour
         Stage = stage;
         Bounds = target;
         Limits = limits;
-        ApplyCamera(target, stage);
+        ApplyCamera(hwnd != IntPtr.Zero ? target : stage, stage);
     }
 
     /// <summary>

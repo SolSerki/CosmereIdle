@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AlortuController
+  m_Controller: {fileID: 9100000, guid: 7da53b7bec5a97c4bb1f1b0867d0a670, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: d389d61cb8c77c74ea34f0e9e7b399b4, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: d866ae55c66efe648b963faf47180d38, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 7b087287c1d976042a5cc88900d64a06, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7c27fe59dfe077f49ab5bf4f8ef94d48, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 270d806576f76dd4fb8f5da6a25988a2, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: be09a6c46624c4c45ad3f5bfdc46a7c6, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 6381f82ff7e31954fb80942d773d1c83, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 85f30dc09c0cb1443ba0722edb69edc9, type: 2}

@@ -1,0 +1,951 @@
+fileFormatVersion: 2
+guid: 9703becf1804cf34799ccdcd8b3d918a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3676006689810342580
+    second: Alortu_Spritesheet_0
+  - first:
+      213: -5368859829749343144
+    second: Alortu_Spritesheet_1
+  - first:
+      213: -1313695487755891892
+    second: Alortu_Spritesheet_2
+  - first:
+      213: 3136051801656431768
+    second: Alortu_Spritesheet_3
+  - first:
+      213: -2717651142413938152
+    second: Alortu_Spritesheet_4
+  - first:
+      213: -2938509513028376732
+    second: Alortu_Spritesheet_5
+  - first:
+      213: 907136228825809855
+    second: Alortu_Spritesheet_6
+  - first:
+      213: 5758702599980185049
+    second: Alortu_Spritesheet_7
+  - first:
+      213: -7356020278738775991
+    second: Alortu_Spritesheet_8
+  - first:
+      213: 7716813041254061855
+    second: Alortu_Spritesheet_9
+  - first:
+      213: -8706028087433633068
+    second: Alortu_Spritesheet_10
+  - first:
+      213: -6060047456801314579
+    second: Alortu_Spritesheet_11
+  - first:
+      213: -2186896596598121094
+    second: Alortu_Spritesheet_12
+  - first:
+      213: -3269627994479758537
+    second: Alortu_Spritesheet_13
+  - first:
+      213: 1552815968806856857
+    second: Alortu_Spritesheet_14
+  - first:
+      213: 3984319987506959261
+    second: Alortu_Spritesheet_15
+  - first:
+      213: -250951645864885367
+    second: Alortu_Spritesheet_16
+  - first:
+      213: -2749213326068604052
+    second: Alortu_Spritesheet_17
+  - first:
+      213: -6208652475237176520
+    second: Alortu_Spritesheet_18
+  - first:
+      213: 6122678653375301731
+    second: Alortu_Spritesheet_19
+  - first:
+      213: 1512945431863759704
+    second: Alortu_Spritesheet_20
+  - first:
+      213: 6175529950665900872
+    second: Alortu_Spritesheet_21
+  - first:
+      213: 3544355866804249330
+    second: Alortu_Spritesheet_22
+  - first:
+      213: 4113997441091393106
+    second: Alortu_Spritesheet_23
+  - first:
+      213: -7800292915318549485
+    second: Alortu_Spritesheet_24
+  - first:
+      213: 4959347310192268982
+    second: Alortu_Spritesheet_25
+  - first:
+      213: -4466653712074994167
+    second: Alortu_Spritesheet_26
+  - first:
+      213: -7429274040587876196
+    second: Alortu_Spritesheet_27
+  - first:
+      213: -4054823068459648529
+    second: Alortu_Spritesheet_28
+  - first:
+      213: -7952771921902236461
+    second: Alortu_Spritesheet_29
+  - first:
+      213: 8433236480690768171
+    second: Alortu_Spritesheet_30
+  - first:
+      213: 3028413660555580745
+    second: Alortu_Spritesheet_31
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 0
+        width: 22
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b2ea1aab9cc30330800000000000000
+      internalID: 3676006689810342580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 0
+        width: 22
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85c1de62e6afd75b0800000000000000
+      internalID: -5368859829749343144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 0
+        width: 22
+        height: 19
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4bc6450ae0d4cde0800000000000000
+      internalID: -1313695487755891892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 0
+        width: 22
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89494f28f7e758b20800000000000000
+      internalID: 3136051801656431768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 0
+        width: 17
+        height: 19
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8129bf84fa6f84ad0800000000000000
+      internalID: -2717651142413938152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_5
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 0
+        width: 17
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46766d2ba215837d0800000000000000
+      internalID: -2938509513028376732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_6
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 0
+        width: 17
+        height: 19
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb3cc0a089bc69c00800000000000000
+      internalID: 907136228825809855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_7
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 0
+        width: 17
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d5ffe6f0850bef40800000000000000
+      internalID: 5758702599980185049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_8
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 0
+        width: 17
+        height: 19
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9409435c78a2ae990800000000000000
+      internalID: -7356020278738775991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_9
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 0
+        width: 17
+        height: 18
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f17dc0a5390a71b60800000000000000
+      internalID: 7716813041254061855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_10
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 0
+        width: 17
+        height: 18
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d2e1fbb499fd2780800000000000000
+      internalID: -8706028087433633068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_11
+      rect:
+        serializedVersion: 2
+        x: 267
+        y: 0
+        width: 17
+        height: 19
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de8295f02f266eba0800000000000000
+      internalID: -6060047456801314579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_12
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 0
+        width: 22
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7d124fc12596a1e0800000000000000
+      internalID: -2186896596598121094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_13
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 0
+        width: 22
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7337c5989a2ff92d0800000000000000
+      internalID: -3269627994479758537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_14
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 0
+        width: 22
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 998694e75e5bc8510800000000000000
+      internalID: 1552815968806856857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_15
+      rect:
+        serializedVersion: 2
+        x: 361
+        y: 0
+        width: 22
+        height: 19
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9357d63be52b4730800000000000000
+      internalID: 3984319987506959261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_16
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 0
+        width: 22
+        height: 19
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9838c64cec0748cf0800000000000000
+      internalID: -250951645864885367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_17
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 0
+        width: 22
+        height: 19
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6329efbb05d8d9d0800000000000000
+      internalID: -2749213326068604052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_18
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 0
+        width: 22
+        height: 19
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83b63a7f77f66d9a0800000000000000
+      internalID: -6208652475237176520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_19
+      rect:
+        serializedVersion: 2
+        x: 457
+        y: 0
+        width: 22
+        height: 19
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3684d40cbcf18f450800000000000000
+      internalID: 6122678653375301731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_20
+      rect:
+        serializedVersion: 2
+        x: 481
+        y: 0
+        width: 22
+        height: 19
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8531ac6badf0ff410800000000000000
+      internalID: 1512945431863759704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_21
+      rect:
+        serializedVersion: 2
+        x: 505
+        y: 0
+        width: 22
+        height: 19
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8430a3155c3e3b550800000000000000
+      internalID: 6175529950665900872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_22
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 0
+        width: 22
+        height: 19
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f2607ec1e4103130800000000000000
+      internalID: 3544355866804249330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_23
+      rect:
+        serializedVersion: 2
+        x: 553
+        y: 0
+        width: 22
+        height: 19
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2565e1330ead71930800000000000000
+      internalID: 4113997441091393106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_24
+      rect:
+        serializedVersion: 2
+        x: 577
+        y: 0
+        width: 22
+        height: 19
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3141176dbeacfb390800000000000000
+      internalID: -7800292915318549485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_25
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 0
+        width: 22
+        height: 19
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b69cc55a1423d440800000000000000
+      internalID: 4959347310192268982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_26
+      rect:
+        serializedVersion: 2
+        x: 625
+        y: 0
+        width: 22
+        height: 19
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90e071d3d124302c0800000000000000
+      internalID: -4466653712074994167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_27
+      rect:
+        serializedVersion: 2
+        x: 649
+        y: 0
+        width: 22
+        height: 19
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c988abf3f9ae5e890800000000000000
+      internalID: -7429274040587876196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_28
+      rect:
+        serializedVersion: 2
+        x: 673
+        y: 0
+        width: 22
+        height: 19
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe9376117ef5ab7c0800000000000000
+      internalID: -4054823068459648529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_29
+      rect:
+        serializedVersion: 2
+        x: 697
+        y: 0
+        width: 22
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3dc0157921412a190800000000000000
+      internalID: -7952771921902236461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_30
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 0
+        width: 22
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b294072e5efd80570800000000000000
+      internalID: 8433236480690768171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Alortu_Spritesheet_31
+      rect:
+        serializedVersion: 2
+        x: 745
+        y: 0
+        width: 22
+        height: 20
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9451b56dd26170a20800000000000000
+      internalID: 3028413660555580745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: d9edcff1457354843887ff4f66880155
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Alortu_Spritesheet_0: 3676006689810342580
+      Alortu_Spritesheet_1: -5368859829749343144
+      Alortu_Spritesheet_10: -8706028087433633068
+      Alortu_Spritesheet_11: -6060047456801314579
+      Alortu_Spritesheet_12: -2186896596598121094
+      Alortu_Spritesheet_13: -3269627994479758537
+      Alortu_Spritesheet_14: 1552815968806856857
+      Alortu_Spritesheet_15: 3984319987506959261
+      Alortu_Spritesheet_16: -250951645864885367
+      Alortu_Spritesheet_17: -2749213326068604052
+      Alortu_Spritesheet_18: -6208652475237176520
+      Alortu_Spritesheet_19: 6122678653375301731
+      Alortu_Spritesheet_2: -1313695487755891892
+      Alortu_Spritesheet_20: 1512945431863759704
+      Alortu_Spritesheet_21: 6175529950665900872
+      Alortu_Spritesheet_22: 3544355866804249330
+      Alortu_Spritesheet_23: 4113997441091393106
+      Alortu_Spritesheet_24: -7800292915318549485
+      Alortu_Spritesheet_25: 4959347310192268982
+      Alortu_Spritesheet_26: -4466653712074994167
+      Alortu_Spritesheet_27: -7429274040587876196
+      Alortu_Spritesheet_28: -4054823068459648529
+      Alortu_Spritesheet_29: -7952771921902236461
+      Alortu_Spritesheet_3: 3136051801656431768
+      Alortu_Spritesheet_30: 8433236480690768171
+      Alortu_Spritesheet_31: 3028413660555580745
+      Alortu_Spritesheet_4: -2717651142413938152
+      Alortu_Spritesheet_5: -2938509513028376732
+      Alortu_Spritesheet_6: 907136228825809855
+      Alortu_Spritesheet_7: 5758702599980185049
+      Alortu_Spritesheet_8: -7356020278738775991
+      Alortu_Spritesheet_9: 7716813041254061855
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

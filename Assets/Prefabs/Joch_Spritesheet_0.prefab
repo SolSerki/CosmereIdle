@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 6679933237084633982}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.26, y: -0.167, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -210,7 +210,7 @@ MonoBehaviour:
   phrases: {fileID: 4900000, guid: 72de3b586ac8e304b816af707ffbc4e9, type: 3}
   fallbackPhrases: {fileID: 4900000, guid: d1295b77cfb3074408fccb2fe354479d, type: 3}
   bubblePrefab: {fileID: 1716076718346636111, guid: 1a43295e74e2ce343b8315af70695c46, type: 3}
-  bubbleHeight: 1.15
+  bubbleGap: 0.08
   bubbleSeconds: 2.8
   longerPhrases:
   - fromCharacters: 40
