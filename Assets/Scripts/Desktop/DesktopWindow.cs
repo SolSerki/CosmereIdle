@@ -26,9 +26,10 @@ using UnityEngine;
 ///     de pantalla mide una unidad de mundo. Lo cambia el jugador con sus
 ///     propios botones y no mueve la ventana.
 ///
-/// La ventana puede ser mas grande que el escenario: el menu de la esquina pide
-/// lugar extra (SetOverlay) cuando se abre y no entra en el escenario. Como la
-/// ventana es transparente y click-through, ese lugar de mas no se ve.
+/// La ventana puede ser mas grande que el escenario: el menu de la esquina y los
+/// globos de dialogo piden lugar extra (SetOverlay) cuando no entran en el
+/// escenario. Como la ventana es transparente y click-through, ese lugar de mas
+/// no se ve.
 ///
 /// Requisitos que NO se configuran desde aca y sin los cuales esto no funciona.
 /// Los tres primeros ya nos costaron un dia cada uno:
@@ -210,8 +211,8 @@ public class DesktopWindow : MonoBehaviour
     private RectInt customRect;
     private float stageScale = 1f;
 
-    // Lugar extra que pide el menu, en pixeles del escritorio. Vacio si no pide nada.
-    private RectInt overlay;
+    // Lugar extra que pide cada uno (el menu, cada globo), en pixeles del escritorio.
+    private readonly Dictionary<object, RectInt> overlays = new Dictionary<object, RectInt>();
 
     private void Awake()
     {
@@ -381,15 +382,24 @@ public class DesktopWindow : MonoBehaviour
     }
 
     /// <summary>
-    /// Lugar extra que necesita alguien (el menu de la esquina) fuera del
-    /// escenario, en pixeles del escritorio. Un rectangulo vacio lo libera.
-    /// La ventana crece para abarcarlo, pero nunca mas alla de <see cref="Limits"/>:
-    /// quien lo pide tiene que ubicarse adentro.
+    /// Lugar extra que necesita alguien (el menu de la esquina, un globo) fuera
+    /// del escenario, en pixeles del escritorio. Cada uno pide el suyo con su
+    /// owner, y un rectangulo vacio lo libera. La ventana crece para abarcarlos
+    /// a todos, pero nunca mas alla de <see cref="Limits"/>: quien lo pide
+    /// tiene que ubicarse adentro.
     /// </summary>
-    public void SetOverlay(RectInt rectPixels)
+    public void SetOverlay(object owner, RectInt rectPixels)
     {
-        if (overlay.Equals(rectPixels)) return;
-        overlay = rectPixels;
+        if (rectPixels.width <= 0 || rectPixels.height <= 0)
+        {
+            if (!overlays.Remove(owner)) return;
+        }
+        else
+        {
+            if (overlays.TryGetValue(owner, out RectInt current) && current.Equals(rectPixels)) return;
+            overlays[owner] = rectPixels;
+        }
+
         Reposition();
     }
 
@@ -574,15 +584,23 @@ public class DesktopWindow : MonoBehaviour
         RectInt stage = CalculateStage(out RectInt limits);
         RectInt target = stage;
 
-        // El menu pide lugar fuera del escenario (arriba, o abajo si la franja
-        // esta pegada al borde de arriba). La ventana crece para abarcarlo,
-        // pero nunca mas alla del monitor.
-        if (Mode == WindowMode.Strip && overlay.width > 0 && overlay.height > 0)
+        // El menu y los globos piden lugar fuera del escenario. La ventana
+        // crece para abarcarlos, pero nunca mas alla del monitor.
+        if (Mode == WindowMode.Strip && overlays.Count > 0)
         {
-            int xMin = Mathf.Max(limits.xMin, Mathf.Min(stage.xMin, overlay.xMin));
-            int yMin = Mathf.Max(limits.yMin, Mathf.Min(stage.yMin, overlay.yMin));
-            int xMax = Mathf.Min(limits.xMax, Mathf.Max(stage.xMax, overlay.xMax));
-            int yMax = Mathf.Min(limits.yMax, Mathf.Max(stage.yMax, overlay.yMax));
+            int xMin = stage.xMin, yMin = stage.yMin, xMax = stage.xMax, yMax = stage.yMax;
+            foreach (RectInt o in overlays.Values)
+            {
+                xMin = Mathf.Min(xMin, o.xMin);
+                yMin = Mathf.Min(yMin, o.yMin);
+                xMax = Mathf.Max(xMax, o.xMax);
+                yMax = Mathf.Max(yMax, o.yMax);
+            }
+
+            xMin = Mathf.Max(limits.xMin, xMin);
+            yMin = Mathf.Max(limits.yMin, yMin);
+            xMax = Mathf.Min(limits.xMax, xMax);
+            yMax = Mathf.Min(limits.yMax, yMax);
             target = new RectInt(xMin, yMin, xMax - xMin, yMax - yMin);
         }
 

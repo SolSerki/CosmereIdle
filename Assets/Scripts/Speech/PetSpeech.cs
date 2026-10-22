@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -29,8 +30,10 @@ public class PetSpeech : MonoBehaviour
 
     [SerializeField] private GameObject bubblePrefab;
 
-    [Tooltip("Altura del globo sobre los pies, en unidades de mundo.")]
-    [SerializeField] private float bubbleHeight = 1.15f;
+    [Tooltip("Aire entre la cabeza y la punta de la colita del globo, en unidades de " +
+             "mundo. El globo crece hacia arriba desde ahi, asi que nunca tapa la cara " +
+             "por largo que sea el texto.")]
+    [SerializeField] private float bubbleGap = 0.08f;
 
     [Tooltip("Cuanto dura el globo en pantalla con una frase corta.")]
     [SerializeField] private float bubbleSeconds = 2.8f;
@@ -57,7 +60,12 @@ public class PetSpeech : MonoBehaviour
         new ReadingTime { fromCharacters = 220, seconds = 12f },
     };
 
+    // Fila (en pixeles de la textura, desde abajo) hasta donde llega el dibujo
+    // mas alto de cada hoja de sprites. Se mide una vez por hoja.
+    private static readonly Dictionary<Texture2D, int> sheetTops = new Dictionary<Texture2D, int>();
+
     private Collider2D body;
+    private SpriteRenderer spriteRenderer;
     private string[] clickPhrases;
     private SpeechBubble bubble;
     private int lastIndex = -1;
@@ -68,6 +76,7 @@ public class PetSpeech : MonoBehaviour
     private void Awake()
     {
         body = GetComponent<Collider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         dragHandler = GetComponent<CharacterDragHandler>();
         clickPhrases = LoadClickPhrases();
     }
@@ -103,7 +112,63 @@ public class PetSpeech : MonoBehaviour
 
         var instance = Instantiate(bubblePrefab, transform.position, Quaternion.identity);
         bubble = instance.GetComponent<SpeechBubble>();
-        bubble.Show(phrase, transform, bubbleHeight, SecondsFor(phrase));
+        bubble.Show(phrase, transform, HeadTop() + bubbleGap, SecondsFor(phrase));
+    }
+
+    /// <summary>
+    /// Altura de la cabeza sobre los pies, en el mundo. Sale de lo que esta
+    /// dibujado y no del cuadro de 24x24 ni del collider: casi todos los
+    /// personajes dejan filas vacias arriba, y el globo quedaria flotando lejos.
+    ///
+    /// Se toma el dibujo mas alto de toda la hoja y no el del cuadro actual,
+    /// para que el globo salga siempre a la misma altura y no salte con la
+    /// animacion. La malla Tight del sprite no sirve: en sprites de menos de
+    /// 32 px Unity la reemplaza por el rectangulo entero.
+    ///
+    /// Necesita la textura con Read/Write; si no lo tiene, usa el collider.
+    /// </summary>
+    private float HeadTop()
+    {
+        Sprite sprite = spriteRenderer != null ? spriteRenderer.sprite : null;
+        if (sprite != null && sprite.texture != null && sprite.texture.isReadable)
+        {
+            Rect rect = sprite.textureRect;
+            int top = SheetTop(sprite.texture, rect);
+            if (top > 0)
+                return (top - rect.y - sprite.pivot.y) / sprite.pixelsPerUnit * transform.lossyScale.y;
+        }
+
+        return body.bounds.max.y - transform.position.y;
+    }
+
+    /// <summary>
+    /// Fila mas alta con algo dibujado en la franja de la hoja donde esta el
+    /// sprite (todos los cuadros de la tira miden lo mismo de alto). 0 si esta vacia.
+    /// </summary>
+    private static int SheetTop(Texture2D texture, Rect rect)
+    {
+        if (sheetTops.TryGetValue(texture, out int cached)) return cached;
+
+        int yMin = Mathf.FloorToInt(rect.yMin);
+        int height = Mathf.CeilToInt(rect.height);
+        Color32[] pixels = texture.GetPixels32();
+        int top = 0;
+
+        for (int y = yMin + height - 1; y >= yMin && top == 0; y--)
+        {
+            int row = y * texture.width;
+            for (int x = 0; x < texture.width; x++)
+            {
+                if (pixels[row + x].a > 8)
+                {
+                    top = y + 1;
+                    break;
+                }
+            }
+        }
+
+        sheetTops[texture] = top;
+        return top;
     }
 
     /// <summary>

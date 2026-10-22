@@ -149,7 +149,7 @@ public class CornerMenu : MonoBehaviour
         {
             IsOpen = false;
             SetVisible(false, false);
-            if (window != null) window.SetOverlay(new RectInt());
+            if (window != null) window.SetOverlay(this, new RectInt());
             return;
         }
 
@@ -237,7 +237,7 @@ public class CornerMenu : MonoBehaviour
     /// </summary>
     private void RequestRoom(DesktopWindow window)
     {
-        window.SetOverlay(IsOpen ? window.WorldToDesktopRect(panelRect) : new RectInt());
+        window.SetOverlay(this, IsOpen ? window.WorldToDesktopRect(panelRect) : new RectInt());
     }
 
     private void LayoutLauncher(bool hovering)

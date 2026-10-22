@@ -13,6 +13,10 @@ using UnityEngine.Rendering;
 /// dibuja entero arriba del anterior: el fondo es opaco y el globo es un
 /// SortingGroup, asi el texto de uno de atras no se mezcla con el de adelante.
 /// El ultimo que aparecio queda arriba.
+///
+/// La punta de la colita va apoyada arriba de la cabeza y el globo crece hacia
+/// arriba desde ahi. Si en la franja no entra, le pide lugar a la ventana
+/// (SetOverlay) en vez de bajar a tapar la cara.
 /// </summary>
 [RequireComponent(typeof(SortingGroup))]
 public class SpeechBubble : MonoBehaviour
@@ -49,15 +53,25 @@ public class SpeechBubble : MonoBehaviour
     [SerializeField] private float baseAlpha = 1f;
 
     private Transform target;
-    private float offsetY;
+    private float tipAboveFeet;
     private float hideAt;
     private float shownAt;
 
-    /// <summary>Muestra una frase encima de un personaje.</summary>
     private void OnEnable() => live.Add(this);
-    private void OnDisable() => live.Remove(this);
 
-    public void Show(string phrase, Transform follow, float aboveFeet, float seconds)
+    private void OnDisable()
+    {
+        live.Remove(this);
+
+        DesktopWindow window = DesktopWindow.Instance;
+        if (window != null) window.SetOverlay(this, new RectInt());
+    }
+
+    /// <summary>
+    /// Muestra una frase encima de un personaje. tipAboveFeet es a que altura
+    /// sobre los pies va la punta de la colita.
+    /// </summary>
+    public void Show(string phrase, Transform follow, float tipAboveFeet, float seconds)
     {
         // El nuevo va arriba de todos los que estan en pantalla. Si no queda
         // ninguno, la pila vuelve a empezar desde abajo.
@@ -68,7 +82,7 @@ public class SpeechBubble : MonoBehaviour
         nextLayer++;
 
         target = follow;
-        offsetY = aboveFeet;
+        this.tipAboveFeet = tipAboveFeet;
         shownAt = Time.time;
         hideAt = Time.time + seconds;
 
@@ -105,12 +119,18 @@ public class SpeechBubble : MonoBehaviour
 
     private void Reposition()
     {
+        // El centro del globo queda medio globo y media colita (que va
+        // centrada en el borde de abajo) arriba de la punta.
+        float halfHeight = background.size.y * 0.5f;
+        float tailHalf = tail != null ? tail.bounds.size.y * 0.5f : 0f;
+
         Vector3 p = target.position;
-        p.y += offsetY;
+        p.y += tipAboveFeet + tailHalf + halfHeight;
         p.z = 0f;
 
-        // Que no se salga por los costados de la franja, ni por arriba si
-        // levantaron al personaje arrastrandolo.
+        // Que no se salga por los costados de la franja. Por arriba, si no
+        // entra, la ventana crece hasta el borde del monitor; recien ahi se
+        // recorta, para que al menos se vea entero.
         var cam = Camera.main;
         DesktopWindow window = DesktopWindow.Instance;
         if (window != null)
@@ -118,7 +138,17 @@ public class SpeechBubble : MonoBehaviour
             Rect stage = window.StageWorldRect;
             float halfBubble = background.size.x * 0.5f;
             p.x = Mathf.Clamp(p.x, stage.xMin + halfBubble + 0.05f, stage.xMax - halfBubble - 0.05f);
-            p.y = Mathf.Min(p.y, stage.yMax - background.size.y * 0.5f - 0.05f);
+
+            float top = p.y + halfHeight + 0.05f;
+            bool fits = window.Mode != DesktopWindow.WindowMode.Strip || top <= stage.yMax;
+            window.SetOverlay(this, fits
+                ? new RectInt()
+                : window.WorldToDesktopRect(new Rect(stage.xMin, stage.yMax, stage.width, top - stage.yMax)));
+
+            float screenTop = window.Mode == DesktopWindow.WindowMode.Strip
+                ? window.DesktopToWorldRect(window.Limits).yMax
+                : stage.yMax;
+            p.y = Mathf.Min(p.y, screenTop - halfHeight - 0.05f);
         }
         else if (cam != null)
         {

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CosmiciariaController
+  m_Controller: {fileID: 9100000, guid: 7da53b7bec5a97c4bb1f1b0867d0a670, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 7b087287c1d976042a5cc88900d64a06, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: b4c72b7e6b2fb4945832ae13d9031dc1, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 6381f82ff7e31954fb80942d773d1c83, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 79f2ee4359ba16e44b5d2ad3f32004da, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: d389d61cb8c77c74ea34f0e9e7b399b4, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a281d3ab7041f454182b3dac7c651ca2, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 270d806576f76dd4fb8f5da6a25988a2, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: faadbfb0b5ab37841865d86ebe70593c, type: 2}
