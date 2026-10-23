@@ -57,7 +57,10 @@ public class UpdateButton : DebugIconButton
             switch (u.State)
             {
                 case GitHubUpdater.UpdateState.Downloading:
-                    return $"Descargando {u.LatestVersion}... {Mathf.RoundToInt(u.DownloadProgress * 100f)}%";
+                    return u.DownloadBytes == 0
+                        ? $"Preparando {u.LatestVersion}..."
+                        : $"Descargando {u.LatestVersion} ({GitHubUpdater.FormatSize(u.DownloadBytes)})... " +
+                          $"{Mathf.RoundToInt(u.DownloadProgress * 100f)}%";
 
                 case GitHubUpdater.UpdateState.Installing:
                     return "Instalando, ya vuelvo";

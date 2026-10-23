@@ -72,7 +72,12 @@ public class UpdateStatusLabel : MonoBehaviour
                 return;
 
             case GitHubUpdater.UpdateState.Downloading:
-                text = $"Descargando la versión {u.LatestVersion}... {Mathf.RoundToInt(u.DownloadProgress * 100f)}%";
+                // Mientras compara sus archivos para elegir entre parche y
+                // completo todavia no sabe cuanto va a bajar.
+                text = u.DownloadBytes == 0
+                    ? $"Preparando la versión {u.LatestVersion}..."
+                    : $"Descargando la versión {u.LatestVersion} ({GitHubUpdater.FormatSize(u.DownloadBytes)})... " +
+                      $"{Mathf.RoundToInt(u.DownloadProgress * 100f)}%";
                 color = highlightColor;
                 return;
 

@@ -33,14 +33,14 @@ using Debug = UnityEngine.Debug;
 public static class CosmereIdleBuild
 {
     private const string Scene = "Assets/Scenes/Main.unity";
-    private const string OutputFolder = "Build";
+    internal const string OutputFolder = "Build";
     private const BuildTarget Target = BuildTarget.StandaloneWindows64;
 
     /// <summary>Lo genera el build para que el instalador no repita el numero de version.</summary>
     private const string VersionInclude = "Installer/Version.iss";
 
     private const string InstallerScript = "Installer/CosmereIdle.iss";
-    private const string InstallerOutput = "Installer/Output";
+    internal const string InstallerOutput = "Installer/Output";
 
     /// <summary>Si ISCC tarda mas que esto, algo se colgo.</summary>
     private const int InstallerTimeoutMs = 10 * 60 * 1000;
@@ -182,6 +182,20 @@ public static class CosmereIdleBuild
             return null;
         }
 
+        // Unity buildea encima de lo que haya y no borra lo que sobra: al sacar
+        // un paquete, sus DLLs quedaban en Build/ y el instalador las seguia
+        // repartiendo (14 MB de DirectML.dll, por ejemplo). Se arranca de cero.
+        try
+        {
+            if (Directory.Exists(OutputFolder)) Directory.Delete(OutputFolder, true);
+        }
+        catch (Exception e) when (e is IOException || e is UnauthorizedAccessException)
+        {
+            Debug.LogError($"[Build] No pude vaciar {OutputFolder}/ ({e.Message}). " +
+                           "¿Está abierto el juego de esa carpeta? Cerralo y probá de nuevo.");
+            return null;
+        }
+
         string exe = Path.Combine(OutputFolder, PlayerSettings.productName + ".exe");
 
         var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
@@ -229,7 +243,15 @@ public static class CosmereIdleBuild
     /// la ruta del setup.exe, o null con el motivo en <paramref name="error"/>.
     /// Sin dialogos, igual que BuildNow.
     /// </summary>
-    public static string BuildInstaller(out string error)
+    public static string BuildInstaller(out string error) =>
+        CompileInstaller("", "*-setup.exe", "Comprimiendo con Inno Setup", out error);
+
+    /// <summary>
+    /// Corre ISCC sobre Installer/CosmereIdle.iss con <paramref name="defines"/>
+    /// extra (el parche usa /DPatch=1 y compania) y devuelve el .exe que acaba
+    /// de escribir y que matchea <paramref name="outputPattern"/>.
+    /// </summary>
+    internal static string CompileInstaller(string defines, string outputPattern, string what, out string error)
     {
         string iscc = FindInnoCompiler();
         if (iscc == null)
@@ -245,8 +267,8 @@ public static class CosmereIdleBuild
         DateTime started = DateTime.Now;
 
         // Comprimir ~40 MB con lzma2/max tarda: RunTool muestra la barra.
-        int exitCode = RunTool(iscc, $"/Q \"{script}\"", Path.GetDirectoryName(script),
-                               "Comprimiendo con Inno Setup", InstallerTimeoutMs, out string output);
+        int exitCode = RunTool(iscc, $"/Q {defines} \"{script}\"", Path.GetDirectoryName(script),
+                               what, InstallerTimeoutMs, out string output);
 
         if (exitCode != 0)
         {
@@ -259,10 +281,10 @@ public static class CosmereIdleBuild
 
         // El nombre lo arma el .iss (AppName-AppVersion-setup). En vez de repetir
         // esa regla aca, se toma el que acaba de escribir.
-        string setup = NewestSetupSince(started);
+        string setup = NewestOutputSince(started, outputPattern);
         if (setup == null)
         {
-            error = $"Inno Setup dijo que terminó bien, pero no aparece ningún setup nuevo en {InstallerOutput}.";
+            error = $"Inno Setup dijo que terminó bien, pero no aparece ningún {outputPattern} nuevo en {InstallerOutput}.";
             Debug.LogError("[Instalador] " + error);
             return null;
         }
@@ -385,14 +407,14 @@ public static class CosmereIdleBuild
         return null;
     }
 
-    private static string NewestSetupSince(DateTime since)
+    private static string NewestOutputSince(DateTime since, string pattern)
     {
         if (!Directory.Exists(InstallerOutput)) return null;
 
         string newest = null;
         DateTime newestTime = since.AddSeconds(-2); // margen por la resolucion del reloj del disco
 
-        foreach (string file in Directory.GetFiles(InstallerOutput, "*-setup.exe"))
+        foreach (string file in Directory.GetFiles(InstallerOutput, pattern))
         {
             DateTime written = File.GetLastWriteTime(file);
             if (written < newestTime) continue;

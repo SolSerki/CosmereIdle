@@ -1,4 +1,4 @@
-; ---------------------------------------------------------------------------
+﻿; ---------------------------------------------------------------------------
 ; Instalador de CosmereIdle
 ;
 ; Se compila con Inno Setup 6.3 o mas nuevo: https://jrsoftware.org/isdl.php
@@ -11,6 +11,12 @@
 ; Instala SIN pedir permisos de administrador (va a la carpeta del usuario).
 ; Para un juego fan sin firma digital eso importa: un instalador que abre el
 ; cartel de UAC espanta a la mitad de la gente.
+;
+; Modo parche: el menu Publicar version lo compila una segunda vez con
+; /DPatch=1 /DPatchDir=<carpeta> /DPatchCheck=<archivo>. Sale un instalador
+; con solo los archivos que cambiaron (un par de MB), que antes de tocar nada
+; verifica que el resto de la instalacion sea exactamente la esperada. A mano
+; no hace falta compilarlo nunca.
 ; ---------------------------------------------------------------------------
 
 #define AppName      "CosmereIdle"
@@ -51,7 +57,11 @@ ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 
 OutputDir=Output
+#ifdef Patch
+OutputBaseFilename={#AppName}-{#AppVersion}-patch
+#else
 OutputBaseFilename={#AppName}-{#AppVersion}-setup
+#endif
 Compression=lzma2/max
 SolidCompression=yes
 WizardStyle=modern
@@ -88,12 +98,30 @@ Name: "startupicon"; Description: "Que arranque junto con Windows"; \
     GroupDescription: "Inicio:"
 
 [Files]
+#ifdef Patch
+; Solo lo que cambio. Lo elige el menu Publicar version, que tambien genera
+; la verificacion de todo lo demas (ver PatchCanApply mas abajo).
+Source: "{#PatchDir}\*"; DestDir: "{app}"; \
+    Flags: ignoreversion recursesubdirs createallsubdirs
+#else
 ; recursesubdirs + createallsubdirs: el .exe no sirve sin la carpeta _Data,
 ; UnityPlayer.dll y MonoBleedingEdge al lado.
+;
+; Si se cambian estos Excludes, cambiar tambien ShippedFiles en
+; CosmereIdlePatch.cs: la lista de archivos del parche tiene que coincidir.
 Source: "{#BuildDir}\*"; DestDir: "{app}"; \
     Flags: ignoreversion recursesubdirs createallsubdirs; \
     Excludes: "*_BurstDebugInformation_DoNotShip\*,*_BackUpThisFolder_ButDontShipItWithYourGame\*,*.pdb"
+#endif
 
+#ifdef Patch
+[InstallDelete]
+; Archivos de versiones anteriores que ya no son parte del juego (paquetes que
+; se sacaron, por ejemplo). Lo genera Publicar version.
+#include PatchDelete
+
+[Files]
+#endif
 ; El icono va instalado al lado del juego: lo usan los accesos directos y el
 ; desinstalador de Windows.
 Source: "CosmereIdle.ico"; DestDir: "{app}"; Flags: ignoreversion
@@ -162,13 +190,10 @@ begin
   end;
 end;
 
-function InitializeSetup(): Boolean;
+procedure WaitForGameToClose();
 var
   Waited: Integer;
 begin
-  Result := True;
-  if not WizardSilent() then Exit;
-
   Waited := 0;
   while GameIsRunning() and (Waited < GameWaitMs) do
   begin
@@ -180,4 +205,84 @@ begin
     Log('El juego sigue abierto despues de esperar; lo cierra el Restart Manager.')
   else
     Log(Format('Juego cerrado (espere %d ms).', [Waited]));
+end;
+
+#ifdef Patch
+// Un parche solo trae lo que cambio: si el resto de la instalacion no es
+// exactamente la version para la que se armo, instalarlo dejaria una mezcla
+// rota de dos versiones. El juego ya lo revisa antes de elegir el parche;
+// esto es la segunda red, por si alguien lo corre a mano o algo cambio entre
+// medio.
+
+// Carpeta donde esta instalado, segun el registro de Windows. Mismo GUID que
+// AppId. Vacio si no esta instalado.
+function InstalledDir(): String;
+var
+  Key: String;
+begin
+  Key := 'Software\Microsoft\Windows\CurrentVersion\Uninstall\{8F3A1C74-6D29-4B15-9E0A-2C7B5D84F1A3}_is1';
+  Result := '';
+  if not RegQueryStringValue(HKCU, Key, 'InstallLocation', Result) then
+    RegQueryStringValue(HKLM, Key, 'InstallLocation', Result);
+  Result := RemoveBackslashUnlessRoot(Result);
+end;
+
+function FileMatches(Dir, RelPath, Sha256: String): Boolean;
+var
+  Actual: String;
+begin
+  try
+    Actual := GetSHA256OfFile(Dir + '\' + RelPath);
+  except
+    Actual := '';
+  end;
+
+  Result := CompareText(Actual, Sha256) = 0;
+  if not Result then Log('Parche: ' + RelPath + ' no es el esperado.');
+end;
+
+// Define PatchBaseMatches(Dir): una llamada a FileMatches por cada archivo
+// que el parche NO trae. Lo genera Publicar version.
+#include PatchCheck
+
+function PatchCanApply(): Boolean;
+var
+  Dir: String;
+  Code: Integer;
+begin
+  Dir := InstalledDir();
+  Result := (Dir <> '') and PatchBaseMatches(Dir);
+  if Result then
+  begin
+    Log('Parche: la instalacion coincide, sigo.');
+    Exit;
+  end;
+
+  Log('Parche: no sirve para esta instalacion. Hace falta el instalador completo.');
+
+  if WizardSilent() then
+  begin
+    // Lo lanzo la actualizacion automatica, que ya cerro el juego. Sin esto
+    // el juego desapareceria sin aviso; al abrirse, ve que el parche no
+    // sirvio y baja el instalador completo.
+    if (Dir <> '') and Exec(Dir + '\{#ExeName}', '', Dir, SW_SHOWNORMAL, ewNoWait, Code) then
+      Log('Parche: juego reabierto.')
+    else
+      Log('Parche: no pude reabrir el juego.');
+  end
+  else
+    MsgBox('Esta es una actualización parcial y no sirve para la versión que tenés instalada.' + #13#10#13#10 +
+           'Bajá el instalador completo ({#AppName}-{#AppVersion}-setup.exe) de la misma página.',
+           mbError, MB_OK);
+end;
+#endif
+
+function InitializeSetup(): Boolean;
+begin
+  Result := True;
+  if WizardSilent() then WaitForGameToClose();
+
+#ifdef Patch
+  Result := PatchCanApply();
+#endif
 end;
