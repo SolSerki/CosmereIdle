@@ -1,10 +1,11 @@
 using UnityEngine;
 
 /// <summary>
-/// Animación procedural para la mascota: Squash & Stretch y rebotes elásticos.
-/// Controla la deformación elástica del sprite preservando su volumen visual
-/// (cuando Y se achica, X se ensancha y viceversa).
-///
+/// Animación procedural para la mascota:
+/// - Squash & Stretch con conservación de volumen visual (X = 1 / Y).
+/// - Rebote elástico amortiguado (Damped Harmonic Oscillator) al caer o soltar.
+/// - Inercia, compresión horizontal e inclinación contra los bordes de la pantalla (Wall Bonk).
+/// 
 /// Diseñado para funcionar con sprites cuyo pivot es Bottom Center (los pies
 /// se mantienen fijos en el piso al aplastarse o estirarse).
 /// </summary>
@@ -42,8 +43,17 @@ public class ProceduralPetAnimator : MonoBehaviour
     [Tooltip("Multiplicador vertical mientras se sostiene al personaje.")]
     [SerializeField] private float dragStretchY = 1.15f;
 
+    [Header("Choque contra Borde (Wall Bonk)")]
+    [Tooltip("Intensidad de compresión horizontal al chocar contra la pared del escenario.")]
+    [SerializeField] private float wallSquashIntensity = 0.38f;
+
+    [Tooltip("Inclinación angular hacia atrás al golpear la pared.")]
+    [SerializeField] private float wallTiltAngle = 8f;
+
     private float currentScaleY = 1f;
     private float velocityY = 0f;
+    private float currentTiltZ = 0f;
+    private float tiltVelocity = 0f;
     private bool isSpringActive = false;
     private float squashHoldTimer = 0f;
 
@@ -81,6 +91,8 @@ public class ProceduralPetAnimator : MonoBehaviour
         squashHoldTimer = 0f;
         velocityY = 0f;
         currentScaleY = dragStretchY;
+        currentTiltZ = 0f;
+        tiltVelocity = 0f;
         ApplyScale();
     }
 
@@ -95,6 +107,8 @@ public class ProceduralPetAnimator : MonoBehaviour
 
         float stretch = Mathf.Clamp(fallSpeed * fallStretchFactor, 0f, maxFallStretch);
         currentScaleY = 1f + stretch;
+        currentTiltZ = 0f;
+        tiltVelocity = 0f;
         ApplyScale();
     }
 
@@ -108,11 +122,30 @@ public class ProceduralPetAnimator : MonoBehaviour
         velocityY = 0f;
         squashHoldTimer = squashHoldDuration; // Pausa para congelar el impacto un instante
         isSpringActive = true;
+        currentTiltZ = 0f;
+        tiltVelocity = 0f;
         ApplyScale();
     }
 
     /// <summary>
-    /// Restablece la escala base del personaje sin oscilación.
+    /// Llamado cuando el personaje se choca contra el borde de la pantalla mientras camina.
+    /// Aplasta horizontalmente e inclina el cuerpo hacia atrás.
+    /// </summary>
+    public void OnWallBonk(int hitDirection)
+    {
+        currentScaleY = 1f + wallSquashIntensity;
+        velocityY = 0f;
+        squashHoldTimer = squashHoldDuration;
+        isSpringActive = true;
+
+        currentTiltZ = -hitDirection * wallTiltAngle;
+        tiltVelocity = 0f;
+
+        ApplyScale();
+    }
+
+    /// <summary>
+    /// Restablece la escala y rotación base del personaje sin oscilación.
     /// </summary>
     public void ResetDeformation()
     {
@@ -120,22 +153,40 @@ public class ProceduralPetAnimator : MonoBehaviour
         squashHoldTimer = 0f;
         velocityY = 0f;
         currentScaleY = 1f;
+        currentTiltZ = 0f;
+        tiltVelocity = 0f;
         transform.localScale = baseScale;
+        transform.localRotation = Quaternion.identity;
     }
 
     private void UpdateSpring(float dt)
     {
-        // Resorte armónico amortiguado hacia target = 1.0f (relativo a baseScale)
+        // 1. Resorte armónico amortiguado en escala Y hacia target = 1.0f
         float displacement = currentScaleY - 1f;
         float force = -stiffness * displacement - damping * velocityY;
         velocityY += force * dt;
         currentScaleY += velocityY * dt;
 
-        // Corte cuando la oscilación es imperceptible
-        if (Mathf.Abs(displacement) < 0.002f && Mathf.Abs(velocityY) < 0.02f)
+        // 2. Resorte armónico amortiguado en rotación Z hacia target = 0f
+        if (Mathf.Abs(currentTiltZ) > 0.01f || Mathf.Abs(tiltVelocity) > 0.01f)
+        {
+            float tiltForce = -stiffness * currentTiltZ - damping * tiltVelocity;
+            tiltVelocity += tiltForce * dt;
+            currentTiltZ += tiltVelocity * dt;
+        }
+        else
+        {
+            currentTiltZ = 0f;
+            tiltVelocity = 0f;
+        }
+
+        // Corte cuando la oscilación y la inclinación son imperceptibles
+        if (Mathf.Abs(displacement) < 0.002f && Mathf.Abs(velocityY) < 0.02f && Mathf.Abs(currentTiltZ) < 0.01f)
         {
             currentScaleY = 1f;
             velocityY = 0f;
+            currentTiltZ = 0f;
+            tiltVelocity = 0f;
             isSpringActive = false;
         }
 
@@ -153,5 +204,7 @@ public class ProceduralPetAnimator : MonoBehaviour
             baseScale.y * clampedY,
             baseScale.z
         );
+
+        transform.localRotation = Quaternion.Euler(0f, 0f, currentTiltZ);
     }
 }

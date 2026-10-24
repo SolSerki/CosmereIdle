@@ -22,6 +22,10 @@ public class StripWalker : MonoBehaviour
     [Tooltip("Cuanto antes del borde de la pantalla se da vuelta, en unidades de mundo.")]
     [SerializeField] private float edgePadding = 0.3f;
 
+    [Header("Inercia y Choque de Pared")]
+    [Tooltip("Tiempo de pausa y compresión al chocar contra el borde antes de girar.")]
+    [SerializeField] private float bonkDuration = 0.35f;
+
     [Header("Acople con el Animator")]
     [Tooltip("Parametro entero que dice que esta haciendo el personaje.")]
     [SerializeField] private string stateParameter = "Estado";
@@ -32,14 +36,43 @@ public class StripWalker : MonoBehaviour
     private SpriteRenderer sprite;
     private Animator animator;
     private Camera cam;
+    private ProceduralPetAnimator proceduralAnim;
+    private PetSprenEmitter sprenEmitter;
+
     private int direction = 1;
     private bool hasStateParameter;
+
+    // Estado de choque contra el borde
+    private bool isBonking;
+    private float bonkTimer;
+    private int pendingDirection;
+    private float pendingClampX;
+
+    private bool isPaused;
+    public bool IsPaused
+    {
+        get => isPaused;
+        set
+        {
+            isPaused = value;
+            if (isPaused)
+            {
+                isBonking = false;
+            }
+        }
+    }
 
     private void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         cam = Camera.main;
+
+        proceduralAnim = GetComponent<ProceduralPetAnimator>();
+        if (proceduralAnim == null) proceduralAnim = gameObject.AddComponent<ProceduralPetAnimator>();
+
+        sprenEmitter = GetComponent<PetSprenEmitter>();
+        if (sprenEmitter == null) sprenEmitter = gameObject.AddComponent<PetSprenEmitter>();
 
         if (cam == null)
             Debug.LogError("[StripWalker] No hay camara con tag MainCamera; no se puede " +
@@ -62,7 +95,6 @@ public class StripWalker : MonoBehaviour
                              "Va a caminar todo el tiempo.");
     }
 
-    public bool IsPaused { get; set; }
     private void Update()
     {
         if (cam == null) return;
@@ -81,12 +113,56 @@ public class StripWalker : MonoBehaviour
             transform.position = p;
         }
 
+        // Manejo de la pausa por choque de pared
+        if (isBonking)
+        {
+            bonkTimer -= Time.deltaTime;
+            if (bonkTimer <= 0f)
+            {
+                isBonking = false;
+                Turn(pendingDirection, pendingClampX);
+            }
+            return;
+        }
+
         if (!ShouldWalk()) return;
 
         transform.position += Vector3.right * (direction * speed * Time.deltaTime);
 
-        if (direction > 0 && transform.position.x >= right) Turn(-1, right);
-        else if (direction < 0 && transform.position.x <= left) Turn(1, left);
+        // Detección de impacto contra las paredes laterales
+        if (direction > 0 && transform.position.x >= right)
+        {
+            StartBonk(-1, right);
+        }
+        else if (direction < 0 && transform.position.x <= left)
+        {
+            StartBonk(1, left);
+        }
+    }
+
+    private void StartBonk(int newDirection, float clampX)
+    {
+        isBonking = true;
+        bonkTimer = bonkDuration;
+        pendingDirection = newDirection;
+        pendingClampX = clampX;
+
+        Vector3 p = transform.position;
+        p.x = clampX;
+        transform.position = p;
+
+        // Impacto procedural: aplastamiento horizontal y rebote elástico
+        if (proceduralAnim != null)
+        {
+            proceduralAnim.OnWallBonk(direction);
+        }
+
+        // Chispas de estrellas al chocar la cabeza
+        if (sprenEmitter == null) sprenEmitter = GetComponent<PetSprenEmitter>();
+        if (sprenEmitter != null)
+        {
+            sprenEmitter.SpawnBonkStars(direction);
+        }
     }
 
     /// <summary>

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Sistema procedural de Spren del Cosmere (Alegrispren y Logispren).
+/// Sistema procedural de Spren del Cosmere (Alegrispren, Logispren y Chispas de Choque).
 /// Genera partículas pixel art en forma de estrella destellante (✨) en memoria,
 /// y anima su comportamiento mediante trayectorias físicas, rotación continua y órbitas en 3D.
 /// </summary>
@@ -149,6 +149,41 @@ public class PetSprenEmitter : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Spawnea estrellitas que saltan de la cabeza cuando la mascota se choca contra la pared.
+    /// </summary>
+    public void SpawnBonkStars(int hitDirection)
+    {
+        Vector3 head = GetHeadPosition();
+
+        for (int i = 0; i < 3; i++)
+        {
+            JoyParticle p = GetJoyParticle();
+            p.position = head + new Vector3(hitDirection * 0.08f, Random.Range(0f, 0.08f), 0f);
+
+            // Salto en arco hacia el lado opuesto al choque (hacia adentro de la pantalla)
+            float angle = (hitDirection > 0 ? Random.Range(120f, 160f) : Random.Range(20f, 60f)) * Mathf.Deg2Rad;
+            float speed = Random.Range(1.1f, 1.8f);
+            p.velocity = new Vector2(Mathf.Cos(angle) * speed, Mathf.Sin(angle) * speed);
+
+            p.wobbleFreq = 12f;
+            p.wobbleAmp = 0.15f;
+            p.lifeTime = 0f;
+            p.maxLifeTime = Random.Range(0.65f, 0.85f); // Suficiente tiempo para apreciarlas claramente
+            p.rotationZ = Random.Range(0f, 360f);
+            p.spinSpeed = Random.Range(-250f, 250f);
+            p.baseColor = new Color(1f, 0.95f, 0.55f, 1f); // Estrellas doradas brillantes
+
+            p.go.transform.position = p.position;
+            p.go.transform.rotation = Quaternion.Euler(0f, 0f, p.rotationZ);
+            p.sr.color = p.baseColor;
+            p.sr.sortingOrder = 15;
+            p.go.SetActive(true);
+
+            activeJoyspren.Add(p);
+        }
+    }
+
     private void UpdateJoyspren(float dt)
     {
         for (int i = activeJoyspren.Count - 1; i >= 0; i--)
@@ -179,7 +214,7 @@ public class PetSprenEmitter : MonoBehaviour
 
             // Escala pixel art dinámica (curva suave de aparición y contracción)
             float scaleCurve = Mathf.Sin(progress * Mathf.PI);
-            float scale = 3.2f * Mathf.Lerp(0.5f, 1.2f, scaleCurve);
+            float scale = 3.5f * Mathf.Lerp(0.6f, 1.25f, scaleCurve);
             p.go.transform.localScale = new Vector3(scale, scale, 1f);
 
             // Desvanecimiento suave
