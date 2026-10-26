@@ -163,7 +163,7 @@ public class CosmereIdleRelease : EditorWindow
         if (!EditorUtility.DisplayDialog($"Publicar {tag}",
                 $"Voy a:\n\n" +
                 $"1. Cambiar el Version de {oldVersion} a {version}.\n" +
-                "2. Buildear el juego y el instalador.\n" +
+                "2. Buildear el juego, el instalador y la actualización parcial.\n" +
                 $"3. Commitear{(pending.Count > 0 ? $" (con tus {pending.Count} cambios)" : "")} y pushear.\n" +
                 $"4. Crear el release {tag} en GitHub con el instalador.\n\n" +
                 "Los jugadores la reciben la próxima vez que abran el juego.",
@@ -201,6 +201,27 @@ public class CosmereIdleRelease : EditorWindow
             return;
         }
 
+        // La actualizacion parcial es un extra: si falla, se publica igual con
+        // el completo, que es lo que los jugadores bajarian de todos modos.
+        var assets = new List<string> { setup };
+        CosmereIdlePatch.Result patch = CosmereIdlePatch.Build(git, version, setup, out string patchError);
+        string patchSummary;
+
+        if (patch == null)
+            patchSummary = "Sin actualización parcial (" + patchError + "): los jugadores bajan el instalador completo.";
+        else
+        {
+            assets.Add(patch.ManifestPath);
+            if (patch.PatchPath != null) assets.Add(patch.PatchPath);
+
+            patchSummary = patch.PatchPath != null
+                ? $"Actualización parcial: {Mb(new FileInfo(patch.PatchPath).Length)} " +
+                  $"en vez de {Mb(new FileInfo(setup).Length)} ({patch.PatchFiles} archivos)."
+                : $"Sin actualización parcial ({patch.SkippedReason}): los jugadores bajan el instalador completo.";
+        }
+
+        string assetArgs = string.Join(" ", assets.Select(a => $"\"{a}\""));
+
         // ---- 3. Commit y push ----
         if (!Git("add -A", "Preparando el commit", FetchTimeoutMs, out string output) ||
             !Git($"commit -m \"Versión {version}\"", "Commiteando", FetchTimeoutMs, out output))
@@ -213,8 +234,9 @@ public class CosmereIdleRelease : EditorWindow
         Git("rev-parse HEAD", "Leyendo el commit", FetchTimeoutMs, out string sha);
         sha = sha.Trim();
 
-        string releaseCommand = $"gh release create {tag} \"{RelativeToProject(setup)}\" " +
-                                $"--title {tag} --target {sha} --notes \"...\"";
+        string releaseCommand = $"gh release create {tag} " +
+                                string.Join(" ", assets.Select(a => $"\"{RelativeToProject(a)}\"")) +
+                                $" --title {tag} --target {sha} --notes \"...\"";
 
         if (!Git("push", "Subiendo a GitHub", PushTimeoutMs, out output))
         {
@@ -230,7 +252,7 @@ public class CosmereIdleRelease : EditorWindow
         string notesFile = Path.Combine(Path.GetTempPath(), $"cosmereidle-{tag}-notes.md");
         File.WriteAllText(notesFile, notes.Trim() + "\n", new UTF8Encoding(false));
 
-        bool released = Gh($"release create {tag} \"{setup}\" --title {tag} --target {sha} " +
+        bool released = Gh($"release create {tag} {assetArgs} --title {tag} --target {sha} " +
                            $"--notes-file \"{notesFile}\"",
                            "Creando el release y subiendo el instalador", UploadTimeoutMs, out output);
         TryDelete(notesFile);
@@ -249,7 +271,7 @@ public class CosmereIdleRelease : EditorWindow
         Git("fetch --tags", "Bajando el tag", FetchTimeoutMs, out _);
 
         string url = output.Split('\n').Select(l => l.Trim()).LastOrDefault(l => l.StartsWith("https://"));
-        Debug.Log($"[Publicar] {tag} publicada. {url}");
+        Debug.Log($"[Publicar] {tag} publicada. {patchSummary} {url}");
 
         notes = "";
         Reload();
@@ -257,10 +279,12 @@ public class CosmereIdleRelease : EditorWindow
 
         if (EditorUtility.DisplayDialog($"{tag} publicada",
                 "Los jugadores la reciben la próxima vez que abran el juego " +
-                "(o en unas horas, si ya lo tienen abierto).",
+                "(o en unas horas, si ya lo tienen abierto).\n\n" + patchSummary,
                 url != null ? "Ver el release" : "Cerrar", "Cerrar") && url != null)
             Application.OpenURL(url);
     }
+
+    private static string Mb(long bytes) => $"{bytes / 1048576.0:0.0} MB";
 
     /// <summary>
     /// Todo lo que puede romper un paso a mitad de camino, revisado antes de

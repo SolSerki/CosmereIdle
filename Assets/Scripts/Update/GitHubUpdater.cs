@@ -72,6 +72,12 @@ public class GitHubUpdater : MonoBehaviour
     [Tooltip("Como termina el nombre del instalador adjunto al release.")]
     [SerializeField] private string installerSuffix = "-setup.exe";
 
+    [Tooltip("Como termina el nombre de la actualizacion parcial adjunta al release.")]
+    [SerializeField] private string patchSuffix = "-patch.exe";
+
+    [Tooltip("La lista de archivos de la version, adjunta al release. La genera Publicar version.")]
+    [SerializeField] private string manifestName = "files.json";
+
     [Header("Cuando revisar")]
     [Tooltip("Espera antes de la primera revision, para no competir con el arranque.")]
     [SerializeField] private float firstCheckDelay = 1f;
@@ -95,6 +101,12 @@ public class GitHubUpdater : MonoBehaviour
     /// <summary>"version|intentos" de la ultima instalacion automatica. Ver StartupInstallAllowed.</summary>
     private const string TriedKey = "Updater.AutoInstallTried";
 
+    /// <summary>
+    /// Version cuyo parche ya se intento. Si seguimos sin esa version, el
+    /// parche no sirvio por algo que no se vio antes: la proxima va el completo.
+    /// </summary>
+    private const string PatchTriedKey = "Updater.PatchTried";
+
     /// <summary>Lo que escribe Inno Setup al final de un log de instalacion que salio bien.</summary>
     private const string InnoSuccessLine = "Installation process succeeded";
 
@@ -115,6 +127,12 @@ public class GitHubUpdater : MonoBehaviour
     /// <summary>De 0 a 1 mientras State es Downloading.</summary>
     public float DownloadProgress { get; private set; }
 
+    /// <summary>Cuanto pesa lo que se esta bajando. 0 mientras todavia se decide que bajar.</summary>
+    public long DownloadBytes { get; private set; }
+
+    /// <summary>Si lo que se baja es la actualizacion parcial y no el instalador completo.</summary>
+    public bool IsPatch { get; private set; }
+
     /// <summary>Que salio mal en el ultimo intento de instalar. Null si nada.</summary>
     public string LastError { get; private set; }
 
@@ -133,6 +151,8 @@ public class GitHubUpdater : MonoBehaviour
 
     private ReleaseJson latest;
     private AssetJson latestInstaller;
+    private AssetJson latestPatch;
+    private AssetJson latestManifest;
 
     /// <summary>Log del instalador. Vive al lado del Player.log y no se borra al arrancar.</summary>
     private static string InstallLogPath => Path.Combine(Application.persistentDataPath, "update-install.log");
@@ -269,7 +289,7 @@ public class GitHubUpdater : MonoBehaviour
 
         if (remote <= local) return;
 
-        AssetJson installer = FindInstaller(release);
+        AssetJson installer = FindAsset(release, installerSuffix);
         if (installer == null)
         {
             Debug.LogWarning($"[GitHubUpdater] El release {release.tag_name} no tiene un '*{installerSuffix}'.");
@@ -284,18 +304,25 @@ public class GitHubUpdater : MonoBehaviour
 
         latest = release;
         latestInstaller = installer;
+
+        // Opcionales: las versiones publicadas antes de la actualizacion
+        // parcial, o en las que no convenia, no los traen.
+        latestPatch = FindAsset(release, patchSuffix);
+        latestManifest = FindAsset(release, manifestName);
+
         LatestVersion = shown;
         State = UpdateState.Available;
     }
 
-    private AssetJson FindInstaller(ReleaseJson release)
+    /// <summary>El adjunto del release cuyo nombre termina en <paramref name="suffix"/>.</summary>
+    private static AssetJson FindAsset(ReleaseJson release, string suffix)
     {
         if (release.assets == null) return null;
 
         foreach (AssetJson asset in release.assets)
         {
             if (asset != null && !string.IsNullOrEmpty(asset.name) &&
-                asset.name.EndsWith(installerSuffix, StringComparison.OrdinalIgnoreCase))
+                asset.name.EndsWith(suffix, StringComparison.OrdinalIgnoreCase))
                 return asset;
         }
 
@@ -314,8 +341,35 @@ public class GitHubUpdater : MonoBehaviour
 
         State = UpdateState.Downloading;
         DownloadProgress = 0f;
+        DownloadBytes = 0;
+        IsPatch = false;
         LastError = null;
 
+        // ---- Parche o completo ----
+        if (CanSelfInstall && latestPatch != null && latestManifest != null)
+        {
+            string patchProblem;
+
+            if (PlayerPrefs.GetString(PatchTriedKey, "") == version)
+                patchProblem = "el parche ya se probó y no alcanzó";
+            else
+            {
+                patchProblem = "no se pudo revisar";
+                yield return CheckPatchFits(version, reason => patchProblem = reason);
+            }
+
+            if (patchProblem == null)
+            {
+                asset = latestPatch;
+                IsPatch = true;
+                Debug.Log($"[GitHubUpdater] Actualización parcial: {FormatSize(latestPatch.size)} " +
+                          $"en vez de {FormatSize(latestInstaller.size)}.");
+            }
+            else
+                Debug.Log($"[GitHubUpdater] Instalador completo, porque {patchProblem}.");
+        }
+
+        DownloadBytes = asset.size;
         string path = Path.Combine(Application.temporaryCachePath, asset.name);
 
         using (UnityWebRequest request = new UnityWebRequest(asset.browser_download_url, UnityWebRequest.kHttpVerbGET))
@@ -361,6 +415,12 @@ public class GitHubUpdater : MonoBehaviour
         if (IsStartupInstall) CountAutoAttempt(version);
         TryDelete(InstallLogPath);
 
+        if (IsPatch)
+        {
+            PlayerPrefs.SetString(PatchTriedKey, version);
+            PlayerPrefs.Save();
+        }
+
         if (!LaunchInstaller(path, out string error))
         {
             Fail(error);
@@ -398,6 +458,83 @@ public class GitHubUpdater : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// El parche solo trae lo que cambio. Sirve si todo lo demas ya esta
+    /// instalado exactamente como en la version nueva: se baja la lista de
+    /// archivos (files.json) y se compara con los de la carpeta del juego.
+    /// Llama a <paramref name="done"/> con null si sirve, o con el motivo.
+    /// </summary>
+    private IEnumerator CheckPatchFits(string version, Action<string> done)
+    {
+        string json;
+        using (UnityWebRequest request = UnityWebRequest.Get(latestManifest.browser_download_url))
+        {
+            request.SetRequestHeader("User-Agent", $"{Application.productName}/{Application.version}");
+            request.timeout = 30;
+            yield return request.SendWebRequest();
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                done($"no se pudo bajar {manifestName} ({request.error})");
+                yield break;
+            }
+
+            json = request.downloadHandler.text;
+        }
+
+        UpdateManifest manifest;
+        try { manifest = JsonUtility.FromJson<UpdateManifest>(json); }
+        catch (Exception e)
+        {
+            done($"{manifestName} es ilegible ({e.Message})");
+            yield break;
+        }
+
+        if (manifest?.files == null || manifest.version != version ||
+            !string.Equals(manifest.patch, latestPatch.name, StringComparison.OrdinalIgnoreCase))
+        {
+            done($"{manifestName} no corresponde a este parche");
+            yield break;
+        }
+
+        // Hashear todo el juego (~90 MB) en el hilo principal congelaria la
+        // pantalla de seleccion un segundo.
+        string gameFolder = Path.GetDirectoryName(Application.dataPath);
+        Task<string> compare = Task.Run(() => FirstMismatch(gameFolder, manifest));
+        while (!compare.IsCompleted) yield return null;
+
+        done(compare.IsFaulted ? compare.Exception?.GetBaseException().Message : compare.Result);
+    }
+
+    /// <summary>Null si todo lo que el parche no trae esta igual; si no, cual no.</summary>
+    private static string FirstMismatch(string gameFolder, UpdateManifest manifest)
+    {
+        foreach (UpdateManifestFile file in manifest.files)
+        {
+            if (file.inPatch) continue;
+
+            string path = Path.Combine(gameFolder, file.path.Replace('/', Path.DirectorySeparatorChar));
+            if (!File.Exists(path)) return $"falta {file.path}";
+
+            var info = new FileInfo(path);
+            if (info.Length != file.size || !string.Equals(Sha256(path), file.sha256, StringComparison.OrdinalIgnoreCase))
+                return $"{file.path} no es el esperado";
+        }
+
+        return null;
+    }
+
+    private static string Sha256(string path)
+    {
+        using (SHA256 sha = SHA256.Create())
+        using (FileStream stream = File.OpenRead(path))
+            return BitConverter.ToString(sha.ComputeHash(stream)).Replace("-", "");
+    }
+
+    /// <summary>"1.2 MB", para mostrar cuanto se baja.</summary>
+    public static string FormatSize(long bytes) =>
+        bytes >= 1048576 ? $"{bytes / 1048576.0:0.0} MB" : $"{Math.Max(1, bytes / 1024)} KB";
+
     /// <summary>Null si el archivo esta bien; si no, el motivo.</summary>
     private static string VerifyDownload(string path, AssetJson asset)
     {
@@ -414,14 +551,9 @@ public class GitHubUpdater : MonoBehaviour
 
         string expected = asset.digest.Substring(prefix.Length);
 
-        using (SHA256 sha = SHA256.Create())
-        using (FileStream stream = File.OpenRead(path))
-        {
-            string actual = BitConverter.ToString(sha.ComputeHash(stream)).Replace("-", "");
-            return string.Equals(actual, expected, StringComparison.OrdinalIgnoreCase)
-                ? null
-                : "El instalador descargado no coincide con el publicado.";
-        }
+        return string.Equals(Sha256(path), expected, StringComparison.OrdinalIgnoreCase)
+            ? null
+            : "El instalador descargado no coincide con el publicado.";
     }
 
     private void Fail(string message)
