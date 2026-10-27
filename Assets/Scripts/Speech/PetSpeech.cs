@@ -71,7 +71,7 @@ public class PetSpeech : MonoBehaviour
     private int lastIndex = -1;
 
     private CharacterDragHandler dragHandler;
-    private PetSprenEmitter sprenEmitter;
+
     private bool isWaitingClickRelease;
 
     private void Awake()
@@ -79,8 +79,8 @@ public class PetSpeech : MonoBehaviour
         body = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         dragHandler = GetComponent<CharacterDragHandler>();
-        sprenEmitter = GetComponent<PetSprenEmitter>();
-        if (sprenEmitter == null) sprenEmitter = gameObject.AddComponent<PetSprenEmitter>();
+
+
         clickPhrases = LoadClickPhrases();
     }
 
@@ -111,8 +111,8 @@ public class PetSpeech : MonoBehaviour
     {
         if (string.IsNullOrEmpty(phrase) || bubblePrefab == null) return;
 
-        // Brotan Alegrispren cuando se interactúa con cariño con la mascota
-        if (sprenEmitter != null) sprenEmitter.SpawnJoyspren();
+
+
 
         // Un globo por personaje: si ya estaba hablando, reemplaza lo que decia.
         if (bubble != null) Destroy(bubble.gameObject);

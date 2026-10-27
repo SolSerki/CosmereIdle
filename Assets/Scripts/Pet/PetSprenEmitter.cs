@@ -10,6 +10,9 @@ using UnityEngine;
 public class PetSprenEmitter : MonoBehaviour
 {
     [Header("Alegrispren (Al acariciar / hacer clic)")]
+    [Tooltip("Habilita o deshabilita la emisión de estrellas doradas al hacer clic.")]
+    [SerializeField] private bool enableJoyspren = false;
+
     [Tooltip("Cantidad de estrellas doradas expulsadas por clic.")]
     [SerializeField] private int joysprenCount = 5;
 
@@ -117,6 +120,8 @@ public class PetSprenEmitter : MonoBehaviour
     /// </summary>
     public void SpawnJoyspren()
     {
+        if (!enableJoyspren) return;
+
         Vector3 head = GetHeadPosition();
 
         for (int i = 0; i < joysprenCount; i++)
