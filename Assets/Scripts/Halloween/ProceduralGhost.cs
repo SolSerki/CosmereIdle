@@ -12,6 +12,7 @@ using UnityEngine;
 /// - Estela de partículas de spren espectral generadas proceduralmente en memoria.
 /// - Reacción elástica con resorte armónico amortiguado si el jugador le hace clic con el cursor.
 /// - Desvanecimiento suave (fade in / fade out) al emerger y disiparse en el éter.
+/// - Tamaño fijo en pantalla correspondiente a la resolución 0.75x, sin importar el escalado de personajes.
 /// </summary>
 [DisallowMultipleComponent]
 [RequireComponent(typeof(SpriteRenderer))]
@@ -26,8 +27,26 @@ public class ProceduralGhost : MonoBehaviour
     [SerializeField] private float animationFps = 8f;
 
     [Header("Escala y Volumen")]
-    [Tooltip("Escala base del fantasma en el mundo (en este proyecto los personajes están a 4x).")]
-    [SerializeField] private Vector3 baseScale = new Vector3(4f, 4f, 1f);
+    /// <summary>
+    /// Escala de resolución de referencia (0.75x) donde el fantasma toma su tamaño base deseado.
+    /// </summary>
+    public const float ReferenceStageScale = 0.75f;
+
+    /// <summary>
+    /// Multiplicador de escala de diseño de personajes (4x).
+    /// En resolución 0.75x, la escala base del fantasma en el mundo resultaba en 4f * 0.75f = 3f.
+    /// </summary>
+    public const float DesignBaseScale = 4f;
+
+    /// <summary>
+    /// Producto constante de escala en pantalla (4f * 0.75f * 0.75f = 2.25f).
+    /// Al dividir este valor por el StageScale actual de la cámara, el tamaño resultante en pantalla
+    /// se mantiene 100% idéntico y fijo al de la resolución 0.75x.
+    /// </summary>
+    public const float FixedScreenScaleProduct = DesignBaseScale * ReferenceStageScale * ReferenceStageScale; // 2.25f
+
+    [Tooltip("Escala base del fantasma en el mundo (se recalcula dinámicamente para ser fija en pantalla a resolución 0.75x).")]
+    [SerializeField] private Vector3 baseScale = new Vector3(3f, 3f, 1f);
 
     [Tooltip("Intensidad de la respiración / oscilación de volumen (Squash & Stretch).")]
     [SerializeField] private float breathIntensity = 0.08f;
@@ -122,6 +141,32 @@ public class ProceduralGhost : MonoBehaviour
     private readonly List<SpectralSpren> activeSpren = new List<SpectralSpren>();
     private static Transform sprenRoot;
 
+    /// <summary>
+    /// Calcula la escala en unidades de mundo para que el fantasma tenga SIEMPRE el mismo
+    /// tamaño en pantalla que tiene en resolución 0.75x, sin importar qué escalado elija el usuario.
+    /// </summary>
+    public static float GetFixedWorldScale(float stageScale)
+    {
+        float safeScale = Mathf.Max(0.01f, stageScale);
+        return FixedScreenScaleProduct / safeScale;
+    }
+
+    /// <summary>
+    /// Factor de escala visual respecto a la referencia (0.75x / stageScale).
+    /// Se usa para normalizar velocidades, amplitudes y offsets en espacio de mundo.
+    /// </summary>
+    public static float GetScaleFactor(float stageScale)
+    {
+        float safeScale = Mathf.Max(0.01f, stageScale);
+        return ReferenceStageScale / safeScale;
+    }
+
+    private void UpdateBaseScale(float stageScale)
+    {
+        float s = GetFixedWorldScale(stageScale);
+        baseScale = new Vector3(s, s, 1f);
+    }
+
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -139,6 +184,9 @@ public class ProceduralGhost : MonoBehaviour
 
         EnsureSprenRoot();
         EnsureHalloweenSprenColors();
+
+        float stageScale = DesktopWindow.Instance != null ? DesktopWindow.Instance.StageScale : ReferenceStageScale;
+        UpdateBaseScale(stageScale);
     }
 
     private void EnsureHalloweenSprenColors()
@@ -183,6 +231,9 @@ public class ProceduralGhost : MonoBehaviour
             spriteRenderer.color = c;
             spriteRenderer.sortingOrder = 16; // Flota por encima de las mascotas y fondos
         }
+
+        float stageScale = DesktopWindow.Instance != null ? DesktopWindow.Instance.StageScale : ReferenceStageScale;
+        UpdateBaseScale(stageScale);
     }
 
     private void OnDestroy()
@@ -209,17 +260,18 @@ public class ProceduralGhost : MonoBehaviour
         age = 0f;
         isDissipating = false;
 
-        // Ajustar escala respecto a la escala del escenario de DesktopWindow si existe
-        if (DesktopWindow.Instance != null)
-        {
-            baseScale = new Vector3(4f, 4f, 1f) * DesktopWindow.Instance.StageScale;
-        }
+        float stageScale = DesktopWindow.Instance != null ? DesktopWindow.Instance.StageScale : ReferenceStageScale;
+        UpdateBaseScale(stageScale);
     }
 
     private void Update()
     {
         float dt = Time.deltaTime;
         age += dt;
+
+        // Mantener el tamaño fijo en pantalla sincronizado con el escalado actual de la franja
+        float currentStageScale = DesktopWindow.Instance != null ? DesktopWindow.Instance.StageScale : ReferenceStageScale;
+        UpdateBaseScale(currentStageScale);
 
         // 1. Chequeo de interacción del mouse (clic para asustar al fantasma)
         CheckMouseInteraction();
@@ -301,8 +353,11 @@ public class ProceduralGhost : MonoBehaviour
 
     private void UpdateDrift(float dt)
     {
-        // 1. Traslación del ancla horizontal
-        anchorPosition.x += driftDirection * driftSpeed * dt;
+        float stageScale = DesktopWindow.Instance != null ? DesktopWindow.Instance.StageScale : ReferenceStageScale;
+        float scaleFactor = GetScaleFactor(stageScale);
+
+        // 1. Traslación del ancla horizontal (normalizada a la velocidad visual a 0.75x)
+        anchorPosition.x += driftDirection * (driftSpeed * scaleFactor) * dt;
 
         // Si está en fase de disipación, ascender suavemente como niebla pero contenido en el 25%
         isDissipating = age >= (lifetime - fadeOutTime);
@@ -310,12 +365,13 @@ public class ProceduralGhost : MonoBehaviour
         {
             Rect b = GetCurrentBounds();
             float maxY = b.yMin + b.height * 0.26f;
-            anchorPosition.y = Mathf.Min(anchorPosition.y + 0.10f * dt, maxY);
+            anchorPosition.y = Mathf.Min(anchorPosition.y + (0.10f * scaleFactor) * dt, maxY);
         }
 
         // 2. Rebotar suavemente al acercarse a los bordes de la franja / pantalla
         Rect bounds = GetCurrentBounds();
-        float padding = 0.45f;
+        float halfWidth = (24f / 100f) * baseScale.x * 0.5f;
+        float padding = halfWidth + 0.09f * scaleFactor;
 
         if (driftDirection > 0 && anchorPosition.x >= bounds.xMax - padding)
         {
@@ -347,18 +403,20 @@ public class ProceduralGhost : MonoBehaviour
     private void UpdateTransform()
     {
         float t = Time.time + timeOffset;
+        float stageScale = DesktopWindow.Instance != null ? DesktopWindow.Instance.StageScale : ReferenceStageScale;
+        float scaleFactor = GetScaleFactor(stageScale);
 
-        // 1. Desplazamiento oscilatorio (Hover & Sway)
+        // 1. Desplazamiento oscilatorio (Hover & Sway normalizado en pantalla a 0.75x)
         // Superposición de dos frecuencias senoidales para movimiento biológico y fluido
-        float hoverY = Mathf.Sin(t * hoverFrequency) * hoverAmplitude 
-                     + Mathf.Sin(t * (hoverFrequency * 1.5f)) * (hoverAmplitude * 0.35f);
+        float hoverY = (Mathf.Sin(t * hoverFrequency) * hoverAmplitude 
+                     + Mathf.Sin(t * (hoverFrequency * 1.5f)) * (hoverAmplitude * 0.35f)) * scaleFactor;
 
-        float swayX = Mathf.Cos(t * swayFrequency) * swayAmplitude;
+        float swayX = Mathf.Cos(t * swayFrequency) * (swayAmplitude * scaleFactor);
 
         // Mantener la base del fantasma suavemente por encima de la barra de tareas y con tope en el 25%
         Rect bounds = GetCurrentBounds();
-        float visibleHalfHeight = baseScale.y * (9.5f / 100f); // ~0.38f en escala 4
-        float minSafeY = bounds.yMin + visibleHalfHeight + 0.02f;
+        float visibleHalfHeight = baseScale.y * (9.5f / 100f);
+        float minSafeY = bounds.yMin + visibleHalfHeight + 0.02f * scaleFactor;
         float maxAllowedY = bounds.yMin + bounds.height * 0.25f;
 
         float finalY = Mathf.Clamp(anchorPosition.y + hoverY, minSafeY, maxAllowedY);
@@ -428,6 +486,9 @@ public class ProceduralGhost : MonoBehaviour
 
     private void UpdateSpectralSpren(float dt)
     {
+        float stageScale = DesktopWindow.Instance != null ? DesktopWindow.Instance.StageScale : ReferenceStageScale;
+        float scaleFactor = GetScaleFactor(stageScale);
+
         sprenTimer += dt;
         if (sprenTimer >= sprenEmitInterval && age < (lifetime - fadeOutTime * 0.5f))
         {
@@ -452,11 +513,11 @@ public class ProceduralGhost : MonoBehaviour
 
             // Ascenso suave con resistencia
             p.position += (Vector3)(p.velocity * dt);
-            p.velocity.y += 0.2f * dt; // Flota hacia arriba
+            p.velocity.y += (0.2f * scaleFactor) * dt; // Flota hacia arriba
             p.go.transform.position = p.position;
 
             // Escala y desvanecimiento
-            float scale = 2.4f * (1f - progress * 0.7f);
+            float scale = (2.4f * scaleFactor) * (1f - progress * 0.7f);
             p.go.transform.localScale = new Vector3(scale, scale, 1f);
 
             Color c = p.baseColor;
@@ -467,17 +528,20 @@ public class ProceduralGhost : MonoBehaviour
 
     private void EmitSpectralParticle()
     {
+        float stageScale = DesktopWindow.Instance != null ? DesktopWindow.Instance.StageScale : ReferenceStageScale;
+        float scaleFactor = GetScaleFactor(stageScale);
+
         // Posición en la cola o estela del fantasma
         Vector3 spawnPos = transform.position + new Vector3(
-            Random.Range(-0.08f, 0.08f),
-            Random.Range(-0.10f, 0.02f),
+            Random.Range(-0.08f, 0.08f) * scaleFactor,
+            Random.Range(-0.10f, 0.02f) * scaleFactor,
             0f
         );
 
         var p = CreateSprenParticle(spawnPos);
         p.velocity = new Vector2(
-            -driftDirection * Random.Range(0.1f, 0.35f) + Random.Range(-0.1f, 0.1f),
-            Random.Range(0.2f, 0.5f)
+            (-driftDirection * Random.Range(0.1f, 0.35f) + Random.Range(-0.1f, 0.1f)) * scaleFactor,
+            Random.Range(0.2f, 0.5f) * scaleFactor
         );
         p.maxLifeTime = Random.Range(0.55f, 0.85f);
         activeSpren.Add(p);
@@ -485,13 +549,20 @@ public class ProceduralGhost : MonoBehaviour
 
     private void BurstSpookySpren(int count)
     {
+        float stageScale = DesktopWindow.Instance != null ? DesktopWindow.Instance.StageScale : ReferenceStageScale;
+        float scaleFactor = GetScaleFactor(stageScale);
+
         for (int i = 0; i < count; i++)
         {
-            Vector3 spawnPos = transform.position + new Vector3(Random.Range(-0.12f, 0.12f), Random.Range(-0.08f, 0.12f), 0f);
+            Vector3 spawnPos = transform.position + new Vector3(
+                Random.Range(-0.12f, 0.12f) * scaleFactor, 
+                Random.Range(-0.08f, 0.12f) * scaleFactor, 
+                0f
+            );
             var p = CreateSprenParticle(spawnPos);
 
             float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
-            float speed = Random.Range(0.7f, 1.4f);
+            float speed = Random.Range(0.7f, 1.4f) * scaleFactor;
             p.velocity = new Vector2(Mathf.Cos(angle) * speed, Mathf.Sin(angle) * speed);
             p.maxLifeTime = Random.Range(0.5f, 0.8f);
 
@@ -525,12 +596,12 @@ public class ProceduralGhost : MonoBehaviour
 
     private Rect GetCurrentBounds()
     {
-        if (hasCustomBounds) return movementBounds;
-
         if (DesktopWindow.Instance != null)
         {
             return DesktopWindow.Instance.StageWorldRect;
         }
+
+        if (hasCustomBounds) return movementBounds;
 
         if (Camera.main != null)
         {

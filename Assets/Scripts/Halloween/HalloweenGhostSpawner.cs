@@ -6,6 +6,7 @@ using UnityEngine;
 /// Spawner del Evento de Halloween:
 /// Genera periódicamente apariciones aleatorias de fantasmas (de 1 a 3) en distintas
 /// posiciones de la pantalla/franja, los deja flotar durante 4 a 5 segundos y los disipa.
+/// El tamaño visual del fantasma se mantiene constante y fijado al correspondiente a la resolución 0.75x.
 /// </summary>
 [DisallowMultipleComponent]
 public class HalloweenGhostSpawner : MonoBehaviour
@@ -149,23 +150,27 @@ public class HalloweenGhostSpawner : MonoBehaviour
         count = Mathf.Clamp(count, 1, 10);
         Rect bounds = GetStageBounds();
 
-        // Subdividir el ancho de la pantalla en sectores para que no salgan superpuestos
-        float availableWidth = Mathf.Max(1f, bounds.width - 0.8f);
-        float sectorWidth = availableWidth / count;
-        float startX = bounds.xMin + 0.4f;
+        float stageScale = DesktopWindow.Instance != null ? DesktopWindow.Instance.StageScale : ProceduralGhost.ReferenceStageScale;
+        float scaleFactor = ProceduralGhost.GetScaleFactor(stageScale);
 
-        // Calcular altura segura flotando cerca de la barra de tareas
-        float stageScale = DesktopWindow.Instance != null ? DesktopWindow.Instance.StageScale : 1f;
-        float ghostHalfHeight = (24f / 100f) * 4f * stageScale * 0.5f; // ~0.48 en escala 1
-        float minSafeY = bounds.yMin + ghostHalfHeight + minGroundPadding;
+        // Subdividir el ancho de la pantalla en sectores para que no salgan superpuestos
+        float borderPadding = 0.4f * scaleFactor;
+        float availableWidth = Mathf.Max(1f, bounds.width - borderPadding * 2f);
+        float sectorWidth = availableWidth / count;
+        float startX = bounds.xMin + borderPadding;
+
+        // Calcular altura segura flotando cerca de la barra de tareas (tamaño fijo a resolución 0.75x)
+        float ghostWorldScale = ProceduralGhost.GetFixedWorldScale(stageScale);
+        float ghostHalfHeight = (24f / 100f) * ghostWorldScale * 0.5f;
+        float minSafeY = bounds.yMin + ghostHalfHeight + minGroundPadding * scaleFactor;
         float calculatedMinY = Mathf.Max(minSafeY, bounds.yMin + bounds.height * minHeightRatio);
-        float calculatedMaxY = Mathf.Max(calculatedMinY + 0.12f, bounds.yMin + bounds.height * maxHeightRatio);
+        float calculatedMaxY = Mathf.Max(calculatedMinY + 0.12f * scaleFactor, bounds.yMin + bounds.height * maxHeightRatio);
 
         for (int i = 0; i < count; i++)
         {
             // Posición X aleatoria dentro de su sector
-            float minX = startX + i * sectorWidth + 0.1f;
-            float maxX = startX + (i + 1) * sectorWidth - 0.1f;
+            float minX = startX + i * sectorWidth + 0.1f * scaleFactor;
+            float maxX = startX + (i + 1) * sectorWidth - 0.1f * scaleFactor;
             float spawnX = Random.Range(minX, maxX);
 
             // Altura Y: flotando cerca de la barra de tareas y a la altura de las mascotas, no tan alto
