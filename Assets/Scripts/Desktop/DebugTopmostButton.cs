@@ -31,9 +31,6 @@ public class DebugTopmostButton : DebugIconButton
         }
     }
 
-    /// <summary>Es un switch: el menu queda abierto para que se vea como quedo.</summary>
-    protected override bool ClosesMenuOnClick => false;
-
     protected override Color GetColor(bool hovering)
     {
         DesktopWindow window = DesktopWindow.Instance;

@@ -1,37 +1,35 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Menu de la esquina de abajo a la derecha de la franja, al estilo Taskbar
-/// Hero: un boton chico pegado al borde que despliega hacia arriba una lista
-/// con los botones de la app (DebugIconButton). Los avisos (actualizaciones)
-/// no se esconden en la lista: van sueltos al lado del boton.
+/// Hero: un boton chico pegado al borde que despliega una lista de opciones.
 ///
-/// Este componente solo decide donde va cada cosa. Cada boton se dibuja y se
-/// aprieta solo; le pregunta aca en que lugar le toca (<see cref="PlacementOf"/>).
-/// Por eso corre antes que ellos.
+/// Es un Canvas en el mundo armado en la escena: el boton, el panel y cada fila
+/// (<see cref="MenuRow"/>) estan en la jerarquia, y el orden de las filas es el
+/// orden de la jerarquia (lo resuelve el VerticalLayoutGroup del panel). Este
+/// componente no crea ni acomoda filas; solo:
+///   - pone el Canvas en la esquina de la franja, con la escala de interfaz,
+///   - abre el panel hacia arriba o, si arriba no entra, hacia abajo, y lo
+///     mantiene dentro del monitor,
+///   - reparte los clicks, con el cursor de DesktopWindow (Win32, no depende
+///     del foco) y no con el EventSystem,
+///   - le pide lugar a la ventana (SetOverlay) mientras esta abierto.
 ///
-/// Las medidas son de interfaz: unidades a escala 1, donde 1 = 100 pixeles. La
-/// escala de la franja no las achica (DesktopWindow.UiScale lo compensa): los
-/// personajes pueden quedar chiquitos, pero un menu ilegible no sirve.
+/// Las medidas del Canvas son pixeles de pantalla: 1 unidad del Canvas mide 1
+/// pixel, sea cual sea el tamaño de los personajes.
 ///
-/// Si la franja es muy baja para el menu abierto, le pide lugar a la ventana
-/// con SetOverlay. La ventana crece solo mientras el menu esta abierto; como es
-/// transparente, no se nota. Normalmente se despliega hacia arriba, pero si
-/// arriba no entra en el monitor (la franja pegada al borde de arriba) se
-/// despliega hacia abajo. Nunca sale del monitor: un menu fuera de la pantalla
-/// no se puede cerrar ni usar para volver a acomodar la franja.
+/// Los avisos (actualizaciones) no son filas: son DebugIconButton que van
+/// sueltos al lado del boton (<see cref="PinnedPosition"/>).
 /// </summary>
 [DefaultExecutionOrder(-50)]
-public class CornerMenu : MonoBehaviour
+public class CornerMenu : MonoBehaviour, DesktopWindow.IPointerTarget
 {
     public enum Placement
     {
-        /// <summary>No se dibuja: menu cerrado, otra forma de ventana, o acomodando la franja.</summary>
+        /// <summary>No se dibuja: otra forma de ventana, o acomodando la franja.</summary>
         Hidden,
-
-        /// <summary>Fila del menu desplegado.</summary>
-        Row,
 
         /// <summary>Suelto al lado del boton del menu.</summary>
         Pinned
@@ -39,102 +37,83 @@ public class CornerMenu : MonoBehaviour
 
     public static CornerMenu Instance { get; private set; }
 
-    [Header("Piezas")]
-    [Tooltip("Boton que abre y cierra el menu. Necesita BoxCollider2D. Si el sprite tiene " +
-             "bordes 9-slice se estira como fondo; si no (el logo), se escala entero.")]
-    [SerializeField] private SpriteRenderer launcher;
+    [Header("Piezas (Canvas en el mundo, en la escena)")]
+    [SerializeField] private Canvas canvas;
 
-    [Tooltip("Icono dentro del boton. Opcional: con el logo de boton no hace falta.")]
-    [SerializeField] private SpriteRenderer launcherIcon;
+    [Tooltip("Raiz del menu. Se pone en la esquina de abajo a la derecha de la franja; " +
+             "sus hijos se anclan a esa esquina.")]
+    [SerializeField] private RectTransform root;
 
-    [Tooltip("Fondo del menu desplegado. Se dibuja en modo Sliced.")]
-    [SerializeField] private SpriteRenderer panel;
+    [Tooltip("Boton que abre y cierra el menu.")]
+    [SerializeField] private Image launcher;
 
-    [Tooltip("Resaltado de la fila que esta bajo el cursor. Se dibuja en modo Sliced.")]
-    [SerializeField] private SpriteRenderer highlight;
+    [Tooltip("Panel con las filas. Lo ordena su VerticalLayoutGroup y lo mide su ContentSizeFitter.")]
+    [SerializeField] private RectTransform panel;
 
-    [Header("Medidas (interfaz, 1 = 100 px)")]
-    [Tooltip("Distancia del boton a los bordes de la franja.")]
-    [SerializeField] private float margin = 0.06f;
-    [SerializeField] private float launcherSize = 0.26f;
+    [SerializeField] private VerticalLayoutGroup panelLayout;
 
-    [Tooltip("Lugar de cada aviso suelto a la izquierda del boton.")]
-    [SerializeField] private float pinnedSlot = 0.24f;
-
-    [SerializeField] private float rowWidth = 1.7f;
-    [SerializeField] private float rowHeight = 0.26f;
-
-    [Tooltip("Ancho de la columna del icono dentro de cada fila.")]
-    [SerializeField] private float rowIconSlot = 0.3f;
-
-    [SerializeField] private float panelPadding = 0.08f;
+    [Header("Medidas (pixeles de pantalla)")]
+    [Tooltip("Distancia del boton y del panel a los bordes de la franja.")]
+    [SerializeField] private float margin = 6f;
 
     [Tooltip("Aire entre el boton y el menu desplegado.")]
-    [SerializeField] private float panelGap = 0.06f;
+    [SerializeField] private float panelGap = 6f;
+
+    [Tooltip("Lugar de cada aviso suelto a la izquierda del boton.")]
+    [SerializeField] private float pinnedSlot = 24f;
 
     [Header("Colores")]
     [SerializeField] private Color launcherColor = new Color(1f, 1f, 1f, 0.85f);
     [SerializeField] private Color launcherHoverColor = Color.white;
-    [SerializeField] private Color iconColor = new Color(1f, 1f, 1f, 0.6f);
-    [SerializeField] private Color iconActiveColor = Color.white;
-    [SerializeField] private Color highlightColor = new Color(1f, 1f, 1f, 0.12f);
 
     public bool IsOpen { get; private set; }
 
-    /// <summary>localScale de las piezas de interfaz (ver DesktopWindow.UiScale).</summary>
+    /// <summary>
+    /// localScale de las piezas de interfaz que no son del Canvas (los avisos
+    /// sueltos). Ver DesktopWindow.UiScale.
+    /// </summary>
     public float UiScale { get; private set; } = 1f;
 
-    public float RowWidth => rowWidth;
-    public float RowHeight => rowHeight;
-    public float RowIconSlot => rowIconSlot;
-
-    private readonly List<DebugIconButton> rows = new List<DebugIconButton>();
     private readonly List<DebugIconButton> pinned = new List<DebugIconButton>();
-
-    private BoxCollider2D launcherBox;
-    private BoxCollider2D panelBox;
-    private Vector3 launcherCenter;
-    private Rect panelRect;
+    private MenuRow[] rows = new MenuRow[0];
+    private readonly Vector3[] corners = new Vector3[4];
     private bool active;
 
     private void Awake()
     {
         Instance = this;
-        if (launcher != null) launcherBox = launcher.GetComponent<BoxCollider2D>();
-        if (panel != null) panelBox = panel.GetComponent<BoxCollider2D>();
+        if (panel != null) rows = panel.GetComponentsInChildren<MenuRow>(true);
     }
+
+    private void OnEnable() => DesktopWindow.AddPointerTarget(this);
+    private void OnDisable() => DesktopWindow.RemovePointerTarget(this);
 
     public void Close() => IsOpen = false;
 
-    /// <summary>Donde va un boton. index es su fila o su lugar al lado del boton del menu.</summary>
+    /// <summary>Donde va un aviso. index es su lugar al lado del boton del menu.</summary>
     public Placement PlacementOf(DebugIconButton button, out int index)
     {
-        index = 0;
-        if (!active) return Placement.Hidden;
-
-        index = pinned.IndexOf(button);
+        index = active ? pinned.IndexOf(button) : -1;
         if (index >= 0) return Placement.Pinned;
-
-        index = rows.IndexOf(button);
-        if (index >= 0 && IsOpen) return Placement.Row;
 
         index = 0;
         return Placement.Hidden;
     }
 
-    /// <summary>Centro del icono de la fila, en el mundo. La fila 0 es la de arriba.</summary>
-    public Vector3 RowIconPosition(int row)
-    {
-        float x = panelRect.xMin + (panelPadding + rowIconSlot * 0.5f) * UiScale;
-        float y = panelRect.yMax - (panelPadding + rowHeight * (row + 0.5f)) * UiScale;
-        return new Vector3(x, y, 0f);
-    }
-
-    /// <summary>Centro de un aviso suelto. El 0 es el mas pegado al boton.</summary>
+    /// <summary>Centro de un aviso suelto, en el mundo. El 0 es el mas pegado al boton.</summary>
     public Vector3 PinnedPosition(int slot)
     {
-        float x = launcherCenter.x - (launcherSize * 0.5f + pinnedSlot * (slot + 0.5f)) * UiScale;
-        return new Vector3(x, launcherCenter.y, 0f);
+        Rect l = WorldRect(launcher.rectTransform);
+        float x = l.xMin - pinnedSlot * (slot + 0.5f) * root.lossyScale.x;
+        return new Vector3(x, l.center.y, 0f);
+    }
+
+    /// <summary>Para DesktopWindow: con el cursor encima del menu, la ventana no es click-through.</summary>
+    public bool ContainsPoint(Vector3 world)
+    {
+        if (!active || canvas == null || !canvas.enabled) return false;
+        return MenuRow.Contains(launcher.rectTransform, world)
+               || (IsOpen && MenuRow.Contains(panel, world));
     }
 
     private void Update()
@@ -145,201 +124,130 @@ public class CornerMenu : MonoBehaviour
                  && window.Mode == DesktopWindow.WindowMode.Strip
                  && !LayoutEditor.IsEditing;
 
+        if (canvas != null) canvas.enabled = active;
+
         if (!active)
         {
             IsOpen = false;
-            SetVisible(false, false);
             if (window != null) window.SetOverlay(this, new RectInt());
             return;
         }
 
-        CollectButtons();
-
+        CollectPinned();
         UiScale = window.UiScale;
+
+        // El Canvas va a la esquina de abajo a la derecha de la franja, y una
+        // unidad del Canvas mide un pixel de pantalla.
         Rect stage = window.StageWorldRect;
-
-        float half = launcherSize * 0.5f;
-        launcherCenter = new Vector3(
-            stage.xMax - (margin + half) * UiScale,
-            stage.yMin + (margin + half) * UiScale,
-            0f);
-
-        float panelWidth = (rowWidth + panelPadding * 2f) * UiScale;
-        float panelHeight = (rows.Count * rowHeight + panelPadding * 2f) * UiScale;
-        panelRect = PlacePanel(window, stage, panelWidth, panelHeight, out bool opensDown);
-
-        // Cerrar (slot 0) va siempre pegado al boton del menu: abajo de todo
-        // si se despliega hacia arriba, arriba de todo si se despliega hacia abajo.
-        if (opensDown) rows.Reverse();
+        float scale = window.WorldUnitsPerPixel;
+        root.position = new Vector3(stage.xMax, stage.yMin, 0f);
+        root.localScale = new Vector3(scale, scale, 1f);
 
         Vector3 cursor = window.CursorWorldPosition;
-        bool overLauncher = launcherBox != null && launcherBox.OverlapPoint(cursor);
+        bool overLauncher = MenuRow.Contains(launcher.rectTransform, cursor);
+        MenuRow hovered = IsOpen ? RowAt(cursor) : null;
 
         if (window.LeftPressedThisFrame)
         {
-            if (overLauncher) IsOpen = !IsOpen;
-            else if (IsOpen && !panelRect.Contains(cursor)) IsOpen = false;
+            if (overLauncher)
+            {
+                IsOpen = !IsOpen;
+            }
+            else if (hovered != null)
+            {
+                hovered.OnClicked(cursor);
+                if (hovered.ClosesMenuOnClick) IsOpen = false;
+            }
+            else if (IsOpen && !MenuRow.Contains(panel, cursor))
+            {
+                IsOpen = false;
+            }
         }
 
-        if (rows.Count == 0) IsOpen = false;
+        launcher.color = overLauncher ? launcherHoverColor : launcherColor;
 
-        RequestRoom(window);
-        LayoutLauncher(overLauncher);
-        LayoutPanel(cursor);
+        foreach (MenuRow row in rows)
+            if (row.gameObject.activeSelf != row.IsAvailable) row.gameObject.SetActive(row.IsAvailable);
+
+        if (panel.gameObject.activeSelf != IsOpen) panel.gameObject.SetActive(IsOpen);
+
+        if (IsOpen)
+        {
+            foreach (MenuRow row in rows)
+                if (row.gameObject.activeSelf) row.Refresh(row == hovered, cursor);
+
+            PlacePanel(window);
+        }
+
+        window.SetOverlay(this, IsOpen ? window.WorldToDesktopRect(WorldRect(panel)) : new RectInt());
     }
 
-    private void CollectButtons()
+    /// <summary>La fila que se puede apretar bajo el cursor, o null.</summary>
+    private MenuRow RowAt(Vector3 cursor)
     {
-        rows.Clear();
+        foreach (MenuRow row in rows)
+            if (row.gameObject.activeSelf && row.IsInteractable && row.ContainsPoint(cursor)) return row;
+        return null;
+    }
+
+    private void CollectPinned()
+    {
         pinned.Clear();
 
         foreach (var button in DebugIconButton.All)
-        {
-            if (button == null || !button.IsAvailableNow) continue;
-            (button.PinnedNextToLauncher ? pinned : rows).Add(button);
-        }
+            if (button != null && button.IsAvailableNow && button.PinnedNextToLauncher)
+                pinned.Add(button);
 
-        // El de slot mas alto arriba de todo; Cerrar (slot 0) queda abajo,
-        // pegado al boton del menu.
-        rows.Sort((a, b) => b.Slot.CompareTo(a.Slot));
         pinned.Sort((a, b) => a.Slot.CompareTo(b.Slot));
     }
 
     /// <summary>
-    /// Rectangulo del menu desplegado, en el mundo. Va pegado al borde derecho
-    /// de la franja, arriba del boton; si arriba no entra en el monitor y
-    /// abajo hay mas lugar, va abajo. Despues se recorta contra el monitor por
-    /// los cuatro lados, asi que nunca queda afuera.
+    /// Pega el panel al borde derecho de la franja, arriba del boton; si arriba
+    /// no entra en el monitor y abajo hay mas lugar, abajo. Despues lo corre lo
+    /// que haga falta para que quede entero dentro del monitor: un menu fuera de
+    /// la pantalla no se puede cerrar ni usar para volver a acomodar la franja.
     /// </summary>
-    private Rect PlacePanel(DesktopWindow window, Rect stage, float width, float height, out bool opensDown)
+    private void PlacePanel(DesktopWindow window)
     {
+        // Primero el tamaño: depende de que filas estan prendidas.
+        LayoutRebuilder.ForceRebuildLayoutImmediate(panel);
+
+        float scale = root.lossyScale.y;
         Rect screen = window.DesktopToWorldRect(window.Limits);
-        float gap = (launcherSize * 0.5f + panelGap) * UiScale;
+        Rect l = WorldRect(launcher.rectTransform);
+        float height = panel.rect.height * scale;
+        float gap = panelGap * scale;
 
-        float upBottom = launcherCenter.y + gap;
-        float downTop = launcherCenter.y - gap;
-        float roomUp = screen.yMax - upBottom;
-        float roomDown = downTop - screen.yMin;
-        opensDown = roomUp < height && roomDown > roomUp;
+        float roomUp = screen.yMax - (l.yMax + gap);
+        float roomDown = (l.yMin - gap) - screen.yMin;
+        bool opensDown = roomUp < height && roomDown > roomUp;
 
-        float y = opensDown ? downTop - height : upBottom;
-        y = Mathf.Clamp(y, screen.yMin, Mathf.Max(screen.yMin, screen.yMax - height));
+        // Cerrar va siempre pegado al boton: abajo de todo si se abre hacia
+        // arriba, arriba de todo si se abre hacia abajo.
+        if (panelLayout != null && panelLayout.reverseArrangement != opensDown)
+        {
+            panelLayout.reverseArrangement = opensDown;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(panel);
+        }
 
-        float x = stage.xMax - margin * UiScale - width;
-        x = Mathf.Clamp(x, screen.xMin, Mathf.Max(screen.xMin, screen.xMax - width));
+        float launcherTop = launcher.rectTransform.anchoredPosition.y + launcher.rectTransform.rect.height;
+        float launcherBottom = launcher.rectTransform.anchoredPosition.y;
 
-        return new Rect(x, y, width, height);
+        panel.anchorMin = panel.anchorMax = new Vector2(1f, 0f);
+        panel.pivot = new Vector2(1f, opensDown ? 1f : 0f);
+        panel.anchoredPosition = new Vector2(-margin, opensDown ? launcherBottom - panelGap : launcherTop + panelGap);
+
+        // Dentro del monitor por los cuatro lados.
+        Rect p = WorldRect(panel);
+        float dx = Mathf.Max(0f, screen.xMin - p.xMin) - Mathf.Max(0f, p.xMax - screen.xMax);
+        float dy = Mathf.Max(0f, screen.yMin - p.yMin) - Mathf.Max(0f, p.yMax - screen.yMax);
+        if (dx != 0f || dy != 0f)
+            panel.anchoredPosition += new Vector2(dx / root.lossyScale.x, dy / scale);
     }
 
-    /// <summary>
-    /// Le pide a la ventana el lugar del menu desplegado. Con el menu cerrado
-    /// no pide nada: el boton esta dentro de la franja y siempre entra.
-    /// </summary>
-    private void RequestRoom(DesktopWindow window)
+    private Rect WorldRect(RectTransform rt)
     {
-        window.SetOverlay(this, IsOpen ? window.WorldToDesktopRect(panelRect) : new RectInt());
-    }
-
-    private void LayoutLauncher(bool hovering)
-    {
-        if (launcher == null) return;
-
-        launcher.enabled = true;
-        launcher.transform.position = launcherCenter;
-        launcher.color = hovering ? launcherHoverColor : launcherColor;
-
-        // Dos formas de boton: un fondo con bordes 9-slice (con su icono
-        // adentro), o una imagen que es el boton entero, como el logo. La
-        // imagen se escala para medir launcherSize; el fondo se estira.
-        Sprite art = launcher.sprite;
-        bool isImage = art != null && art.border == Vector4.zero;
-
-        Vector2 localSize;
-        if (isImage)
-        {
-            float fit = launcherSize / Mathf.Max(art.bounds.size.x, art.bounds.size.y);
-            launcher.drawMode = SpriteDrawMode.Simple;
-            launcher.transform.localScale = Vector3.one * (UiScale * fit);
-            localSize = art.bounds.size;
-        }
-        else
-        {
-            launcher.drawMode = SpriteDrawMode.Sliced;
-            launcher.transform.localScale = Vector3.one * UiScale;
-            launcher.size = Vector2.one * launcherSize;
-            localSize = launcher.size;
-        }
-
-        if (launcherBox != null)
-        {
-            launcherBox.enabled = true;
-            launcherBox.size = localSize;
-            launcherBox.offset = Vector2.zero;
-        }
-
-        if (launcherIcon != null)
-        {
-            launcherIcon.enabled = true;
-            launcherIcon.color = hovering || IsOpen ? iconActiveColor : iconColor;
-        }
-    }
-
-    private void LayoutPanel(Vector3 cursor)
-    {
-        if (panel != null)
-        {
-            panel.enabled = IsOpen;
-            if (panelBox != null) panelBox.enabled = IsOpen;
-
-            if (IsOpen)
-            {
-                panel.drawMode = SpriteDrawMode.Sliced;
-                panel.transform.localScale = Vector3.one * UiScale;
-                panel.transform.position = panelRect.center;
-                panel.size = panelRect.size / UiScale;
-
-                // Sin collider el aire entre filas seria click-through y el
-                // click se iria al escritorio de atras.
-                if (panelBox != null)
-                {
-                    panelBox.size = panel.size;
-                    panelBox.offset = Vector2.zero;
-                }
-            }
-        }
-
-        if (highlight == null) return;
-
-        int hovered = -1;
-        if (IsOpen && panelRect.Contains(cursor))
-        {
-            float fromTop = (panelRect.yMax - cursor.y) / UiScale - panelPadding;
-            int row = Mathf.FloorToInt(fromTop / rowHeight);
-            if (fromTop >= 0f && row < rows.Count) hovered = row;
-        }
-
-        highlight.enabled = hovered >= 0;
-        if (hovered < 0) return;
-
-        highlight.drawMode = SpriteDrawMode.Sliced;
-        highlight.color = highlightColor;
-        highlight.transform.localScale = Vector3.one * UiScale;
-        highlight.size = new Vector2(rowWidth, rowHeight);
-
-        Vector3 icon = RowIconPosition(hovered);
-        highlight.transform.position = new Vector3(
-            icon.x + (rowWidth * 0.5f - rowIconSlot * 0.5f) * UiScale,
-            icon.y,
-            0f);
-    }
-
-    private void SetVisible(bool launcherVisible, bool panelVisible)
-    {
-        if (launcher != null) launcher.enabled = launcherVisible;
-        if (launcherBox != null) launcherBox.enabled = launcherVisible;
-        if (launcherIcon != null) launcherIcon.enabled = launcherVisible;
-        if (panel != null) panel.enabled = panelVisible;
-        if (panelBox != null) panelBox.enabled = panelVisible;
-        if (highlight != null) highlight.enabled = false;
+        rt.GetWorldCorners(corners);
+        return Rect.MinMaxRect(corners[0].x, corners[0].y, corners[2].x, corners[2].y);
     }
 }

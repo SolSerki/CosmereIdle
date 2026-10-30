@@ -17,6 +17,14 @@ using UnityEngine.Rendering;
 /// La punta de la colita va apoyada arriba de la cabeza y el globo crece hacia
 /// arriba desde ahi. Si en la franja no entra, le pide lugar a la ventana
 /// (SetOverlay) en vez de bajar a tapar la cara.
+///
+/// El tamaño no sigue al de los personajes: el globo lleva la escala inversa a
+/// la de la franja, asi mide siempre lo mismo en pantalla. El texto tiene su
+/// propio tamaño (<see cref="BubbleTextSize"/>); si cambia con el globo en
+/// pantalla, el globo se vuelve a medir en el momento.
+///
+/// Las medidas del Inspector (padding, ancho maximo) son a escala 1 de los
+/// personajes y con el texto al 100%.
 /// </summary>
 [RequireComponent(typeof(SortingGroup))]
 public class SpeechBubble : MonoBehaviour
@@ -32,12 +40,11 @@ public class SpeechBubble : MonoBehaviour
     [Tooltip("Cuantos globos se apilan antes de volver a empezar desde abajo.")]
     [SerializeField] private int maxStack = 25;
 
-    [SerializeField] private SpriteRenderer background;
-    [SerializeField] private TextMeshPro label;
+    [Tooltip("Fondo armado con las piezas de Art/Dialog.png. Su colita apunta al personaje: " +
+             "sirve para saber quien hablo cuando hay varias mascotas juntas.")]
+    [SerializeField] private BubbleFrame frame;
 
-    [Tooltip("Colita que apunta al personaje. Sirve para saber quien hablo cuando " +
-             "hay varias mascotas juntas.")]
-    [SerializeField] private SpriteRenderer tail;
+    [SerializeField] private TextMeshPro label;
 
     [Tooltip("Aire entre el texto y el borde del globo, en unidades de mundo.")]
     [SerializeField] private Vector2 padding = new Vector2(0.18f, 0.12f);
@@ -56,15 +63,37 @@ public class SpeechBubble : MonoBehaviour
     private float tipAboveFeet;
     private float hideAt;
     private float shownAt;
+    private string phrase;
+    private float baseFontSize;
 
-    private void OnEnable() => live.Add(this);
+    private void Awake() => baseFontSize = label.fontSize;
+
+    private void OnEnable()
+    {
+        live.Add(this);
+        BubbleTextSize.Changed += Relayout;
+    }
 
     private void OnDisable()
     {
         live.Remove(this);
+        BubbleTextSize.Changed -= Relayout;
 
         DesktopWindow window = DesktopWindow.Instance;
         if (window != null) window.SetOverlay(this, new RectInt());
+    }
+
+    /// <summary>
+    /// Escala del globo en el mundo: la inversa de la de la franja, para que
+    /// los personajes puedan crecer sin que crezca el globo.
+    /// </summary>
+    private static float WorldScale
+    {
+        get
+        {
+            DesktopWindow window = DesktopWindow.Instance;
+            return window != null ? 1f / Mathf.Max(0.01f, window.StageScale) : 1f;
+        }
     }
 
     /// <summary>
@@ -83,21 +112,36 @@ public class SpeechBubble : MonoBehaviour
 
         target = follow;
         this.tipAboveFeet = tipAboveFeet;
+        this.phrase = phrase;
         shownAt = Time.time;
         hideAt = Time.time + seconds;
 
+        Relayout();
+    }
+
+    /// <summary>
+    /// Mide el texto con el tamaño elegido y arma el fondo a su medida. Lo
+    /// llama Show, y tambien BubbleTextSize cuando cambia el tamaño con el
+    /// globo en pantalla.
+    /// </summary>
+    private void Relayout()
+    {
+        if (phrase == null || target == null) return;
+
+        // El ancho maximo y el aire crecen con la letra: asi una frase corta
+        // en las mismas palabras, sea cual sea el tamaño.
+        float k = BubbleTextSize.Scale;
+        float maxWidth = maxTextWidth * k;
+        label.fontSize = baseFontSize * k;
         label.text = phrase;
 
         // GetPreferredValues con ancho maximo devuelve el tamaño YA con el texto
         // cortado en lineas, que es lo que hay que medir para el fondo.
-        Vector2 size = label.GetPreferredValues(phrase, maxTextWidth, 0f);
-        size.x = Mathf.Min(size.x, maxTextWidth);
+        Vector2 size = label.GetPreferredValues(phrase, maxWidth, 0f);
+        size.x = Mathf.Min(size.x, maxWidth);
 
         label.rectTransform.sizeDelta = size;
-        background.size = size + padding * 2f;
-
-        if (tail != null)
-            tail.transform.localPosition = new Vector3(0f, -background.size.y * 0.5f, 0f);
+        frame.Layout(size + padding * 2f * k);
 
         Reposition();
     }
@@ -119,13 +163,19 @@ public class SpeechBubble : MonoBehaviour
 
     private void Reposition()
     {
-        // El centro del globo queda medio globo y media colita (que va
-        // centrada en el borde de abajo) arriba de la punta.
-        float halfHeight = background.size.y * 0.5f;
-        float tailHalf = tail != null ? tail.bounds.size.y * 0.5f : 0f;
+        // El globo se mide en sus unidades; en el mundo lleva la escala que lo
+        // separa del tamaño de los personajes.
+        float s = WorldScale;
+        transform.localScale = new Vector3(s, s, 1f);
+
+        // El centro del globo queda medio globo y lo que sobresale la colita
+        // arriba de la punta.
+        Vector2 bubbleSize = frame.Size * s;
+        float halfHeight = bubbleSize.y * 0.5f;
+        float edge = 0.05f * s;
 
         Vector3 p = target.position;
-        p.y += tipAboveFeet + tailHalf + halfHeight;
+        p.y += tipAboveFeet + frame.TailDrop * s + halfHeight;
         p.z = 0f;
 
         // Que no se salga por los costados de la franja. Por arriba, si no
@@ -136,10 +186,10 @@ public class SpeechBubble : MonoBehaviour
         if (window != null)
         {
             Rect stage = window.StageWorldRect;
-            float halfBubble = background.size.x * 0.5f;
-            p.x = Mathf.Clamp(p.x, stage.xMin + halfBubble + 0.05f, stage.xMax - halfBubble - 0.05f);
+            float halfBubble = bubbleSize.x * 0.5f;
+            p.x = Mathf.Clamp(p.x, stage.xMin + halfBubble + edge, stage.xMax - halfBubble - edge);
 
-            float top = p.y + halfHeight + 0.05f;
+            float top = p.y + halfHeight + edge;
             bool fits = window.Mode != DesktopWindow.WindowMode.Strip || top <= stage.yMax;
             window.SetOverlay(this, fits
                 ? new RectInt()
@@ -148,23 +198,33 @@ public class SpeechBubble : MonoBehaviour
             float screenTop = window.Mode == DesktopWindow.WindowMode.Strip
                 ? window.DesktopToWorldRect(window.Limits).yMax
                 : stage.yMax;
-            p.y = Mathf.Min(p.y, screenTop - halfHeight - 0.05f);
+            p.y = Mathf.Min(p.y, screenTop - halfHeight - edge);
+
+            // La esquina del globo, justo sobre un pixel de pantalla: el fondo
+            // son varias piezas de pixel art, y si caen entre dos pixeles se
+            // ven cortes entre ellas (pasa cuando el personaje camina o lo
+            // arrastran y el globo lo sigue).
+            Vector2 half = bubbleSize * 0.5f;
+            Vector2 corner = window.SnapToPixel(new Vector2(p.x - half.x, p.y - half.y));
+            p = new Vector3(corner.x + half.x, corner.y + half.y, 0f);
         }
         else if (cam != null)
         {
-            float halfBubble = background.size.x * 0.5f;
-            float limit = cam.orthographicSize * cam.aspect - halfBubble - 0.05f;
+            float halfBubble = bubbleSize.x * 0.5f;
+            float limit = cam.orthographicSize * cam.aspect - halfBubble - edge;
             p.x = Mathf.Clamp(p.x, cam.transform.position.x - limit, cam.transform.position.x + limit);
         }
 
         transform.position = p;
+
+        // Si el globo se corrio para no salirse, la colita igual apunta al
+        // personaje. SetTailX va en unidades del globo, sin la escala.
+        frame.SetTailX((target.position.x - p.x) / s);
     }
 
     private void SetAlpha(float a)
     {
-        Color c = background.color; c.a = a * baseAlpha; background.color = c;
-        Color t = label.color;      t.a = a;             label.color = t;
-
-        if (tail != null) { Color x = tail.color; x.a = a * baseAlpha; tail.color = x; }
+        frame.SetAlpha(a * baseAlpha);
+        Color t = label.color; t.a = a; label.color = t;
     }
 }

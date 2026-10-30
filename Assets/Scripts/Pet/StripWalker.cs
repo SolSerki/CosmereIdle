@@ -29,6 +29,10 @@ public class StripWalker : MonoBehaviour
     [Tooltip("Valor de ese parametro que significa 'caminando'.")]
     [SerializeField] private int walkStateValue = 1;
 
+    [Tooltip("Estado del Animator que camina. Se mueve solo cuando ya llego ahi: si no, " +
+             "al pasar de leer a caminar se deslizaria mientras guarda el libro.")]
+    [SerializeField] private string walkStateName = "Walk";
+
     private SpriteRenderer sprite;
     private Animator animator;
     private Camera cam;
@@ -113,7 +117,8 @@ public class StripWalker : MonoBehaviour
     private bool ShouldWalk()
     {
         if (animator == null || !hasStateParameter) return true;
-        return animator.GetInteger(stateParameter) == walkStateValue;
+        return animator.GetInteger(stateParameter) == walkStateValue
+               && animator.GetCurrentAnimatorStateInfo(0).IsName(walkStateName);
     }
 
     /// <summary>
