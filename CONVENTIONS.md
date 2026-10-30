@@ -252,6 +252,12 @@ Profiles.** El menú hace dos cosas que a mano se olvidan:
   ajustes mal compila igual, pero se ve con el fondo negro, y no hay forma de
   enterarse hasta correr el `.exe`.
 
+Además **vacía `Build/` antes de buildear**. Unity buildea encima de lo que
+haya y no borra lo que sobra: cuando se sacaron paquetes, sus DLLs (14 MB de
+`DirectML.dll`, entre otras) seguían en `Build/` y el instalador las seguía
+repartiendo. Si el juego de esa carpeta está abierto, no puede vaciarla y
+avisa.
+
 Si corta, `Tools > CosmereIdle > Arreglar ajustes de ventana` los deja bien.
 Es un menú aparte a propósito: cambiar Player Settings por atrás de quien
 apretó "buildear" es el tipo de sorpresa que después nadie entiende.
@@ -299,9 +305,10 @@ Para sacarla: **`Tools > CosmereIdle > Publicar versión...`**. Escribís el
 número nuevo (viene sugerido) y qué cambió, y el menú hace todo:
 
 1. Sube el **Version** de Player Settings.
-2. Buildea el juego y el instalador.
+2. Buildea el juego, el instalador completo y la actualización parcial.
 3. Commitea (`Versión 1.3`) y pushea.
-4. Crea el release `v1.3` en GitHub con el instalador adjunto.
+4. Crea el release `v1.3` en GitHub con tres adjuntos: el instalador completo
+   (`-setup.exe`), el parche (`-patch.exe`) y la lista de archivos (`files.json`).
 
 Antes de tocar nada revisa que gh esté logueado, que tu rama no esté atrás de
 GitHub y que el tag no exista. Si tenés cambios sin commitear te los muestra y
@@ -316,10 +323,42 @@ problema fue al subir, deja copiado el comando para terminar a mano.
 
 A mano es lo mismo, en ese orden: Version, `Tools > CosmereIdle > Buildear`,
 commit y push, y `gh release create v1.3 "Installer/Output/CosmereIdle-1.3-setup.exe"
---title v1.3 --notes "..."` desde la carpeta del proyecto.
+--title v1.3 --notes "..."` desde la carpeta del proyecto. A mano no hay
+actualización parcial: los jugadores bajan el completo, que siempre funciona.
 
 El instalador **no se commitea** (`Installer/Output/` está en el `.gitignore`):
 va adjunto al release, que es de donde lo baja el juego.
+
+#### Actualización parcial
+
+Las versiones casi siempre son frases, sprites o un spren nuevo, y eso toca
+siempre los mismos ~10 archivos de datos: entre 0,5 y 2 MB comprimidos. El
+resto (`UnityPlayer.dll`, Mono, las DLLs de Unity) no cambia nunca. Por eso
+cada versión publica, además del completo, un **parche** con solo lo que cambió.
+
+- **Qué entra en el parche** (`Assets/Editor/CosmereIdlePatch.cs`): todo
+  archivo distinto en *cualquiera* de las últimas 10 versiones publicadas. Así
+  sirve también para quien se salteó varias. Las versiones anteriores se leen
+  de git, porque cada commit `Versión X` tiene su `Build/` adentro.
+- **Cuándo lo usa el juego**: antes de bajar nada, baja `files.json` y compara
+  sus propios archivos con la lista. Si todo lo que el parche no trae está
+  exactamente igual, baja el parche; si no (es muy viejo, alguien tocó la
+  carpeta, cambió el motor), baja el completo. El cartel muestra cuánto baja:
+  "Descargando la versión 1.9 (1,2 MB)... 45%".
+- **El parche se verifica solo**: antes de instalar revisa de nuevo esos
+  archivos. Si algo no coincide, no toca nada, vuelve a abrir el juego, y el
+  juego la próxima vez baja el completo. Nunca queda una mezcla de dos
+  versiones.
+- **Borra lo que ya no se usa**: los archivos que estaban en versiones
+  anteriores y ya no forman parte del juego (DLLs de un paquete que se sacó).
+- **Si conviene, no hay parche**: si cambió más del 60 % del juego
+  (actualizar Unity, por ejemplo), se publica solo el completo. Publicar versión
+  lo dice al terminar.
+
+El parche es el mismo `CosmereIdle.iss` compilado con `/DPatch=1`: comparte la
+espera a que se cierre el juego, la reapertura y el log. Si se cambian los
+`Excludes` de `[Files]`, hay que cambiar también `IsShipped` en
+`CosmereIdlePatch.cs`.
 
 **Qué pasa del lado del jugador** (`Scripts/Update/`):
 
@@ -355,8 +394,8 @@ Detalles que importan:
   `%USERPROFILE%\AppData\LocalLow\Comunidad CosmereAR\CosmereArgIdle\` están
   el `Player.log` del juego (líneas `[GitHubUpdater]`) y `update-install.log`,
   el del instalador.
-- **El nombre del adjunto tiene que terminar en `-setup.exe`.** Es como el
-  juego lo encuentra entre los archivos del release.
+- **Los nombres de los adjuntos importan**: `-setup.exe`, `-patch.exe` y
+  `files.json` son como el juego los encuentra entre los archivos del release.
 - **Solo se autoinstala la copia que vino del instalador** (la detecta por el
   `unins000.exe` al lado). Un build suelto, como el de la carpeta `Build/`,
   avisa igual, pero el botón abre la página del release en vez de instalar.
@@ -379,6 +418,22 @@ El `.exe` son ~600 KB de lanzador; el juego vive en `_Data`, `UnityPlayer.dll`
 y `MonoBleedingEdge`, al lado. Sacarlo de la carpeta no arranca. Para repartir:
 zip (lo que espera itch.io) o el instalador.
 
+
+## Paquetes
+
+Cada paquete que entra en el build lo bajan todos los jugadores, así que
+**solo se instalan paquetes que se usan**. Al crear el proyecto vinieron con la
+plantilla varios que no se usaban, y se sacaron en octubre de 2026: el
+instalador bajó de 36 a 25 MB. Entre ellos estaba `com.unity.pipeline`
+(experimental), que metía un compilador de C# en el juego y un canal para
+mandarle comandos desde afuera.
+
+Se sacaron: `ai.inference`, `pipeline`, `visualscripting`, `timeline`,
+`2d.spriteshape`, `2d.tilemap.extras`, `2d.psdimporter`, `2d.animation`,
+`multiplayer.center` y `collab-proxy`. Si algún día hace falta uno, se vuelve
+a agregar desde el Package Manager en un click.
+
+`ai.assistant` se queda: es la conexión de Claude con el editor.
 
 ## Lo que NO estamos haciendo todavía
 

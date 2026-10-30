@@ -8,13 +8,14 @@ using UnityEngine;
 ///   Panel  - boton con icono grande y etiqueta debajo, en una fila abajo de todo.
 ///            Ahi hay lugar, y una pantalla de menu sin texto no se entiende.
 ///            Los que tienen menuSlot -1 van sueltos en la esquina de arriba.
-///   Franja - los acomoda el CornerMenu de abajo a la derecha: una fila (icono
-///            y texto) del menu desplegable, o fijo al lado del boton del menu
-///            si es un aviso que tiene que verse sin abrir nada (actualizaciones).
-///            Si no hay CornerMenu, vuelven a la esquina de arriba como antes.
+///   Franja - solo los avisos que tienen que verse sin abrir nada
+///            (actualizaciones): van fijos al lado del boton del CornerMenu. Las
+///            opciones del menu de la franja no son estos botones sino filas
+///            del Canvas (MenuRow). Si no hay CornerMenu, vuelven a la esquina
+///            de arriba como antes.
 ///
-/// Un boton con menuSlot -1 no entra al menu del panel. En la franja, slot es
-/// el orden: el mas alto va arriba de todo en el menu.
+/// Un boton con menuSlot -1 no entra al menu del panel. Al lado del boton del
+/// menu de la franja, slot es el orden: el 0 va mas pegado.
 ///
 /// El collider no es decorativo: es lo que hace que DesktopWindow apague el
 /// click-through cuando el cursor pasa por encima. Sin collider el boton se
@@ -36,8 +37,8 @@ public abstract class DebugIconButton : MonoBehaviour
     public static IReadOnlyList<DebugIconButton> All => all;
 
     [Header("Esquina (ventana en franja)")]
-    [Tooltip("Posicion en la fila de la esquina (0 es el mas pegado a la derecha) " +
-             "y orden en el menu de la franja (el mas alto va arriba).")]
+    [Tooltip("Posicion en la fila de la esquina (0 es el mas pegado a la derecha), " +
+             "y al lado del boton del menu de la franja (0 es el mas pegado).")]
     [SerializeField] private int slot = 0;
 
     [Tooltip("Margen contra el borde de la ventana, en unidades de mundo.")]
@@ -90,16 +91,10 @@ public abstract class DebugIconButton : MonoBehaviour
     protected virtual string TooltipText => menuLabel;
 
     /// <summary>
-    /// Si en la franja va fijo al lado del boton del menu en vez de adentro.
-    /// Es para avisos que tienen que verse sin abrir nada.
+    /// Si en la franja va fijo al lado del boton del menu. Es para avisos que
+    /// tienen que verse sin abrir nada; los demas no se muestran en la franja.
     /// </summary>
     public virtual bool PinnedNextToLauncher => false;
-
-    /// <summary>
-    /// Si el menu de la franja se cierra despues de apretarlo. Un switch lo
-    /// deja abierto para que se vea como quedo.
-    /// </summary>
-    protected virtual bool ClosesMenuOnClick => true;
 
     public bool IsAvailableNow => IsAvailable;
     public int Slot => slot;
@@ -143,8 +138,8 @@ public abstract class DebugIconButton : MonoBehaviour
         bool inStrip = window != null && window.Mode == DesktopWindow.WindowMode.Strip;
         CornerMenu corner = inStrip ? CornerMenu.Instance : null;
 
-        // En la franja decide el menu de la esquina: puede tenerlo escondido
-        // (menu cerrado, o acomodando la ventana).
+        // En la franja decide el menu de la esquina: solo muestra los avisos, al
+        // lado de su boton, y los esconde mientras se acomoda la ventana.
         var placement = CornerMenu.Placement.Hidden;
         int index = 0;
         if (corner != null) placement = corner.PlacementOf(this, out index);
@@ -163,10 +158,8 @@ public abstract class DebugIconButton : MonoBehaviour
         }
 
         bool inMenu = InMenu();
-        bool inRow = corner != null && placement == CornerMenu.Placement.Row;
 
         if (inMenu) LayoutAsMenuButton();
-        else if (inRow) LayoutAsMenuRow(corner, index);
         else if (corner != null) LayoutAsPinned(corner, index);
         else LayoutAsCornerIcon();
 
@@ -174,7 +167,7 @@ public abstract class DebugIconButton : MonoBehaviour
 
         // Los iconos sueltos esconden el texto en un tooltip. Al lado del menu
         // de abajo el tooltip va arriba: abajo no hay lugar.
-        if (!inMenu && !inRow) LayoutTooltip(hovering, corner != null);
+        if (!inMenu) LayoutTooltip(hovering, corner != null);
 
         Color color = GetColor(hovering);
         Sprite.color = color;
@@ -182,13 +175,8 @@ public abstract class DebugIconButton : MonoBehaviour
         // En el menu la etiqueta acompaña el estado del icono (gris si no se puede
         // apretar). En el tooltip va siempre en blanco, sobre su propio fondo.
         if (inMenu && label != null) label.color = color;
-        if (inRow && label != null) label.color = hovering ? Color.white : new Color(1f, 1f, 1f, 0.8f);
 
-        if (hovering && window.LeftPressedThisFrame)
-        {
-            OnClicked();
-            if (inRow && ClosesMenuOnClick) corner.Close();
-        }
+        if (hovering && window.LeftPressedThisFrame) OnClicked();
     }
 
     /// <summary>Si el boton tiene sentido ahora mismo. Por defecto, siempre.</summary>
@@ -253,40 +241,6 @@ public abstract class DebugIconButton : MonoBehaviour
 
         box.size = new Vector2(slotWidth - 0.12f, menuIconY + hitTop - hitBottom) / scale;
         box.offset = new Vector2(0f, ((menuIconY + hitTop + hitBottom) * 0.5f - menuIconY) / scale);
-    }
-
-    /// <summary>
-    /// Fila del menu desplegable de la franja: icono a la izquierda y el texto
-    /// al lado. El collider cubre la fila entera, asi se puede apretar el texto.
-    /// Las medidas son de interfaz (a escala 1) y la escala del boton las lleva
-    /// a pantalla, para que el menu no se achique con la franja.
-    /// </summary>
-    private void LayoutAsMenuRow(CornerMenu corner, int index)
-    {
-        float k = corner.UiScale;
-        transform.localScale = Vector3.one * k;
-        transform.position = corner.RowIconPosition(index);
-
-        float rowWidth = corner.RowWidth;
-        float rowHeight = corner.RowHeight;
-        float iconSlot = corner.RowIconSlot;
-
-        box.size = new Vector2(rowWidth, rowHeight);
-        box.offset = new Vector2(rowWidth * 0.5f - iconSlot * 0.5f, 0f);
-
-        SetTextVisible(true, false);
-        SetText(TooltipText);
-
-        if (label == null) return;
-
-        float labelWidth = rowWidth - iconSlot;
-        Transform holder = LabelHolder();
-        holder.localScale = Vector3.one;
-        holder.localPosition = new Vector3(iconSlot * 0.5f + labelWidth * 0.5f, 0f, 0f);
-
-        label.alignment = TextAlignmentOptions.Left;
-        label.transform.localPosition = Vector3.zero;
-        label.rectTransform.sizeDelta = new Vector2(labelWidth, rowHeight);
     }
 
     /// <summary>Icono suelto al lado del boton del menu de la franja.</summary>

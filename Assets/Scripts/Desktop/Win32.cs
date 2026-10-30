@@ -123,11 +123,18 @@ internal static class Win32
     internal static extern short GetAsyncKeyState(int vKey);
 
     internal const int VK_LBUTTON = 0x01;
+    internal const int VK_RBUTTON = 0x02;
 
     /// <summary>Si el boton izquierdo del mouse esta apretado ahora mismo.</summary>
     internal static bool IsLeftMouseDown()
     {
         return (GetAsyncKeyState(VK_LBUTTON) & 0x8000) != 0;
+    }
+
+    /// <summary>Si el boton derecho del mouse esta apretado ahora mismo.</summary>
+    internal static bool IsRightMouseDown()
+    {
+        return (GetAsyncKeyState(VK_RBUTTON) & 0x8000) != 0;
     }
 
     internal const int SM_CXSCREEN = 0;

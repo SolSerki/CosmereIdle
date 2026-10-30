@@ -3,17 +3,18 @@ using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// Modo "Mover y escalar" de la franja. Mientras esta prendido se dibuja un
-/// marco sobre la franja (la ventana es transparente: sin marco no hay nada que
-/// agarrar) y:
+/// Modo "Mover y escalar ventana" de la franja. Mientras esta prendido se
+/// dibuja un marco sobre la franja (la ventana es transparente: sin marco no
+/// hay nada que agarrar) y:
 ///
 ///   - arrastrar en cualquier lado del marco mueve la franja,
 ///   - las manijas de las cuatro esquinas cambian el tamaño de la ventana, sin
 ///     tocar a los personajes,
-///   - los botones - y + cambian el tamaño de los personajes, sin tocar la
-///     ventana,
 ///   - "Restablecer" devuelve la franja a la de siempre, "Listo" o un click
 ///     afuera terminan.
+///
+/// El tamaño de los personajes no se cambia aca sino en el menu de la esquina
+/// (PetScaleRow).
 ///
 /// Se calcula todo en pixeles de pantalla y no en coordenadas de mundo: el
 /// mundo se mueve justamente mientras se arrastra.
@@ -69,13 +70,6 @@ public class LayoutEditor : MonoBehaviour
     [SerializeField] private Pill doneButton;
     [SerializeField] private Pill resetButton;
 
-    [Header("Tamaño de los personajes")]
-    [SerializeField] private Pill smallerButton;
-    [SerializeField] private Pill largerButton;
-
-    [Tooltip("Muestra el tamaño actual, entre los botones - y +.")]
-    [SerializeField] private TextMeshPro scaleLabel;
-
     [Header("Medidas (interfaz, 1 = 100 px)")]
     [SerializeField] private float margin = 0.04f;
     [SerializeField] private float gripSize = 0.26f;
@@ -116,12 +110,10 @@ public class LayoutEditor : MonoBehaviour
 
         doneButton?.Init();
         resetButton?.Init();
-        smallerButton?.Init();
-        largerButton?.Init();
         SetVisible(false);
     }
 
-    /// <summary>Prende el modo edicion. Lo llama el boton "Mover y escalar" del menu.</summary>
+    /// <summary>Prende el modo edicion. Lo llama la fila "Mover y escalar ventana" del menu.</summary>
     public void Begin()
     {
         DesktopWindow window = DesktopWindow.Instance;
@@ -157,8 +149,6 @@ public class LayoutEditor : MonoBehaviour
 
             if (doneButton.Contains(cursor)) { End(); return; }
             if (resetButton.Contains(cursor)) window.ResetStage();
-            else if (smallerButton.Contains(cursor)) window.SetPetScale(window.PetScale - window.PetScaleStep);
-            else if (largerButton.Contains(cursor)) window.SetPetScale(window.PetScale + window.PetScaleStep);
             else if (corner >= 0) BeginResize(window, corner);
             else if (frameBox != null && frameBox.enabled && frameBox.OverlapPoint(cursor)) BeginDrag(window, Drag.Move);
             else
@@ -303,39 +293,13 @@ public class LayoutEditor : MonoBehaviour
         right = LayoutPill(doneButton, right, topRow, k, cursor, true) - buttonGap * k;
         LayoutPill(resetButton, right, topRow, k, cursor, true);
 
-        // Fila de abajo, centrada entre las manijas: el tamaño de los
-        // personajes. Van separados de los de arriba para que entren en una
-        // franja angosta.
-        float bottomRow = stage.yMin + inset;
-        bool canShrink = window.PetScale > window.MinPetScale + 0.001f;
-        bool canGrow = window.PetScale < window.MaxPetScale - 0.001f;
-
-        string scaleText = $"Personajes x{window.PetScale:0.##}";
-        float textWidth = scaleLabel != null ? scaleLabel.GetPreferredValues(scaleText).x + buttonPadding * 2f : 0f;
-        float groupWidth = PillWidth(smallerButton) + textWidth + PillWidth(largerButton);
-        float x = stage.center.x - groupWidth * 0.5f * k;
-
-        x = LayoutPillFromLeft(smallerButton, x, bottomRow, k, cursor, canShrink);
-
-        if (scaleLabel != null)
-        {
-            scaleLabel.transform.localScale = Vector3.one * k;
-            scaleLabel.transform.position = new Vector3(x + textWidth * 0.5f * k, bottomRow, 0f);
-            scaleLabel.alignment = TextAlignmentOptions.Center;
-            scaleLabel.rectTransform.sizeDelta = new Vector2(textWidth, buttonHeight);
-            scaleLabel.color = textColor;
-            if (scaleLabel.text != scaleText) scaleLabel.text = scaleText;
-        }
-
-        LayoutPillFromLeft(largerButton, x + textWidth * k, bottomRow, k, cursor, canGrow);
-
         if (hint != null)
         {
             hint.transform.localScale = Vector3.one * k;
             hint.transform.position = stage.center;
             hint.color = textColor;
 
-            const string text = "Arrastrá para mover\nEsquinas: tamaño de la ventana";
+            const string text = "Arrastrá la ventana y redimensioná desde las puntas";
             if (hint.text != text) hint.text = text;
 
             // En una franja chica no entra: se esconde antes que taparle los
@@ -344,22 +308,6 @@ public class LayoutEditor : MonoBehaviour
             float free = stage.height - 2f * (margin + gripSize + buttonGap) * k;
             hint.enabled = needed.x < stage.width - 2f * margin * k && needed.y < free;
         }
-    }
-
-    /// <summary>Acomoda un boton con su borde izquierdo en x. Devuelve su borde derecho.</summary>
-    private float LayoutPillFromLeft(Pill pill, float left, float centerY, float k, Vector3 cursor, bool enabled)
-    {
-        float width = PillWidth(pill);
-        return LayoutPill(pill, left + width * k, centerY, k, cursor, enabled) + width * k;
-    }
-
-    private float PillWidth(Pill pill)
-    {
-        if (pill == null) return 0f;
-
-        float labelWidth = pill.label != null ? pill.label.GetPreferredValues(pill.label.text).x : 0f;
-        float iconWidth = pill.icon != null ? buttonIconSlot : buttonPadding;
-        return iconWidth + labelWidth + buttonPadding;
     }
 
     /// <summary>Acomoda un boton con su borde derecho en x. Devuelve su borde izquierdo.</summary>
@@ -418,10 +366,7 @@ public class LayoutEditor : MonoBehaviour
         }
 
         if (hint != null && !visible) hint.enabled = false;
-        if (scaleLabel != null) scaleLabel.enabled = visible;
         doneButton?.SetVisible(visible);
         resetButton?.SetVisible(visible);
-        smallerButton?.SetVisible(visible);
-        largerButton?.SetVisible(visible);
     }
 }

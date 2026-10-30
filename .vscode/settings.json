@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "CosmereIdle.slnx"
+    "dotnet.defaultSolution": "My project (1).slnx"
 }

@@ -58,8 +58,8 @@ public class DesktopWindow : MonoBehaviour
     public static DesktopWindow Instance { get; private set; }
 
     [Header("Franja")]
-    [Tooltip("Alto de la franja automatica en pixeles de pantalla, con los personajes a tamaño 1. " +
-             "Crece con el tamaño de los personajes para que siempre entren.")]
+    [Tooltip("Alto de la franja automatica en pixeles de pantalla. No crece con el tamaño " +
+             "de los personajes: solo si ya no entran (ver characterRoom).")]
     [SerializeField] private int stripHeight = 200;
 
     [Tooltip("Corrimiento vertical en pixeles. Positivo baja la franja sobre la barra de tareas.")]
@@ -73,6 +73,11 @@ public class DesktopWindow : MonoBehaviour
              "de 0.25 cada pixel del sprite cae en un numero entero de pixeles de " +
              "pantalla y el pixel art no se deforma.")]
     [SerializeField] private float stageScaleStep = 0.25f;
+
+    [Tooltip("Alto que necesita el personaje mas alto, en unidades de mundo (a 4x, un sprite " +
+             "de 24 px mide 0.96 y uno de 32 px, 1.28). La franja, automatica o a mano, nunca " +
+             "queda mas baja que esto por el tamaño de los personajes: si no entran, crece hacia arriba.")]
+    [SerializeField] private float characterRoom = 1.3f;
 
     [Header("Franja a mano")]
     [Tooltip("Tamaño minimo de la franja en pixeles, al redimensionarla.")]
@@ -153,21 +158,32 @@ public class DesktopWindow : MonoBehaviour
     public float PetScaleStep => stageScaleStep;
 
     /// <summary>
-    /// Cuantos pixeles de pantalla mide un pixel de la interfaz (menu, botones,
-    /// tooltips). Es entero para que los iconos no se deformen, y no baja de 1:
-    /// achicar la franja achica a los personajes, pero un menu de 8 pixeles no
-    /// se puede leer.
+    /// localScale que tiene que llevar algo de la interfaz (menu, botones,
+    /// tooltips, el marco de "Mover y escalar ventana") para medir en pantalla lo mismo
+    /// que con los personajes a tamaño 1. La interfaz no sigue al tamaño de los
+    /// personajes: agrandarlos no agranda los botones, y achicarlos no deja un
+    /// menu ilegible.
     /// </summary>
-    public int UiPixelScale => Mode == WindowMode.Panel ? 1 : Mathf.Max(1, Mathf.FloorToInt(stageScale + 0.5f));
-
-    /// <summary>
-    /// localScale que tiene que llevar algo de la interfaz para medir en
-    /// pantalla lo mismo que a escala 1 (multiplicado por <see cref="UiPixelScale"/>).
-    /// </summary>
-    public float UiScale => UiPixelScale / StageScale;
+    public float UiScale => 1f / StageScale;
 
     /// <summary>Unidades de mundo que mide un pixel de pantalla.</summary>
     public float WorldUnitsPerPixel => 1f / (Mathf.Max(1f, pixelsPerUnit) * StageScale);
+
+    /// <summary>
+    /// Lleva un punto del mundo al borde de pixel de pantalla mas cercano. Es
+    /// para lo que se arma con varias piezas de pixel art (los globos): si una
+    /// pieza queda entre dos pixeles, su borde agarra el pixel vecino de la
+    /// imagen y se ve un corte. Los bordes del escenario caen siempre sobre la
+    /// grilla, asi que se mide desde ahi.
+    /// </summary>
+    public Vector2 SnapToPixel(Vector2 world)
+    {
+        float unitsPerPixel = WorldUnitsPerPixel;
+        Vector2 origin = StageWorldRect.min;
+        return new Vector2(
+            origin.x + Mathf.Round((world.x - origin.x) / unitsPerPixel) * unitsPerPixel,
+            origin.y + Mathf.Round((world.y - origin.y) / unitsPerPixel) * unitsPerPixel);
+    }
 
     /// <summary>Si el botón izquierdo se mantiene presionado actualmente.</summary>
     public bool IsLeftDown => leftWasDown;
@@ -185,11 +201,37 @@ public class DesktopWindow : MonoBehaviour
     /// </summary>
     public Vector2Int CursorScreenPixel { get; private set; }
 
-    /// <summary>Si el cursor esta sobre algo clickeable de la ventana.</summary>
+    /// <summary>
+    /// Si el cursor esta sobre algo clickeable de la ventana: algo con collider,
+    /// o algo de interfaz que se haya anotado con <see cref="AddPointerTarget"/>.
+    /// </summary>
     public bool CursorOverContent { get; private set; }
+
+    /// <summary>
+    /// Algo clickeable sin collider, como el menu de la esquina (un Canvas).
+    /// Sin esto la ventana seria click-through encima de el y el click se iria
+    /// al escritorio.
+    /// </summary>
+    public interface IPointerTarget
+    {
+        /// <summary>Si ese punto del mundo cae sobre algo clickeable.</summary>
+        bool ContainsPoint(Vector3 world);
+    }
+
+    private static readonly List<IPointerTarget> pointerTargets = new List<IPointerTarget>();
+
+    public static void AddPointerTarget(IPointerTarget target)
+    {
+        if (!pointerTargets.Contains(target)) pointerTargets.Add(target);
+    }
+
+    public static void RemovePointerTarget(IPointerTarget target) => pointerTargets.Remove(target);
 
     /// <summary>Flanco de bajada del boton izquierdo, leido global (sin depender del foco).</summary>
     public bool LeftPressedThisFrame { get; private set; }
+
+    /// <summary>Flanco de bajada del boton derecho, leido igual que el izquierdo.</summary>
+    public bool RightPressedThisFrame { get; private set; }
 
     public bool AlwaysOnTop => alwaysOnTop;
 
@@ -204,6 +246,7 @@ public class DesktopWindow : MonoBehaviour
     private float nextRefresh;
     private bool clickThroughApplied;
     private bool leftWasDown;
+    private bool rightWasDown;
     private int currentMonitorIndex = 0;
 
     // Franja acomodada a mano, en pixeles del escritorio.
@@ -293,7 +336,11 @@ public class DesktopWindow : MonoBehaviour
     public void MoveStage(Vector2Int topLeft)
     {
         MakeStageCustom();
-        customRect.position = topLeft;
+
+        // topLeft es la esquina de la franja que se ve, que puede ser mas alta
+        // que la guardada si crecio para que entren los personajes. Lo que se
+        // mueve es el piso, asi al soltarla no salta.
+        customRect.position = new Vector2Int(topLeft.x, topLeft.y + Stage.height - customRect.height);
         Reposition();
     }
 
@@ -330,8 +377,8 @@ public class DesktopWindow : MonoBehaviour
     }
 
     /// <summary>
-    /// Cambia el tamaño de los personajes. No toca la ventana, salvo la franja
-    /// automatica, que crece con ellos para que siempre entren.
+    /// Cambia el tamaño de los personajes. No toca la ventana, salvo que ya no
+    /// entren: ahi la franja crece hacia arriba lo justo (ver characterRoom).
     /// </summary>
     public void SetPetScale(float scale)
     {
@@ -352,8 +399,14 @@ public class DesktopWindow : MonoBehaviour
         return Mathf.Clamp(snapped, minStageScale, maxStageScale);
     }
 
-    /// <summary>Alto de la franja automatica en pixeles para un tamaño de personajes dado.</summary>
-    public int StageHeightFor(float scale) => Mathf.Max(1, Mathf.RoundToInt(stripHeight * scale));
+    /// <summary>Alto minimo de la franja, en pixeles, para que entren los personajes a ese tamaño.</summary>
+    public int RoomFor(float scale) => Mathf.CeilToInt(characterRoom * pixelsPerUnit * scale);
+
+    /// <summary>
+    /// Alto de la franja automatica en pixeles para un tamaño de personajes
+    /// dado: el de siempre, o mas si los personajes no entran.
+    /// </summary>
+    public int StageHeightFor(float scale) => Mathf.Max(stripHeight, RoomFor(scale));
 
     /// <summary>
     /// Vuelve a la franja de siempre: ancho completo, sobre la barra de tareas.
@@ -486,12 +539,14 @@ public class DesktopWindow : MonoBehaviour
     private void UpdateCursor()
     {
         bool leftDown = false;
+        bool rightDown = false;
 
 #if !UNITY_EDITOR && UNITY_STANDALONE_WIN
         if (!Win32.GetCursorPos(out Win32.POINT cursor))
         {
             CursorOverContent = false;
             LeftPressedThisFrame = false;
+            RightPressedThisFrame = false;
             return;
         }
 
@@ -504,12 +559,14 @@ public class DesktopWindow : MonoBehaviour
         Vector2 screenPoint = new Vector2(localX, localY);
 
         leftDown = Win32.IsLeftMouseDown();
+        rightDown = Win32.IsRightMouseDown();
 #else
         Vector2 screenPoint = Vector2.zero;
         if (UnityEngine.InputSystem.Mouse.current != null)
         {
             screenPoint = UnityEngine.InputSystem.Mouse.current.position.ReadValue();
             leftDown = UnityEngine.InputSystem.Mouse.current.leftButton.isPressed;
+            rightDown = UnityEngine.InputSystem.Mouse.current.rightButton.isPressed;
         }
 
         // En el Editor no hay ventana que mover: se simula como si el Game
@@ -525,11 +582,20 @@ public class DesktopWindow : MonoBehaviour
                 new Vector3(screenPoint.x, screenPoint.y, -cam.transform.position.z));
 
             Collider2D hit = Physics2D.OverlapPoint(CursorWorldPosition, interactiveLayers);
-            CursorOverContent = hit != null;
+            CursorOverContent = hit != null || OverPointerTarget(CursorWorldPosition);
         }
 
         LeftPressedThisFrame = leftDown && !leftWasDown;
         leftWasDown = leftDown;
+        RightPressedThisFrame = rightDown && !rightWasDown;
+        rightWasDown = rightDown;
+    }
+
+    private static bool OverPointerTarget(Vector3 world)
+    {
+        foreach (IPointerTarget target in pointerTargets)
+            if (target != null && target.ContainsPoint(world)) return true;
+        return false;
     }
 
     // ------------------------------------------------------------------
@@ -753,7 +819,15 @@ public class DesktopWindow : MonoBehaviour
         // posicion guardada se seguiria alejando y despues tardaria en volver.
         customRect = new RectInt(x, y, width, height);
 
-        return customRect;
+        // Si los personajes no entran, crece hacia arriba (el piso queda donde
+        // esta). Esto no se guarda: si despues se achican, vuelve al alto que
+        // eligio el jugador.
+        int room = Mathf.Min(RoomFor(stageScale), m.height);
+        if (height >= room) return customRect;
+
+        int bottom = customRect.yMax;
+        int top = Mathf.Max(m.yMin, bottom - room);
+        return new RectInt(x, top, width, Mathf.Max(room, bottom - top));
     }
 
     /// <summary>El monitor que contiene ese punto, o el mas cercano si no cae en ninguno.</summary>

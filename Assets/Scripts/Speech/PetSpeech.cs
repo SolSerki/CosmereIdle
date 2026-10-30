@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Hace hablar al personaje cuando le hacen click.
+/// Hace hablar al personaje cuando le hacen click y, si la charla automatica
+/// esta prendida (ver <see cref="Chatter"/>), solo cada tanto.
 ///
 /// Las frases viven en un .json por personaje, no en el codigo, para que se
 /// puedan traducir y para que la comunidad pueda escribirlas sin tocar Unity.
@@ -74,6 +75,9 @@ public class PetSpeech : MonoBehaviour
 
     private bool isWaitingClickRelease;
 
+    // Cuando le toca la proxima frase automatica (en Time.time).
+    private float nextChatAt;
+
     private void Awake()
     {
         body = GetComponent<Collider2D>();
@@ -84,10 +88,27 @@ public class PetSpeech : MonoBehaviour
         clickPhrases = LoadClickPhrases();
     }
 
+    private void OnEnable()
+    {
+        ScheduleChatter();
+        Chatter.Changed += ScheduleChatter;
+    }
+
+    private void OnDisable() => Chatter.Changed -= ScheduleChatter;
+
+    /// <summary>
+    /// Sortea la espera hasta la proxima frase automatica. Se vuelve a sortear
+    /// cada vez que habla, por click o solo: si no, despues de un click podria
+    /// hablar de nuevo enseguida.
+    /// </summary>
+    private void ScheduleChatter() => nextChatAt = Time.time + Chatter.NextDelay();
+
     private void Update()
     {
         DesktopWindow window = DesktopWindow.Instance;
         if (window == null) return;
+
+        UpdateChatter();
 
         // Clic inicial sobre el personaje
         if (window.LeftPressedThisFrame && body.OverlapPoint(window.CursorWorldPosition))
@@ -107,12 +128,41 @@ public class PetSpeech : MonoBehaviour
         }
     }
 
+    private void UpdateChatter()
+    {
+        if (!Chatter.Enabled || Time.time < nextChatAt) return;
+
+        // Si ya esta hablando o lo estan arrastrando, no interrumpe: prueba
+        // en un rato. Si otro personaje acaba de hablar solo, espera un poco
+        // para no pisarlo.
+        bool busy = bubble != null || isWaitingClickRelease
+                    || (dragHandler != null && dragHandler.IsDragging);
+
+        if (busy || !Chatter.TryTakeTurn())
+        {
+            nextChatAt = Time.time + UnityEngine.Random.Range(0.5f, Chatter.MinGap * 2f);
+            return;
+        }
+
+        Say(NextPhrase());
+    }
+
+    /// <summary>
+    /// Corta la frase que este diciendo, si dice alguna. Vuelve a sortear la
+    /// espera de la charla automatica: si no, podria arrancar otra enseguida.
+    /// </summary>
+    public void Hush()
+    {
+        if (bubble != null) Destroy(bubble.gameObject);
+        bubble = null;
+        ScheduleChatter();
+    }
+
     public void Say(string phrase)
     {
         if (string.IsNullOrEmpty(phrase) || bubblePrefab == null) return;
 
-
-
+        ScheduleChatter();
 
         // Un globo por personaje: si ya estaba hablando, reemplaza lo que decia.
         if (bubble != null) Destroy(bubble.gameObject);
@@ -134,7 +184,7 @@ public class PetSpeech : MonoBehaviour
     ///
     /// Necesita la textura con Read/Write; si no lo tiene, usa el collider.
     /// </summary>
-    private float HeadTop()
+    public float HeadTop()
     {
         Sprite sprite = spriteRenderer != null ? spriteRenderer.sprite : null;
         if (sprite != null && sprite.texture != null && sprite.texture.isReadable)
