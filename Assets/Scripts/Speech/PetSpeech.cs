@@ -72,6 +72,7 @@ public class PetSpeech : MonoBehaviour
     private int lastIndex = -1;
 
     private CharacterDragHandler dragHandler;
+
     private bool isWaitingClickRelease;
 
     // Cuando le toca la proxima frase automatica (en Time.time).
@@ -82,6 +83,8 @@ public class PetSpeech : MonoBehaviour
         body = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         dragHandler = GetComponent<CharacterDragHandler>();
+
+
         clickPhrases = LoadClickPhrases();
     }
 

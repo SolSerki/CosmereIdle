@@ -29,6 +29,7 @@ public class CharacterDragHandler : MonoBehaviour
     private SpriteRenderer sprite;
     private StripWalker walker;
     private Collider2D body;
+    private ProceduralPetAnimator proceduralAnim;
 
     private bool isHolding;
     private Vector3 dragOffset;
@@ -47,6 +48,8 @@ public class CharacterDragHandler : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         walker = GetComponent<StripWalker>();
         body = GetComponent<Collider2D>();
+        proceduralAnim = GetComponent<ProceduralPetAnimator>();
+        if (proceduralAnim == null) proceduralAnim = gameObject.AddComponent<ProceduralPetAnimator>();
     }
 
     private void Update()
@@ -98,6 +101,7 @@ public class CharacterDragHandler : MonoBehaviour
                     IsDragging = true;
                     IsFalling = false;
                     if (walker != null) walker.IsPaused = true;
+                    if (proceduralAnim != null) proceduralAnim.OnGrab();
                 }
             }
 
@@ -157,6 +161,11 @@ public class CharacterDragHandler : MonoBehaviour
     {
         fallSpeed += gravity * Time.deltaTime;
 
+        if (proceduralAnim != null)
+        {
+            proceduralAnim.OnFalling(fallSpeed);
+        }
+
         Vector3 p = transform.position;
         p.y -= fallSpeed * Time.deltaTime;
 
@@ -164,6 +173,12 @@ public class CharacterDragHandler : MonoBehaviour
         {
             p.y = window.FloorY;
             IsFalling = false;
+
+            if (proceduralAnim != null)
+            {
+                proceduralAnim.OnLand(fallSpeed);
+            }
+
             if (walker != null) walker.IsPaused = false;
         }
 
@@ -187,6 +202,7 @@ public class CharacterDragHandler : MonoBehaviour
             return;
         }
 
+        if (proceduralAnim != null) proceduralAnim.ResetDeformation();
         if (walker != null) walker.IsPaused = false;
     }
 
