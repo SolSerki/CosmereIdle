@@ -284,11 +284,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2803809231118575004, guid: ef6684b7eb84f1040a01cfdebbfccb66, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -70
+      value: -78
       objectReference: {fileID: 0}
     - target: {fileID: 2803809231118575004, guid: ef6684b7eb84f1040a01cfdebbfccb66, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -5
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5160748139369816747, guid: ef6684b7eb84f1040a01cfdebbfccb66, type: 3}
       propertyPath: m_Name

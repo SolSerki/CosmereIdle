@@ -7,14 +7,20 @@ using UnityEngine;
 /// Apagado (gris): las demas apps la tapan, util cuando estas laburando en
 /// pantalla completa y no querés la mascota encima.
 ///
-/// El color muestra el estado, no solo el hover, asi se sabe como esta sin
-/// tener que apretar.
+/// El icono (ojo abierto o tachado) y el color muestran el estado, no solo el
+/// hover, asi se sabe como esta sin tener que apretar.
 /// </summary>
 public class DebugTopmostButton : DebugIconButton
 {
     [SerializeField] private Color onColor = new Color(0.3f, 0.85f, 0.4f, 0.9f);
     [SerializeField] private Color offColor = new Color(1f, 1f, 1f, 0.25f);
     [SerializeField] private Color hoverTint = new Color(1f, 1f, 1f, 1f);
+
+    [Tooltip("Icono con la opcion prendida. Vacio = deja el que tenga el boton.")]
+    [SerializeField] private Sprite onIcon;
+
+    [Tooltip("Icono con la opcion apagada. Vacio = deja el que tenga el boton.")]
+    [SerializeField] private Sprite offIcon;
 
     /// <summary>
     /// El tooltip cuenta el estado actual, igual que el color. Un texto fijo
@@ -29,6 +35,15 @@ public class DebugTopmostButton : DebugIconButton
 
             return on ? "Siempre visible" : "Detrás de las ventanas";
         }
+    }
+
+    protected override void Update()
+    {
+        DesktopWindow window = DesktopWindow.Instance;
+        Sprite stateIcon = window == null || window.AlwaysOnTop ? onIcon : offIcon;
+        if (stateIcon != null) Sprite.sprite = stateIcon;
+
+        base.Update();
     }
 
     protected override Color GetColor(bool hovering)

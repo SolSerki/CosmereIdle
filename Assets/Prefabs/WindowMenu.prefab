@@ -2072,7 +2072,7 @@ PrefabInstance:
     - target: {fileID: 2152363513601714579, guid: ef6684b7eb84f1040a01cfdebbfccb66, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: c734ebe7c1d998245b7b5534fd9daba7, type: 3}
+      objectReference: {fileID: 21300000, guid: bf70d89bb64d4114784ce81bb4a4cd1f, type: 3}
     - target: {fileID: 5160748139369816747, guid: ef6684b7eb84f1040a01cfdebbfccb66, type: 3}
       propertyPath: m_Name
       value: "Selecci\xF3n de spren"
@@ -2244,7 +2244,7 @@ PrefabInstance:
     - target: {fileID: 2272922166578051350, guid: d13f560165860cf43856d648721c5974, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 7d0839f894ef9374fb0b182707b2b122, type: 3}
+      objectReference: {fileID: 21300000, guid: 98ba6392e533f9040b33a9f2b1abd37a, type: 3}
     - target: {fileID: 5029140390899773998, guid: d13f560165860cf43856d648721c5974, type: 3}
       propertyPath: m_Name
       value: "M\xEDn."
@@ -2532,7 +2532,7 @@ PrefabInstance:
     - target: {fileID: 5186008961747779324, guid: 547320194f05cf64ea6b590134ddc81b, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: e33b0da13fb44c9479ae7ce73e57c824, type: 3}
+      objectReference: {fileID: 21300000, guid: 55b35f84bc36f4a42aa3b4c8910c5afd, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2642,7 +2642,7 @@ PrefabInstance:
     - target: {fileID: 2152363513601714579, guid: ef6684b7eb84f1040a01cfdebbfccb66, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 236038d2f1bbecb469af704f2de65bae, type: 3}
+      objectReference: {fileID: 21300000, guid: 323237e9d3174324caed0e5a9013ed0a, type: 3}
     - target: {fileID: 5160748139369816747, guid: ef6684b7eb84f1040a01cfdebbfccb66, type: 3}
       propertyPath: m_Name
       value: Mover y escalar ventana
@@ -2818,7 +2818,7 @@ PrefabInstance:
     - target: {fileID: 2152363513601714579, guid: ef6684b7eb84f1040a01cfdebbfccb66, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 9d6ecfd800a2c5248b5619254884644f, type: 3}
+      objectReference: {fileID: 21300000, guid: 5de3202d8612dbb4fb92e0568060cd7a, type: 3}
     - target: {fileID: 5160748139369816747, guid: ef6684b7eb84f1040a01cfdebbfccb66, type: 3}
       propertyPath: m_Name
       value: "Frases autom\xE1ticas"
@@ -2990,7 +2990,7 @@ PrefabInstance:
     - target: {fileID: 2152363513601714579, guid: ef6684b7eb84f1040a01cfdebbfccb66, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 8dc31e721b5e9ec44981f9605f51325d, type: 3}
+      objectReference: {fileID: 21300000, guid: 5e08026871a1f544f832fa77c7a22291, type: 3}
     - target: {fileID: 5160748139369816747, guid: ef6684b7eb84f1040a01cfdebbfccb66, type: 3}
       propertyPath: m_Name
       value: Siempre visible
@@ -3129,6 +3129,8 @@ MonoBehaviour:
   onColor: {r: 0.3, g: 0.85, b: 0.4, a: 0.9}
   offColor: {r: 1, g: 1, b: 1, a: 0.25}
   hoverTint: {r: 1, g: 1, b: 1, a: 1}
+  onIcon: {fileID: 21300000, guid: 5e08026871a1f544f832fa77c7a22291, type: 3}
+  offIcon: {fileID: 21300000, guid: 36cd836c58292894ead79e45676e5eed, type: 3}
 --- !u!114 &4957087707319491346 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2152363513601714579, guid: ef6684b7eb84f1040a01cfdebbfccb66, type: 3}
@@ -3162,7 +3164,7 @@ PrefabInstance:
     - target: {fileID: 2272922166578051350, guid: d13f560165860cf43856d648721c5974, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 7d0839f894ef9374fb0b182707b2b122, type: 3}
+      objectReference: {fileID: 21300000, guid: 98ba6392e533f9040b33a9f2b1abd37a, type: 3}
     - target: {fileID: 5029140390899773998, guid: d13f560165860cf43856d648721c5974, type: 3}
       propertyPath: m_Name
       value: "M\xE1x."
@@ -3362,7 +3364,7 @@ PrefabInstance:
     - target: {fileID: 2152363513601714579, guid: ef6684b7eb84f1040a01cfdebbfccb66, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 7400c972152f21b4c91ffa010a5fc373, type: 3}
+      objectReference: {fileID: 21300000, guid: 6b467161e509a8f418069cb8ff427a17, type: 3}
     - target: {fileID: 5160748139369816747, guid: ef6684b7eb84f1040a01cfdebbfccb66, type: 3}
       propertyPath: m_Name
       value: Cerrar
@@ -3622,7 +3624,7 @@ PrefabInstance:
     - target: {fileID: 5186008961747779324, guid: 547320194f05cf64ea6b590134ddc81b, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 87a00bdfd56889e468f1af2eafbe0863, type: 3}
+      objectReference: {fileID: 21300000, guid: eaa27c9e0e27be344a7d0eb22afd223b, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
