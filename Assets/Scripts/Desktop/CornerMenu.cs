@@ -79,10 +79,39 @@ public class CornerMenu : MonoBehaviour, DesktopWindow.IPointerTarget
     private readonly Vector3[] corners = new Vector3[4];
     private bool active;
 
-    private void Awake()
+        private void Awake()
     {
         Instance = this;
+        EnsureHalloweenRow();
         if (panel != null) rows = panel.GetComponentsInChildren<MenuRow>(true);
+    }
+
+    private void EnsureHalloweenRow()
+    {
+        if (panel == null) return;
+        if (panel.GetComponentInChildren<HalloweenToggleRow>(true) != null) return;
+
+        var template = panel.GetComponentInChildren<TopmostRow>(true);
+        if (template == null) return;
+
+        GameObject rowGo = Instantiate(template.gameObject, panel);
+        rowGo.name = "HalloweenToggleRow";
+
+        var oldScript = rowGo.GetComponent<TopmostRow>();
+        if (oldScript != null) DestroyImmediate(oldScript);
+
+        var halloweenRow = rowGo.AddComponent<HalloweenToggleRow>();
+        halloweenRow.Setup(
+            rowGo.transform.Find("Icon")?.GetComponent<UnityEngine.UI.Image>(),
+            rowGo.transform.Find("Label")?.GetComponent<TMPro.TMP_Text>(),
+            rowGo.transform.Find("Highlight")?.GetComponent<UnityEngine.UI.Graphic>()
+        );
+
+        var quit = panel.GetComponentInChildren<QuitRow>(true);
+        if (quit != null)
+        {
+            rowGo.transform.SetSiblingIndex(quit.transform.GetSiblingIndex());
+        }
     }
 
     private void OnEnable() => DesktopWindow.AddPointerTarget(this);

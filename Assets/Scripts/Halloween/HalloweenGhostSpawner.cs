@@ -75,7 +75,33 @@ public class HalloweenGhostSpawner : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         // Primer intervalo: demora breve inicial para que aparezcan pronto
-        timer = Mathf.Max(0.5f, initialDelay);
+                timer = Mathf.Max(0.5f, initialDelay);
+    }
+
+    private void OnEnable()
+    {
+        HalloweenEvent.Changed += HandleHalloweenChanged;
+    }
+
+    private void OnDisable()
+    {
+        HalloweenEvent.Changed -= HandleHalloweenChanged;
+    }
+
+    private void HandleHalloweenChanged()
+    {
+        if (!HalloweenEvent.Enabled)
+        {
+            var ghosts = FindObjectsByType<ProceduralGhost>(FindObjectsSortMode.None);
+            foreach (var g in ghosts)
+            {
+                if (g != null) Destroy(g.gameObject);
+            }
+        }
+        else
+        {
+            ResetTimer();
+        }
     }
 
     private void Start()
@@ -91,9 +117,9 @@ public class HalloweenGhostSpawner : MonoBehaviour
         }
     }
 
-    private void Update()
+        private void Update()
     {
-        if (!enableHalloween) return;
+        if (!enableHalloween || !HalloweenEvent.Enabled) return;
 
         // Comprobación de atajo de prueba en el Editor (Ctrl + H para probar instantáneamente)
 #if UNITY_EDITOR
