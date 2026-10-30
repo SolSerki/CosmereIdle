@@ -161,6 +161,25 @@ public class ProceduralGhost : MonoBehaviour
         return ReferenceStageScale / safeScale;
     }
 
+    /// <summary>Margen entre el fantasma y el borde de arriba de la franja (en mundo, a 0.75x).</summary>
+    private const float TopMargin = 0.03f;
+
+    /// <summary>
+    /// Mitad del alto visible del fantasma en el mundo (el dibujo ocupa ~19 de los 24 px del cuadro).
+    /// </summary>
+    public static float GetVisibleHalfHeight(float stageScale)
+    {
+        return GetFixedWorldScale(stageScale) * (9.5f / 100f);
+    }
+
+    /// <summary>
+    /// Altura máxima del centro del fantasma para que no se corte contra el borde de arriba de la franja.
+    /// </summary>
+    public static float GetTopLimitY(Rect bounds, float stageScale)
+    {
+        return bounds.yMax - GetVisibleHalfHeight(stageScale) - TopMargin * GetScaleFactor(stageScale);
+    }
+
     private void UpdateBaseScale(float stageScale)
     {
         float s = GetFixedWorldScale(stageScale);
@@ -333,9 +352,10 @@ public class ProceduralGhost : MonoBehaviour
         // Estallido de partículas de spren espectrales
         BurstSpookySpren(6);
 
-        // Ligera sorpresa: invierte la dirección o se eleva sutilmente sin superar el tope del 25%
+        // Ligera sorpresa: invierte la dirección y se eleva sutilmente sin salirse por arriba
         Rect bounds = GetCurrentBounds();
-        float maxY = bounds.yMin + bounds.height * 0.25f;
+        float stageScale = DesktopWindow.Instance != null ? DesktopWindow.Instance.StageScale : ReferenceStageScale;
+        float maxY = GetTopLimitY(bounds, stageScale);
         anchorPosition.y = Mathf.Min(anchorPosition.y + 0.03f, maxY);
         driftDirection = -driftDirection;
     }
@@ -359,12 +379,12 @@ public class ProceduralGhost : MonoBehaviour
         // 1. Traslación del ancla horizontal (normalizada a la velocidad visual a 0.75x)
         anchorPosition.x += driftDirection * (driftSpeed * scaleFactor) * dt;
 
-        // Si está en fase de disipación, ascender suavemente como niebla pero contenido en el 25%
+        // Si está en fase de disipación, ascender suavemente como niebla sin salirse por arriba
         isDissipating = age >= (lifetime - fadeOutTime);
         if (isDissipating)
         {
             Rect b = GetCurrentBounds();
-            float maxY = b.yMin + b.height * 0.26f;
+            float maxY = GetTopLimitY(b, stageScale);
             anchorPosition.y = Mathf.Min(anchorPosition.y + (0.10f * scaleFactor) * dt, maxY);
         }
 
@@ -413,11 +433,11 @@ public class ProceduralGhost : MonoBehaviour
 
         float swayX = Mathf.Cos(t * swayFrequency) * (swayAmplitude * scaleFactor);
 
-        // Mantener la base del fantasma suavemente por encima de la barra de tareas y con tope en el 25%
+        // Mantener el fantasma dentro de la franja: sin hundirse en el piso ni cortarse arriba
         Rect bounds = GetCurrentBounds();
         float visibleHalfHeight = baseScale.y * (9.5f / 100f);
         float minSafeY = bounds.yMin + visibleHalfHeight + 0.02f * scaleFactor;
-        float maxAllowedY = bounds.yMin + bounds.height * 0.25f;
+        float maxAllowedY = Mathf.Max(minSafeY, GetTopLimitY(bounds, stageScale));
 
         float finalY = Mathf.Clamp(anchorPosition.y + hoverY, minSafeY, maxAllowedY);
         transform.position = new Vector3(anchorPosition.x + swayX, finalY, anchorPosition.z);

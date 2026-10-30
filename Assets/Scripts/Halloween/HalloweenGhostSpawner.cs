@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -30,17 +31,10 @@ public class HalloweenGhostSpawner : MonoBehaviour
     [Tooltip("Tiempo de espera para la primera aparición al iniciar la app.")]
     [SerializeField] private float initialDelay = 3f;
 
-    [Header("Rango de Altura (Cerca de la Barra de Tareas)")]
-    [Tooltip("Proporción mínima del alto de la franja para flotar sobre la barra de tareas.")]
-    [Range(0.05f, 0.8f)]
-    [SerializeField] private float minHeightRatio = 0.05f;
-
-    [Tooltip("Proporción máxima del alto de la franja para flotar sobre la barra de tareas.")]
-    [Range(0.05f, 0.8f)]
-    [SerializeField] private float maxHeightRatio = 0.10f;
-
-    [Tooltip("Margen vertical mínimo sobre la barra de tareas (en unidades de mundo).")]
-    [SerializeField] private float minGroundPadding = 0.08f;
+    [Header("Altura de Vuelo")]
+    [Tooltip("Alto en el mundo de los personajes más altos (32 px a escala 4). Los fantasmas vuelan " +
+             "por encima de esto, entre la cabeza de los personajes y el borde de arriba de la franja.")]
+    [SerializeField] private float characterHeight = 1.28f;
 
     [Header("Cantidad de Fantasmas")]
     [Tooltip("Cantidad mínima de fantasmas por aparición.")]
@@ -48,6 +42,12 @@ public class HalloweenGhostSpawner : MonoBehaviour
 
     [Tooltip("Cantidad máxima de fantasmas por aparición.")]
     [SerializeField] private int maxGhosts = 3;
+
+    [Tooltip("Espera mínima en segundos entre un fantasma y el siguiente de la misma oleada.")]
+    [SerializeField] private float minStagger = 0.4f;
+
+    [Tooltip("Espera máxima en segundos entre un fantasma y el siguiente de la misma oleada.")]
+    [SerializeField] private float maxStagger = 2.8f;
 
     [Header("Duración de los Fantasmas")]
     [Tooltip("Tiempo base que permanecen en pantalla antes de desaparecer (4 a 5 segundos).")]
@@ -61,6 +61,7 @@ public class HalloweenGhostSpawner : MonoBehaviour
     [SerializeField] private Sprite[] ghostSprites;
 
     private float timer = 0f;
+    private Coroutine waveRoutine;
     private static Sprite[] cachedSprites;
 
     private void Awake()
@@ -86,12 +87,17 @@ public class HalloweenGhostSpawner : MonoBehaviour
     private void OnDisable()
     {
         HalloweenEvent.Changed -= HandleHalloweenChanged;
+
+        // Unity corta las corrutinas al desactivar: sin esto la oleada quedaría "en curso" para siempre
+        StopWave();
     }
 
     private void HandleHalloweenChanged()
     {
         if (!HalloweenEvent.Enabled)
         {
+            StopWave();
+
             var ghosts = FindObjectsByType<ProceduralGhost>(FindObjectsSortMode.None);
             foreach (var g in ghosts)
             {
@@ -139,6 +145,9 @@ public class HalloweenGhostSpawner : MonoBehaviour
             }
         }
 
+        // Mientras una oleada sigue soltando fantasmas, la cuenta para la próxima no corre
+        if (waveRoutine != null) return;
+
         timer -= Time.deltaTime;
         if (timer <= 0f)
         {
@@ -170,10 +179,44 @@ public class HalloweenGhostSpawner : MonoBehaviour
 
     /// <summary>
     /// Genera la cantidad solicitada de fantasmas distribuidos armónicamente en el ancho de la franja.
+    /// No salen todos juntos: el primero aparece enseguida y cada uno de los siguientes
+    /// después de una espera aleatoria (minStagger a maxStagger).
     /// </summary>
     public void SpawnGhosts(int count)
     {
         count = Mathf.Clamp(count, 1, 10);
+        StopWave();
+        waveRoutine = StartCoroutine(SpawnWaveRoutine(count));
+    }
+
+    private IEnumerator SpawnWaveRoutine(int count)
+    {
+        // Cada fantasma va a un sector distinto del ancho, en orden mezclado:
+        // si no, con el desfase aparecerían siempre de izquierda a derecha.
+        int[] sectors = Enumerable.Range(0, count).OrderBy(_ => Random.value).ToArray();
+
+        for (int i = 0; i < count; i++)
+        {
+            if (i > 0) yield return new WaitForSeconds(Random.Range(minStagger, maxStagger));
+            SpawnGhostInSector(sectors[i], count);
+        }
+
+        waveRoutine = null;
+    }
+
+    private void StopWave()
+    {
+        if (waveRoutine == null) return;
+        StopCoroutine(waveRoutine);
+        waveRoutine = null;
+    }
+
+    /// <summary>
+    /// Genera un fantasma en el sector indicado del ancho de la franja (de un total de sectorCount).
+    /// La posición se calcula al momento de aparecer, por si la franja cambió durante la oleada.
+    /// </summary>
+    private void SpawnGhostInSector(int sector, int sectorCount)
+    {
         Rect bounds = GetStageBounds();
 
         float stageScale = DesktopWindow.Instance != null ? DesktopWindow.Instance.StageScale : ProceduralGhost.ReferenceStageScale;
@@ -182,35 +225,31 @@ public class HalloweenGhostSpawner : MonoBehaviour
         // Subdividir el ancho de la pantalla en sectores para que no salgan superpuestos
         float borderPadding = 0.4f * scaleFactor;
         float availableWidth = Mathf.Max(1f, bounds.width - borderPadding * 2f);
-        float sectorWidth = availableWidth / count;
+        float sectorWidth = availableWidth / sectorCount;
         float startX = bounds.xMin + borderPadding;
 
-        // Calcular altura segura flotando cerca de la barra de tareas (tamaño fijo a resolución 0.75x)
-        float ghostWorldScale = ProceduralGhost.GetFixedWorldScale(stageScale);
-        float ghostHalfHeight = (24f / 100f) * ghostWorldScale * 0.5f;
-        float minSafeY = bounds.yMin + ghostHalfHeight + minGroundPadding * scaleFactor;
-        float calculatedMinY = Mathf.Max(minSafeY, bounds.yMin + bounds.height * minHeightRatio);
-        float calculatedMaxY = Mathf.Max(calculatedMinY + 0.12f * scaleFactor, bounds.yMin + bounds.height * maxHeightRatio);
+        // Altura de vuelo: por encima de las cabezas de las mascotas, dejando lugar arriba
+        // para el balanceo. Si los personajes llenan la franja, vuelan pegados al borde de arriba.
+        float ghostHalfHeight = ProceduralGhost.GetVisibleHalfHeight(stageScale);
+        float calculatedMaxY = ProceduralGhost.GetTopLimitY(bounds, stageScale) - 0.09f * scaleFactor;
+        float calculatedMinY = Mathf.Min(bounds.yMin + characterHeight + ghostHalfHeight, calculatedMaxY);
 
-        for (int i = 0; i < count; i++)
-        {
-            // Posición X aleatoria dentro de su sector
-            float minX = startX + i * sectorWidth + 0.1f * scaleFactor;
-            float maxX = startX + (i + 1) * sectorWidth - 0.1f * scaleFactor;
-            float spawnX = Random.Range(minX, maxX);
+        // Posición X aleatoria dentro de su sector
+        float minX = startX + sector * sectorWidth + 0.1f * scaleFactor;
+        float maxX = startX + (sector + 1) * sectorWidth - 0.1f * scaleFactor;
+        float spawnX = Random.Range(minX, maxX);
 
-            // Altura Y: flotando cerca de la barra de tareas y a la altura de las mascotas, no tan alto
-            float spawnY = Random.Range(calculatedMinY, calculatedMaxY);
+        // Altura Y: volando por encima de las mascotas
+        float spawnY = Random.Range(calculatedMinY, calculatedMaxY);
 
-            Vector3 spawnPos = new Vector3(spawnX, spawnY, 0f);
+        Vector3 spawnPos = new Vector3(spawnX, spawnY, 0f);
 
-            // Dirección inicial y tiempo con ligera variación orgánica
-            int dir = Random.value > 0.5f ? 1 : -1;
-            float variance = Random.Range(-0.35f, 0.45f);
-            float customLife = Mathf.Max(3.5f, ghostLifetime + variance);
+        // Dirección inicial y tiempo con ligera variación orgánica
+        int dir = Random.value > 0.5f ? 1 : -1;
+        float variance = Random.Range(-0.35f, 0.45f);
+        float customLife = Mathf.Max(3.5f, ghostLifetime + variance);
 
-            CreateGhostInstance(spawnPos, dir, customLife, bounds);
-        }
+        CreateGhostInstance(spawnPos, dir, customLife, bounds);
     }
 
     private void CreateGhostInstance(Vector3 pos, int dir, float life, Rect bounds)

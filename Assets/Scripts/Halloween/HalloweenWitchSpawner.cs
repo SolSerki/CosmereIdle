@@ -31,14 +31,10 @@ public class HalloweenWitchSpawner : MonoBehaviour
     [Tooltip("Tiempo de espera para la primera aparición al iniciar la app.")]
     [SerializeField] private float initialDelay = 3f;
 
-    [Header("Rango de Altura de Vuelo")]
-    [Tooltip("Proporción mínima del alto de la franja (justo encima de la cabeza de los personajes).")]
-    [Range(0.1f, 0.8f)]
-    [SerializeField] private float minHeightRatio = 0.12f;
-
-    [Tooltip("Proporción máxima del alto de la franja (justo encima de la cabeza de los personajes).")]
-    [Range(0.1f, 0.8f)]
-    [SerializeField] private float maxHeightRatio = 0.16f;
+    [Header("Altura de Vuelo")]
+    [Tooltip("Alto en el mundo de los personajes más altos (32 px a escala 4). La bruja vuela " +
+             "por encima de esto, entre la cabeza de los personajes y el borde de arriba de la franja.")]
+    [SerializeField] private float characterHeight = 1.28f;
 
     [Header("Duración de Vuelo")]
     [Tooltip("Tiempo en segundos que permanece en pantalla.")]
@@ -212,9 +208,12 @@ public class HalloweenWitchSpawner : MonoBehaviour
             spawnX = bounds.xMax - borderPadding - Random.Range(0f, 0.4f * scaleFactor);
         }
 
-        // Altura de vuelo: surcando el aire por encima de las mascotas
-        float minY = bounds.yMin + bounds.height * minHeightRatio;
-        float maxY = bounds.yMin + bounds.height * maxHeightRatio;
+        // Altura de vuelo: surcando el aire por encima de las cabezas de las mascotas,
+        // dejando lugar arriba para la ondulación. Si los personajes llenan la franja,
+        // vuela pegada al borde de arriba.
+        float halfHeight = (32f / 100f) * ProceduralWitch.GetFixedWorldScale(stageScale) * 0.5f;
+        float maxY = ProceduralWitch.GetTopLimitY(bounds, stageScale) - 0.06f * scaleFactor;
+        float minY = Mathf.Min(bounds.yMin + characterHeight + halfHeight, maxY);
         float spawnY = Random.Range(minY, maxY);
 
         Vector3 spawnPos = new Vector3(spawnX, spawnY, 0f);

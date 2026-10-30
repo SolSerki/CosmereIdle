@@ -103,6 +103,9 @@ public class PetSpeech : MonoBehaviour
     /// </summary>
     private void ScheduleChatter() => nextChatAt = Time.time + Chatter.NextDelay();
 
+    /// <summary>El globo que usa, para que los que no son personajes (la bruja) hablen con el mismo.</summary>
+    public GameObject BubblePrefab => bubblePrefab;
+
     private void Update()
     {
         DesktopWindow window = DesktopWindow.Instance;

@@ -82,6 +82,17 @@ public class ProceduralWitch : MonoBehaviour
         new Color(1f, 0.85f, 0.32f, 0.9f)      // Amarillo/ámbar estelar
     };
 
+    [Header("Risa")]
+    [Tooltip("Lo que dice la bruja en el globo.")]
+    [SerializeField] private string cacklePhrase = "Bruuujajajaja";
+
+    [Tooltip("Probabilidad de que se ría en una pasada (0 = nunca, 1 = siempre).")]
+    [Range(0f, 1f)]
+    [SerializeField] private float cackleChance = 0.6f;
+
+    [Tooltip("Cuánto queda el globo en pantalla.")]
+    [SerializeField] private float cackleSeconds = 1.8f;
+
     [Header("Reacción al Clic")]
     [Tooltip("Fuerza del resorte elástico al hacer clic.")]
     [SerializeField] private float springStiffness = 150f;
@@ -104,6 +115,9 @@ public class ProceduralWitch : MonoBehaviour
     private float springDisplacement = 0f;
     private float springVelocity = 0f;
     private float currentTilt = 0f;
+
+    // Momento de la risa (en edad de la bruja); negativo si en esta pasada no se ríe
+    private float cackleAt = -1f;
 
     // Límites de vuelo
     private Rect flightBounds;
@@ -134,6 +148,18 @@ public class ProceduralWitch : MonoBehaviour
     {
         float safeScale = Mathf.Max(0.01f, stageScale);
         return ReferenceStageScale / safeScale;
+    }
+
+    /// <summary>Margen entre la bruja y el borde de arriba de la franja (en mundo, a 0.75x).</summary>
+    private const float TopMargin = 0.03f;
+
+    /// <summary>
+    /// Altura máxima del centro de la bruja para que no se corte contra el borde de arriba de la franja.
+    /// </summary>
+    public static float GetTopLimitY(Rect bounds, float stageScale)
+    {
+        float halfHeight = (32f / 100f) * GetFixedWorldScale(stageScale) * 0.5f;
+        return bounds.yMax - halfHeight - TopMargin * GetScaleFactor(stageScale);
     }
 
     private void UpdateBaseScale(float stageScale)
@@ -222,6 +248,7 @@ public class ProceduralWitch : MonoBehaviour
         hasCustomBounds = true;
         age = 0f;
         isDissipating = false;
+        ScheduleCackle();
 
         EnsureFrames();
 
@@ -254,7 +281,14 @@ public class ProceduralWitch : MonoBehaviour
         // 5. Estela mágica de escoba
         UpdateMagicalTrail(dt);
 
-        // 6. Fin de ciclo de vida
+        // 6. Risa en un globo de diálogo
+        if (cackleAt >= 0f && age >= cackleAt)
+        {
+            cackleAt = -1f;
+            Cackle();
+        }
+
+        // 7. Fin de ciclo de vida
         if (age >= lifetime)
         {
             Destroy(gameObject);
@@ -293,6 +327,38 @@ public class ProceduralWitch : MonoBehaviour
         flyDirection = -flyDirection;
     }
 
+    /// <summary>
+    /// Sortea si se ríe en esta pasada y cuándo. Solo con la bruja del todo visible:
+    /// el globo no se desvanece con ella y quedaría hablando una bruja invisible.
+    /// </summary>
+    private void ScheduleCackle()
+    {
+        cackleAt = -1f;
+        float latest = lifetime - fadeOutTime - cackleSeconds;
+        if (latest < fadeInTime || UnityEngine.Random.value >= cackleChance) return;
+
+        cackleAt = UnityEngine.Random.Range(fadeInTime, latest);
+    }
+
+    /// <summary>
+    /// Muestra la risa con el mismo globo que usan las mascotas. Se lo pide prestado
+    /// a cualquiera de ellas: la bruja se crea en tiempo de ejecución y no tiene prefab propio.
+    /// </summary>
+    private void Cackle()
+    {
+        var speaker = FindFirstObjectByType<PetSpeech>();
+        GameObject bubblePrefab = speaker != null ? speaker.BubblePrefab : null;
+        if (bubblePrefab == null || string.IsNullOrEmpty(cacklePhrase)) return;
+
+        var instance = Instantiate(bubblePrefab, transform.position, Quaternion.identity);
+        var bubble = instance.GetComponent<SpeechBubble>();
+        if (bubble == null) { Destroy(instance); return; }
+
+        // La punta de la colita, sobre el sombrero (el pivote de la bruja está en el centro del cuadro)
+        float tipAboveCenter = (32f / 100f) * baseScale.y * 0.5f;
+        bubble.Show(cacklePhrase, transform, tipAboveCenter, cackleSeconds);
+    }
+
     private void UpdateSpriteFrame()
     {
         if (frames == null || frames.Length == 0 || frames.All(f => f == null))
@@ -321,7 +387,7 @@ public class ProceduralWitch : MonoBehaviour
         if (isDissipating)
         {
             Rect b = GetCurrentBounds();
-            float topY = b.yMin + b.height * 0.35f;
+            float topY = GetTopLimitY(b, stageScale);
             anchorPosition.y = Mathf.Min(anchorPosition.y + (0.08f * scaleFactor) * dt, topY);
         }
 
@@ -367,10 +433,10 @@ public class ProceduralWitch : MonoBehaviour
 
         float swayX = Mathf.Cos(t * swayFrequency) * (swayAmplitude * scaleFactor);
 
-        // Delimitar dentro del área visible justo arriba de los personajes
+        // Delimitar dentro de la franja: sin hundirse en el piso ni cortarse arriba
         Rect bounds = GetCurrentBounds();
-        float minSafeY = bounds.yMin + bounds.height * 0.15f;
-        float maxAllowedY = bounds.yMin + bounds.height * 0.35f;
+        float minSafeY = bounds.yMin + (32f / 100f) * baseScale.y * 0.5f;
+        float maxAllowedY = Mathf.Max(minSafeY, GetTopLimitY(bounds, stageScale));
 
         float finalY = Mathf.Clamp(anchorPosition.y + hoverY, minSafeY, maxAllowedY);
         transform.position = new Vector3(anchorPosition.x + swayX, finalY, anchorPosition.z);
